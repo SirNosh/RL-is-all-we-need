@@ -1,0 +1,5 @@
+numpy==2.3.1
+sentencepiece==0.2.0
+# The reported run used the CUDA 12.4 build: torch==2.6.0+cu124.
+# Install the appropriate PyTorch wheel for the reviewer's platform.
+torch==2.6.0

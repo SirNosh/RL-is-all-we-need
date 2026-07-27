@@ -77,4 +77,4 @@ All three corrected IID CLM development seeds have completed. These summarize
 one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
-Ordered CLM seed 4000 is also complete; seeds 4001–4002 remain.
+Ordered CLM seeds 4000 and 4001 are also complete; seed 4002 remains.

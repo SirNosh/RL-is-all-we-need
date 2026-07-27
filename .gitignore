@@ -19,6 +19,7 @@ results/*
 !results/stage0-20260726-225121.json
 !results/stage0-20260726-231303.json
 !results/stage0-20260726-233431.json
+!results/stage0-20260726-235542.json
 !results/runs/
 results/runs/*
 !results/runs/stage0-20260726-205259-adaptive_caregiver_rl-3200/
@@ -42,3 +43,6 @@ results/runs/stage0-20260726-225530-iid_clm-4002/*
 !results/runs/stage0-20260726-231707-ordered_clm-4000/
 results/runs/stage0-20260726-231707-ordered_clm-4000/*
 !results/runs/stage0-20260726-231707-ordered_clm-4000/trace.json
+!results/runs/stage0-20260726-233812-ordered_clm-4001/
+results/runs/stage0-20260726-233812-ordered_clm-4001/*
+!results/runs/stage0-20260726-233812-ordered_clm-4001/trace.json

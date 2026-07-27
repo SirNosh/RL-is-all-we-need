@@ -105,3 +105,10 @@
 - The paired clarification gap vanishes under length normalization (both
   100%), reinforcing that candidate scoring must accompany all condition
   comparisons. Deferred any condition verdict until ordered seeds 4001–4002.
+- Ordered CLM seed 4001 completed at 5,002,787 tokens. Paired primary far
+  differences from IID were 0 pp turn, +11.7 truth, 0 entity, −2.3 property,
+  −26.6 count, and +60.2 clarification; the clarification gap was again zero
+  under length normalization.
+- Primary turn accuracy was 50% before and after withholding, but normalized
+  accuracy was 0% at both points. Recorded the nominal retention ratio of 1.0
+  while treating it as scoring-rule-sensitive rather than robust retention.

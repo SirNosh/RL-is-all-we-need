@@ -274,3 +274,15 @@ both paired models then select the long canonical reply on every far item.
 Turn and entity were below chance at the ordered pre-holdout baseline, so this
 seed does not estimate forgetting. One paired seed does not support a
 condition-level ordering; ordered seeds 4001 and 4002 remain.
+
+Ordered CLM seed 4001 completed 5,002,787 tokens. Primary far accuracy was
+50.0% turn, 78.1% truth, 21.9% entity, 54.7% property, 14.1% counting, and
+100% clarification. Paired differences from IID seed 4001 were 0, +11.7, 0,
+−2.3, −26.6, and +60.2 percentage points, respectively. The clarification
+difference is again zero under length normalization.
+
+Primary turn accuracy was 50% both before and after withholding, which yields a
+retention ratio of 1.0 relative to 25% chance. However, length-normalized turn
+accuracy was 0% at both checkpoints, so this apparent retention is not robust
+to the prespecified secondary scoring rule. Ordered seed 4002 remains before a
+condition summary.

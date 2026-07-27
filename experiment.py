@@ -577,11 +577,13 @@ def save_checkpoint(path: Path, model, optimizer, scheduler, visible, rollout,
 
 def load_checkpoint(path: Path, model, optimizer, scheduler, curriculum, rng,
                     tok_path: Path, args):
-    payload = torch.load(path, map_location=next(model.parameters()).device, weights_only=False)
+    payload = torch.load(path, map_location="cpu", weights_only=False)
     if payload["tokenizer_hash"] != _file_hash(tok_path):
         raise ValueError("Tokenizer hash differs from checkpoint")
     if payload["configuration_hash"] != _config_hash(args):
         raise ValueError("Configuration differs from checkpoint")
+    if payload["code_commit"] != _code_commit():
+        raise ValueError("Code commit differs from checkpoint")
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     scheduler.load_state_dict(payload["lr_scheduler"])
@@ -589,9 +591,9 @@ def load_checkpoint(path: Path, model, optimizer, scheduler, curriculum, rng,
     random.setstate(payload["python_rng"])
     rng.setstate(payload["local_python_rng"])
     np.random.set_state(payload["numpy_rng"])
-    torch.set_rng_state(payload["torch_cpu_rng"])
+    torch.set_rng_state(payload["torch_cpu_rng"].cpu())
     if payload["torch_cuda_rng"] is not None and torch.cuda.is_available():
-        torch.cuda.set_rng_state_all(payload["torch_cuda_rng"])
+        torch.cuda.set_rng_state_all([state.cpu() for state in payload["torch_cuda_rng"]])
     return payload
 
 

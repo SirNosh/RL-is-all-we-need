@@ -59,7 +59,7 @@ class StageZeroTests(unittest.TestCase):
             rollout_dialogues=8, diagnostic_interval=100_000,
             diagnostic_items=2, overfit_test=False, overfit_rollouts=1,
             hybrid_clm_weight=.3, layers=1, hidden=32, device="cpu",
-            resume=None,
+            policy_lr=1e-4, resume=None,
         )
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

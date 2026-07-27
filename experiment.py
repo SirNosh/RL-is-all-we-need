@@ -582,7 +582,8 @@ def load_checkpoint(path: Path, model, optimizer, scheduler, curriculum, rng,
 
 
 def overfit_test(tok, device, args):
-    model, optimizer = make_model(tok, device, 731, args.layers, args.hidden)
+    model, optimizer = make_model(tok, device, 731, args.layers, args.hidden,
+                                  args.policy_lr)
     rng = random.Random(731); curriculum = Curriculum(False)
     fixed = list(range(1000)); history = []
     for rollout in range(args.overfit_rollouts):
@@ -599,7 +600,7 @@ def overfit_test(tok, device, args):
 
 def run_condition(condition, seed, budget, tok, tok_path, device, args,
                   run_dir: Path, resume_path: Path | None = None):
-    policy_lr = 3e-4 if condition in ("iid_clm", "ordered_clm", "adaptive_clm", "adaptive_hybrid") else 1e-4
+    policy_lr = 3e-4 if condition in ("iid_clm", "ordered_clm", "adaptive_clm", "adaptive_hybrid") else args.policy_lr
     model, optimizer = make_model(tok, device, seed, args.layers, args.hidden, policy_lr)
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lambda _: 1.0)
     adaptive = condition in ("adaptive_caregiver_rl", "adaptive_hybrid", "adaptive_clm")
@@ -695,6 +696,8 @@ def main():
     p.add_argument("--overfit-test", action="store_true")
     p.add_argument("--overfit-rollouts", type=int, default=30)
     p.add_argument("--hybrid-clm-weight", type=float, choices=(.1, .3, 1.0), default=.3)
+    p.add_argument("--policy-lr", type=float, default=1e-4,
+                   help="Development-only PPO policy learning rate; freeze after calibration")
     p.add_argument("--max-rollouts", type=int)
     p.add_argument("--resume", type=Path)
     p.add_argument("--layers", type=int, default=8)

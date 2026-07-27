@@ -427,7 +427,7 @@ def collect_rollout(model, tok, device, curriculum, rng, dialogues, progress,
     return transitions, visible, metrics
 
 
-def ppo_update(model, tok, device, transitions, optimizer, rng):
+def ppo_update(model, tok, device, transitions, optimizer, rng, target_kl=.03):
     by_skill = defaultdict(list)
     for i, t in enumerate(transitions):
         by_skill[t.skill].append(i)
@@ -436,7 +436,8 @@ def ppo_update(model, tok, device, transitions, optimizer, rng):
         v = advantages[indices]
         advantages[indices] = (v - v.mean()) / (v.std(unbiased=False) + 1e-8)
     logs = defaultdict(list)
-    for _ in range(2):
+    early_stopped = False; updates = 0; epochs_completed = 0
+    for epoch in range(2):
         order = list(range(len(transitions))); rng.shuffle(order)
         for start in range(0, len(order), 64):
             idx = order[start:start + 64]; batch = [transitions[i] for i in idx]
@@ -448,6 +449,12 @@ def ppo_update(model, tok, device, transitions, optimizer, rng):
             old_logp = torch.tensor([t.old_logp for t in batch], device=device)
             adv = advantages[idx].to(device)
             ratio = (new_logp - old_logp).exp()
+            log_ratio = new_logp - old_logp
+            approx_kl = ((ratio - 1) - log_ratio).mean()
+            if updates and float(approx_kl.detach()) > 1.5 * target_kl:
+                logs["kl"].append(float(approx_kl.detach()))
+                early_stopped = True
+                break
             clipped = ratio.clamp(.8, 1.2)
             policy_loss = -torch.minimum(ratio * adv, clipped * adv).mean()
             returns = torch.tensor([t.return_ for t in batch], device=device)
@@ -456,14 +463,21 @@ def ppo_update(model, tok, device, transitions, optimizer, rng):
             loss = policy_loss + .5 * value_loss - .02 * entropy
             optimizer.zero_grad(set_to_none=True); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0); optimizer.step()
-            logs["kl"].append(float((old_logp - new_logp).mean().detach()))
+            updates += 1
+            logs["kl"].append(float(approx_kl.detach()))
             logs["clip_fraction"].append(float(((ratio - 1).abs() > .2).float().mean().detach()))
             logs["entropy"].append(float(entropy.detach()))
             logs["value_error"].append(float(value_loss.detach()))
+        if early_stopped:
+            break
+        epochs_completed = epoch + 1
     old_values = np.array([t.old_value for t in transitions])
     returns = np.array([t.return_ for t in transitions])
     explained = 1 - np.var(returns - old_values) / max(np.var(returns), 1e-8)
-    return {k: float(np.mean(v)) for k, v in logs.items()} | {"explained_variance": float(explained)}
+    return {k: float(np.mean(v)) for k, v in logs.items()} | {
+        "explained_variance": float(explained), "early_stopped_for_kl": early_stopped,
+        "optimizer_minibatches": updates, "epochs_completed": epochs_completed,
+    }
 
 
 def clm_update(model, tok, device, situations, optimizer, weight=1.0):
@@ -589,7 +603,8 @@ def overfit_test(tok, device, args):
     for rollout in range(args.overfit_rollouts):
         transitions, _, _ = collect_rollout(model, tok, device, curriculum, rng,
                                              min(512, len(fixed)), 0, "entity", fixed)
-        metrics = ppo_update(model, tok, device, transitions, optimizer, rng)
+        metrics = ppo_update(model, tok, device, transitions, optimizer, rng,
+                             args.target_kl)
         train_acc = accuracy(model, tok, device, "entity", (0, 1, 2, 3), 1000, fixed)
         history.append({"rollout": rollout + 1, "accuracy": train_acc, **metrics})
         print(f"overfit rollout={rollout+1} accuracy={train_acc:.3f} kl={metrics['kl']:.4f}", flush=True)
@@ -637,7 +652,8 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
             transitions, used, collection_metrics = collect_rollout(
                 model, tok, device, curriculum, rng, args.rollout_dialogues, progress)
             update_started = time.perf_counter()
-            metrics = ppo_update(model, tok, device, transitions, optimizer, rng)
+            metrics = ppo_update(model, tok, device, transitions, optimizer, rng,
+                                 args.target_kl)
             metrics["ppo_update_seconds"] = time.perf_counter() - update_started
             visible += used; training_metrics = metrics
             if condition == "adaptive_hybrid":
@@ -698,6 +714,7 @@ def main():
     p.add_argument("--hybrid-clm-weight", type=float, choices=(.1, .3, 1.0), default=.3)
     p.add_argument("--policy-lr", type=float, default=1e-4,
                    help="Development-only PPO policy learning rate; freeze after calibration")
+    p.add_argument("--target-kl", type=float, default=.03)
     p.add_argument("--max-rollouts", type=int)
     p.add_argument("--resume", type=Path)
     p.add_argument("--layers", type=int, default=8)

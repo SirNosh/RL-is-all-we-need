@@ -66,7 +66,8 @@ class StageZeroTests(unittest.TestCase):
         tok = Tokenizer(tok_path)
         base = dict(
             budget=10**9, seeds=[41], conditions=["fixed_caregiver_rl"],
-            rollout_dialogues=8, diagnostic_interval=100_000,
+            rollout_dialogues=8, clm_rollout_tokens=16_384,
+            diagnostic_interval=100_000,
             diagnostic_items=2, overfit_test=False, overfit_rollouts=1,
             hybrid_clm_weight=.3, layers=1, hidden=32, device="cpu",
             policy_lr=1e-4, target_kl=.03, resume=None,

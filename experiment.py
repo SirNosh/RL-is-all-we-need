@@ -671,13 +671,22 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
             curriculum.set_withheld(args.retention_skills)
         step_started = time.perf_counter(); collection_metrics = {}
         if condition in ("iid_clm", "ordered_clm", "adaptive_clm"):
-            situations = []
-            for _ in range(64):
-                available = [s for s in SKILLS if s not in curriculum.withheld_skills]
-                skill = rng.choice(available) if condition == "iid_clm" else curriculum.sample(rng, progress)
-                situations.append(make_situation(skill, rng.randrange(1 << 30), rng.randrange(4)))
-            loss, used = clm_update(model, tok, device, situations, optimizer)
-            visible += used; training_metrics = {"clm_loss": loss}
+            used = 0; losses = []; optimizer_batches = 0
+            while used < args.clm_rollout_tokens and visible < budget:
+                if retention_start is not None and visible >= retention_start and not curriculum.withheld_skills:
+                    curriculum.set_withheld(args.retention_skills)
+                situations = []
+                for _ in range(64):
+                    available = [s for s in SKILLS if s not in curriculum.withheld_skills]
+                    skill = rng.choice(available) if condition == "iid_clm" else curriculum.sample(rng, progress)
+                    situations.append(make_situation(skill, rng.randrange(1 << 30), rng.randrange(4)))
+                loss, batch_used = clm_update(model, tok, device, situations, optimizer)
+                visible += batch_used; used += batch_used; optimizer_batches += 1
+                losses.append(loss); scheduler.step()
+            training_metrics = {
+                "clm_loss": float(np.mean(losses)),
+                "optimizer_batches": optimizer_batches,
+            }
         else:
             transitions, used, collection_metrics = collect_rollout(
                 model, tok, device, curriculum, rng, args.rollout_dialogues, progress)
@@ -693,7 +702,8 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
                 clm_loss, clm_tokens = clm_update(model, tok, device, texts, optimizer,
                                                   args.hybrid_clm_weight)
                 visible += clm_tokens; training_metrics["environment_clm_loss"] = clm_loss
-        scheduler.step(); rollout += 1
+            scheduler.step()
+        rollout += 1
         diagnostic_metrics = None
         if adaptive and visible >= next_diagnostic:
             diagnostic_metrics = diagnostics(model, tok, device, args.diagnostic_items)
@@ -742,6 +752,7 @@ def main():
     p.add_argument("--seeds", type=int, nargs="+", default=[2000])
     p.add_argument("--conditions", nargs="+", choices=CONDITIONS, default=list(DEFAULT_CONDITIONS))
     p.add_argument("--rollout-dialogues", type=int, default=512)
+    p.add_argument("--clm-rollout-tokens", type=int, default=16_384)
     p.add_argument("--diagnostic-interval", type=int, default=100_000)
     p.add_argument("--diagnostic-items", type=int, default=128)
     p.add_argument("--overfit-test", action="store_true")

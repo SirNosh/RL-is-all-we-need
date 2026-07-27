@@ -106,3 +106,21 @@ Each 5M-token run withholds `turn` and `entity` during the final 500,000 tokens
 for a prespecified hidden-family retention check. The five development
 conditions remain IID CLM, ordered CLM with replay, fixed caregiver RL,
 adaptive caregiver RL, and adaptive hybrid.
+
+## Development study progress
+
+IID CLM seed 4000 is the first completed 5M-token development endpoint:
+
+| Skill | Independent | Far family |
+|---|---:|---:|
+| Turn-taking | 0.0% | 0.0% |
+| Truth judgment | 71.9% | 78.1% |
+| Entity reference | 14.1% | 18.0% |
+| Property binding | 50.0% | 62.5% |
+| Counting | 47.7% | 21.1% |
+| Clarification | 100.0% | 100.0% |
+
+After the final 500,756-token holdout, retention was 0% for turn-taking and
+18.0% for entity reference. This is one development seed, not a condition
+comparison. Seed 4001 stopped at 36,830 tokens when the command window expired
+and has no endpoint; seed 4002 has not started.

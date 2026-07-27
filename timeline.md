@@ -46,3 +46,6 @@
   was 19.4 percent of opportunities, and no numerical/CUDA failure occurred.
 - Froze development seeds 4000, 4001, and 4002, and added a final 500k-token
   retention holdout for turn-taking and entity reference.
+- IID CLM development seed 4000 completed 5,000,756 tokens. Truth and
+  clarification transferred well, while turn/entity retention failed. Seed
+  4001 stopped at 36,830 tokens due to the command window and has no endpoint.

@@ -273,6 +273,8 @@ class Curriculum:
         self.diagnostics: list[dict] = []
         self.skill_selections = defaultdict(int)
         self.review_selections = 0
+        self.review_opportunities = 0
+        self.frontier_probes = 0
         self.total_selections = 0
 
     def update_diagnostics(self, scores: dict[str, dict[str, float]], tokens: int):
@@ -292,8 +294,17 @@ class Curriculum:
     def sample(self, rng: random.Random, progress: float) -> str:
         if self.adaptive:
             eligible = self.eligible()
+            locked = [s for s in SKILLS if s not in eligible]
+            if locked and rng.random() < .05:
+                selected = rng.choice(locked)
+                self.frontier_probes += 1
+                self.skill_selections[selected] += 1
+                self.total_selections += 1
+                return selected
             review = [s for s in eligible if s in self.mastered]
             learning = [s for s in eligible if s not in self.mastered]
+            if review:
+                self.review_opportunities += 1
             if review and rng.random() < .20:
                 selected = rng.choice(review)
                 self.review_selections += 1
@@ -318,6 +329,8 @@ class Curriculum:
             "streak": dict(self.streak), "diagnostics": self.diagnostics,
             "skill_selections": dict(self.skill_selections),
             "review_selections": self.review_selections,
+            "review_opportunities": self.review_opportunities,
+            "frontier_probes": self.frontier_probes,
             "total_selections": self.total_selections,
         }
 
@@ -327,6 +340,8 @@ class Curriculum:
         self.diagnostics = state["diagnostics"]
         self.skill_selections = defaultdict(int, state["skill_selections"])
         self.review_selections = state["review_selections"]
+        self.review_opportunities = state.get("review_opportunities", 0)
+        self.frontier_probes = state.get("frontier_probes", 0)
         self.total_selections = state["total_selections"]
 
 

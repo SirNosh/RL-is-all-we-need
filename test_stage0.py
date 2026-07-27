@@ -34,6 +34,16 @@ class StageZeroTests(unittest.TestCase):
         self.assertIn("entity", curriculum.eligible())
         self.assertNotIn("property", curriculum.eligible())
 
+    def test_frontier_probes_do_not_unlock_skills(self):
+        curriculum = Curriculum(True)
+        rng = __import__("random").Random(12)
+        for _ in range(2000):
+            curriculum.sample(rng, 0)
+        self.assertGreater(curriculum.frontier_probes, 0)
+        self.assertEqual(set(), curriculum.mastered)
+        self.assertEqual(["turn"], curriculum.eligible())
+        self.assertEqual(set(SKILLS), set(curriculum.skill_selections))
+
     def test_evaluation_names_absent_from_training_families(self):
         evaluation_names = {"Asha", "Bram", "Inez", "Keon", "Yuki", "Zuri"}
         training = " ".join(make_situation(skill, seed, family).prompt

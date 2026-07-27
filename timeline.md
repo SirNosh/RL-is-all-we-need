@@ -112,3 +112,12 @@
 - Primary turn accuracy was 50% before and after withholding, but normalized
   accuracy was 0% at both points. Recorded the nominal retention ratio of 1.0
   while treating it as scoring-rule-sensitive rather than robust retention.
+- Ordered CLM seed 4002 completed at 5,000,103 tokens, completing the
+  three-seed ordered condition.
+- Paired ordered-minus-IID primary far differences averaged 0 pp turn, +15.1
+  truth, −0.8 entity, +2.9 property, −6.8 count, and +36.7 clarification.
+  Under length normalization the clarification difference was 0 for all seeds.
+- Treated improved truth judgment as the only reasonably consistent first
+  cross-condition signal. Property/count contrasts varied by seed, entity
+  stayed near chance, and retention remained uninterpretable because the held
+  skills were not robustly acquired before withholding.

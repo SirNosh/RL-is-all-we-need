@@ -272,8 +272,8 @@ rollouts. Its retention baseline was recorded at 4,500,511 tokens.
 The clarification difference disappears under length normalization because
 both paired models then select the long canonical reply on every far item.
 Turn and entity were below chance at the ordered pre-holdout baseline, so this
-seed does not estimate forgetting. One paired seed does not support a
-condition-level ordering; ordered seeds 4001 and 4002 remain.
+seed does not estimate forgetting. One paired seed alone did not support a
+condition-level ordering.
 
 Ordered CLM seed 4001 completed 5,002,787 tokens. Primary far accuracy was
 50.0% turn, 78.1% truth, 21.9% entity, 54.7% property, 14.1% counting, and
@@ -284,5 +284,36 @@ difference is again zero under length normalization.
 Primary turn accuracy was 50% both before and after withholding, which yields a
 retention ratio of 1.0 relative to 25% chance. However, length-normalized turn
 accuracy was 0% at both checkpoints, so this apparent retention is not robust
-to the prespecified secondary scoring rule. Ordered seed 4002 remains before a
-condition summary.
+to the prespecified secondary scoring rule.
+
+Ordered CLM seed 4002 completed 5,000,103 tokens. Primary far accuracy was 0%
+turn, 86.7% truth, 15.6% entity, 75.8% property, 18.8% counting, and 100%
+clarification. Its length-normalized values differed only for entity (17.2%).
+
+The three-seed ordered condition and paired comparison are:
+
+| Skill | Ordered primary far mean ± SD | Ordered − IID paired mean ± SD |
+|---|---:|---:|
+| Turn-taking | 16.7% ± 28.9% | 0.0 ± 0.0 pp |
+| Truth judgment | 81.0% ± 5.0% | +15.1 ± 17.1 pp |
+| Entity reference | 19.8% ± 3.6% | −0.8 ± 5.1 pp |
+| Property binding | 58.6% ± 15.6% | +2.9 ± 23.1 pp |
+| Counting | 18.5% ± 4.3% | −6.8 ± 17.2 pp |
+| Clarification | 83.3% ± 28.9% | +36.7 ± 77.7 pp |
+
+Under length normalization, the paired clarification difference is exactly
+zero for every seed. The normalized paired means for turn, truth, entity,
+property, count, and clarify are 0, +15.1, +1.8, +2.9, −6.8, and 0 percentage
+points, respectively.
+
+The first valid cross-condition development signal is therefore narrow:
+ordered CLM improves truth judgment by about 15 points on average. The property
+and counting contrasts are inconsistent across seeds, entity is near chance in
+both conditions, and conventional replies are scoring-sensitive. With three
+development seeds these are directional estimates, not confirmatory
+statistics.
+
+Ordered pre-holdout accuracy averaged 16.7% primary/0% normalized for turn and
+15.4% primary/13.5% normalized for entity. The condition again lacks robust
+above-chance acquisition of the retained skills, so it does not provide a
+meaningful forgetting estimate.

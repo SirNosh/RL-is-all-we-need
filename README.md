@@ -78,4 +78,4 @@ one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
 All three ordered CLM seeds are also complete. The caregiver-RL conditions
-remain.
+remain; fixed caregiver RL seed 4000 is complete.

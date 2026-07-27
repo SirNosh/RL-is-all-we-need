@@ -121,3 +121,17 @@
   cross-condition signal. Property/count contrasts varied by seed, entity
   stayed near chance, and retention remained uninterpretable because the held
   skills were not robustly acquired before withholding.
+- Fixed caregiver RL seed 4000 completed at 5,019,278 tokens across 298 PPO
+  rollouts and three bounded sessions. Far accuracy was turn 100%, truth 78.1%,
+  entity 13.3%, property 49.2%, count 23.4%, and clarification 0%.
+- Turn remained 100% before and after a 489,573-token holdout under both
+  scoring rules, the first robust retention observation for a prespecified
+  skill. Entity was near chance and did not support a forgetting estimate.
+- Corrected the RL resource forecast after entity-stage PPO peaked near 10 GB
+  allocated and essentially filled the 12 GB card. Reserved subsequent
+  caregiver-RL sessions exclusively up to 11 GB physical VRAM rather than
+  changing frozen minibatching mid-comparison.
+- The fixed run completed without numerical/CUDA failure, but target-KL early
+  stopping fired on 187/298 rollouts and the maximum rollout-mean KL was 0.284;
+  retained this as a monitoring item rather than recalibrating after endpoints
+  had begun.

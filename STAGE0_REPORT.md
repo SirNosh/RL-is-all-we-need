@@ -317,3 +317,34 @@ Ordered pre-holdout accuracy averaged 16.7% primary/0% normalized for turn and
 15.4% primary/13.5% normalized for entity. The condition again lacks robust
 above-chance acquisition of the retained skills, so it does not provide a
 meaningful forgetting estimate.
+
+## Fixed caregiver RL progress
+
+Fixed caregiver RL seed 4000 completed 5,019,278 visible tokens across 298 PPO
+rollouts and three bounded sessions.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 100.0% | 100.0% | 100.0% |
+| Truth judgment | 100.0% | 78.1% | 78.1% |
+| Entity reference | 15.6% | 13.3% | 18.8% |
+| Property binding | 39.1% | 49.2% | 49.2% |
+| Counting | 72.7% | 23.4% | 23.4% |
+| Clarification | 0.0% | 0.0% | 0.0% |
+
+Compared with paired IID seed 4000, primary far differences were +100, 0,
+−4.7, −13.3, +2.3, and −100 percentage points. Compared with ordered seed
+4000 they were +100, 0, −8.6, +3.9, +0.8, and −50 points. A single paired seed
+does not identify a condition effect.
+
+Turn-taking was 100% before and after the final 489,573-token holdout under
+both scoring rules, yielding a retention ratio of 1.0. Entity reference fell
+from 18.8% to 14.1% primary accuracy and was not meaningfully above chance at
+the baseline. This is the first robust retention observation for one of the
+prespecified skills, but it is one seed.
+
+The run executed 48,728 retries and exposed all six skills. Rollout-mean KL
+averaged 0.0225, while 187 of 298 rollouts triggered target-KL early stopping;
+the largest rollout mean was 0.284. No NaN, OOM, or CUDA failure occurred.
+Entity-stage PPO peaked near 10.0 GB allocated VRAM and required exclusive use
+of the 12 GB card. Fixed seeds 4001 and 4002 remain.

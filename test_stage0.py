@@ -2,6 +2,7 @@ import tempfile
 import unittest
 from argparse import Namespace
 from pathlib import Path
+from unittest.mock import patch
 
 import torch
 
@@ -65,13 +66,15 @@ class StageZeroTests(unittest.TestCase):
         tok_path = ROOT / "artifacts" / "stage0_tokenizer.model"
         tok = Tokenizer(tok_path)
         base = dict(
-            budget=10**9, seeds=[41], conditions=["fixed_caregiver_rl"],
+            budget=10**9, seeds=[40, 41, 42],
+            conditions=["iid_clm", "fixed_caregiver_rl"],
             rollout_dialogues=8, clm_rollout_tokens=16_384,
             diagnostic_interval=100_000,
             diagnostic_items=2, overfit_test=False, overfit_rollouts=1,
             hybrid_clm_weight=.3, layers=1, hidden=32, device="cpu",
             policy_lr=1e-4, target_kl=.03, resume=None,
             retention_tokens=500_000, retention_skills=["turn", "entity"],
+            session_seconds=None,
         )
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -79,12 +82,17 @@ class StageZeroTests(unittest.TestCase):
             run_condition("fixed_caregiver_rl", 41, 10**9, tok, tok_path,
                           torch.device("cpu"), continuous_args, root / "continuous")
             split_args = Namespace(**base, max_rollouts=1)
-            run_condition("fixed_caregiver_rl", 41, 10**9, tok, tok_path,
-                          torch.device("cpu"), split_args, root / "split")
-            resume_args = Namespace(**base, max_rollouts=2)
-            run_condition("fixed_caregiver_rl", 41, 10**9, tok, tok_path,
-                          torch.device("cpu"), resume_args, root / "split",
-                          root / "split" / "latest.pt")
+            with patch("experiment._code_commit", return_value="before-doc-commit"):
+                run_condition("fixed_caregiver_rl", 41, 10**9, tok, tok_path,
+                              torch.device("cpu"), split_args, root / "split")
+            resumed_base = base | {
+                "seeds": [41], "conditions": ["fixed_caregiver_rl"],
+            }
+            resume_args = Namespace(**resumed_base, max_rollouts=2)
+            with patch("experiment._code_commit", return_value="after-doc-commit"):
+                run_condition("fixed_caregiver_rl", 41, 10**9, tok, tok_path,
+                              torch.device("cpu"), resume_args, root / "split",
+                              root / "split" / "latest.pt")
             continuous = torch.load(root / "continuous" / "latest.pt",
                                     map_location="cpu", weights_only=False)
             resumed = torch.load(root / "split" / "latest.pt",
@@ -94,6 +102,88 @@ class StageZeroTests(unittest.TestCase):
             self.assertEqual(continuous["curriculum"], resumed["curriculum"])
             self.assertEqual(continuous["visible_tokens"], resumed["visible_tokens"])
             self.assertEqual(continuous["rollout"], resumed["rollout"])
+
+    def test_scientific_configuration_and_file_changes_block_resume(self):
+        tok_path = ROOT / "artifacts" / "stage0_tokenizer.model"
+        tok = Tokenizer(tok_path)
+        base = dict(
+            budget=10**9, seeds=[51], conditions=["fixed_caregiver_rl"],
+            rollout_dialogues=4, clm_rollout_tokens=16_384,
+            diagnostic_interval=100_000, diagnostic_items=1,
+            overfit_test=False, overfit_rollouts=1, hybrid_clm_weight=.3,
+            layers=1, hidden=32, device="cpu", policy_lr=3e-5,
+            target_kl=.03, resume=None, retention_tokens=500_000,
+            retention_skills=["turn", "entity"], session_seconds=None,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            args = Namespace(**base, max_rollouts=1)
+            run_condition("fixed_caregiver_rl", 51, 10**9, tok, tok_path,
+                          torch.device("cpu"), args, root)
+            changed_lr = Namespace(**(base | {"policy_lr": 1e-4}), max_rollouts=2)
+            with self.assertRaisesRegex(ValueError, "Configuration differs"):
+                run_condition("fixed_caregiver_rl", 51, 10**9, tok, tok_path,
+                              torch.device("cpu"), changed_lr, root,
+                              root / "latest.pt")
+            hashes = torch.load(root / "latest.pt", map_location="cpu",
+                                weights_only=False)["scientific_file_hashes"]
+            for filename in ("experiment.py", "legacy_pilot.py"):
+                changed = hashes | {filename: "changed"}
+                with self.subTest(filename=filename), \
+                        patch("experiment._scientific_hashes", return_value=changed), \
+                        self.assertRaisesRegex(ValueError, "Scientific files differ"):
+                    run_condition("fixed_caregiver_rl", 51, 10**9, tok, tok_path,
+                                  torch.device("cpu"), Namespace(**base, max_rollouts=2),
+                                  root, root / "latest.pt")
+
+    def test_session_limit_exits_at_rollout_boundary(self):
+        tok_path = ROOT / "artifacts" / "stage0_tokenizer.model"
+        tok = Tokenizer(tok_path)
+        args = Namespace(
+            budget=10**9, seeds=[61], conditions=["fixed_caregiver_rl"],
+            rollout_dialogues=4, clm_rollout_tokens=16_384,
+            diagnostic_interval=100_000, diagnostic_items=1,
+            overfit_test=False, overfit_rollouts=1, hybrid_clm_weight=.3,
+            layers=1, hidden=32, device="cpu", policy_lr=3e-5,
+            target_kl=.03, resume=None, retention_tokens=500_000,
+            retention_skills=["turn", "entity"], session_seconds=0,
+            max_rollouts=None,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = run_condition(
+                "fixed_caregiver_rl", 61, 10**9, tok, tok_path,
+                torch.device("cpu"), args, root)
+            self.assertFalse(result["completed"])
+            self.assertEqual(1, result["rollouts"])
+            trace = __import__("json").loads(
+                (root / "trace.json").read_text(encoding="utf-8"))
+            self.assertEqual("session_limit_reached", trace["termination_reason"])
+
+    def test_retention_records_pre_and_post_with_distinct_seeds(self):
+        tok_path = ROOT / "artifacts" / "stage0_tokenizer.model"
+        tok = Tokenizer(tok_path)
+        args = Namespace(
+            budget=100, seeds=[71], conditions=["iid_clm"],
+            rollout_dialogues=4, clm_rollout_tokens=1,
+            diagnostic_interval=100_000, diagnostic_items=2,
+            overfit_test=False, overfit_rollouts=1, hybrid_clm_weight=.3,
+            layers=1, hidden=32, device="cpu", policy_lr=3e-5,
+            target_kl=.03, resume=None, retention_tokens=50,
+            retention_skills=["turn", "entity"], session_seconds=None,
+            max_rollouts=None,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = run_condition(
+                "iid_clm", 71, args.budget, tok, tok_path,
+                torch.device("cpu"), args, root)
+            self.assertTrue(result["completed"])
+            self.assertGreaterEqual(result["retention_start_visible"], 50)
+            self.assertTrue((root / "retention_start.pt").exists())
+            self.assertEqual({"turn", "entity"}, set(result["retention_pre"]))
+            self.assertEqual({"turn", "entity"}, set(result["retention_post"]))
+            self.assertIsNotNone(result["retention_summary"])
 
     def test_withheld_skills_are_not_sampled(self):
         curriculum = Curriculum(True)

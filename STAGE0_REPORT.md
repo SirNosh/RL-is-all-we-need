@@ -1,7 +1,7 @@
 # Stage-0 engineering report
 
 Date: 2026-07-26  
-Status: optimizer gate passed; scientific matrix not started
+Status: mechanism gates passed; corrected development matrix pending
 
 ## PPO overfit gate
 
@@ -109,7 +109,8 @@ adaptive caregiver RL, and adaptive hybrid.
 
 ## Development study progress
 
-IID CLM seed 4000 is the first completed 5M-token development endpoint:
+IID CLM seed 4000 produced the first completed 5M-token development-v1
+endpoint:
 
 | Skill | Independent | Far family |
 |---|---:|---:|
@@ -120,7 +121,20 @@ IID CLM seed 4000 is the first completed 5M-token development endpoint:
 | Counting | 47.7% | 21.1% |
 | Clarification | 100.0% | 100.0% |
 
-After the final 500,756-token holdout, retention was 0% for turn-taking and
-18.0% for entity reference. This is one development seed, not a condition
-comparison. Seed 4001 stopped at 36,830 tokens when the command window expired
-and has no endpoint; seed 4002 has not started.
+After a 500,756-token interval without direct turn-taking or entity-reference
+examples, final far-family accuracy was 0% and 18.0%, respectively. Because v1
+did not evaluate immediately before withholding, these are post-holdout scores,
+not measured forgetting. This is one development seed, not a condition
+comparison.
+
+The v1 endpoint is preserved as `development_v1_pre_retention_baseline`. Seed
+4001 stopped at 36,830 tokens and is preserved as
+`interrupted_unresumable_under_v1`: its checkpoint hashes the outer matrix
+lists, requires the old Git SHA, and predates scientific-file hashes. Seed 4002
+did not start.
+
+The corrected protocol uses per-run resume identity, executable-file hashes, a
+pre-holdout baseline and dedicated checkpoint, distinct post-holdout seeds,
+candidate-length diagnostics, and graceful rollout-boundary session exits.
+Development seeds 4000–4002 will restart from scratch under the corrected
+frozen commit.

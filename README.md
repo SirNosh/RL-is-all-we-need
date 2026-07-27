@@ -42,25 +42,33 @@ python experiment.py --overfit-test
 
 ## Stage-0 matrix
 
-The bounded 500k mechanism gate passed on engineering seed 3201. The frozen
-three-seed development list is `4000`, `4001`, and `4002`:
+The bounded 500k mechanism gate passed on engineering seed 3201. Run one
+seed-condition pair per command, with graceful session limits:
 
 ```powershell
-python experiment.py --budget 5000000 --seeds 4000 4001 4002 --policy-lr 3e-5 --target-kl 0.03
+python experiment.py --budget 5000000 --seeds 4000 --conditions iid_clm --session-seconds 1000
 ```
 
 Runs save `results/runs/<run>/latest.pt` and atomically update `trace.json`
-after every rollout. Resume one condition and seed with the identical config:
+after every rollout. A session-limit exit is clean and resumable:
 
 ```powershell
-python experiment.py --budget 500000 --seeds 3201 --conditions adaptive_caregiver_rl --policy-lr 3e-5 --target-kl 0.03 --resume results/runs/<run>/latest.pt
+python experiment.py --budget 5000000 --seeds 4000 --conditions iid_clm --session-seconds 1000 --resume results/runs/<run>/latest.pt
 ```
+
+Resume identity is based on the seed-condition scientific configuration,
+tokenizer, executable experiment/model files, and pinned requirements. Outer
+matrix lists, output paths, session controls, and documentation-only commits do
+not invalidate a checkpoint.
 
 Seeds 1000–1002 were inspected during the legacy pilot and are excluded from
 the new confirmatory study. Development also excludes overfit seed 731,
 interrupted seed 3000, calibration seeds 3100–3102, and engineering seeds
 3200–3201.
 
-For 5M-token runs, `turn` and `entity` are withheld from training during the
-final 500,000 tokens and evaluated from hidden families as a prespecified
-retention check.
+For 5M-token runs, hidden far-family performance on `turn` and `entity` is
+recorded at the first batch/rollout boundary after 4.5M tokens. A dedicated
+`retention_start.pt` is saved, the two skills are withheld, and post-holdout
+performance is evaluated on different seeds. Traces also record raw and
+length-normalized accuracy, candidate token lengths and selections, and policy
+entropy.

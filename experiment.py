@@ -14,7 +14,7 @@ import os
 import random
 import subprocess
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -355,27 +355,57 @@ class Curriculum:
 
 
 @torch.no_grad()
-def accuracy(model, tok, device, skill: str, families: tuple[int, ...],
-             count: int, seeds: list[int] | None = None):
-    model.eval(); hits = total = 0
+def evaluation(model, tok, device, skill: str, families: tuple[int, ...],
+               count: int, seeds: list[int] | None = None):
+    model.eval(); hits = normalized_hits = total = 0
+    selections = Counter()
+    length_counts = Counter()
+    entropies = []
     seeds = seeds or list(range(800_000, 800_000 + count))
     situations = [make_situation(skill, seed, families[i % len(families)]) for i, seed in enumerate(seeds)]
     for start in range(0, len(situations), 64):
         batch = situations[start:start + 64]
         contexts = ["Caregiver: " + s.prompt + "\nChild:" for s in batch]
         scores, _ = _candidate_scores(model, tok, contexts, [s.candidates for s in batch], device)
+        lengths = torch.tensor(
+            [[len(tok.encode(" " + candidate)) + 1 for candidate in s.candidates]
+             for s in batch], device=device)
         pred = scores.argmax(-1).cpu().tolist()
+        normalized_pred = (scores / lengths).argmax(-1).cpu().tolist()
         hits += sum(p == s.answer for p, s in zip(pred, batch)); total += len(batch)
+        normalized_hits += sum(p == s.answer for p, s in zip(normalized_pred, batch))
+        entropies.extend(torch.distributions.Categorical(logits=scores).entropy().cpu().tolist())
+        for p, situation, candidate_lengths in zip(pred, batch, lengths.cpu().tolist()):
+            selections[situation.candidates[p]] += 1
+            length_counts.update(candidate_lengths)
     model.train()
-    return hits / total
+    return {
+        "accuracy": hits / total,
+        "length_normalized_accuracy": normalized_hits / total,
+        "mean_policy_entropy": float(np.mean(entropies)),
+        "candidate_selection_counts": dict(selections),
+        "candidate_token_length_counts": {str(k): v for k, v in sorted(length_counts.items())},
+    }
+
+
+def accuracy(model, tok, device, skill: str, families: tuple[int, ...],
+             count: int, seeds: list[int] | None = None):
+    return evaluation(model, tok, device, skill, families, count, seeds)["accuracy"]
 
 
 @torch.no_grad()
 def diagnostics(model, tok, device, count=128):
-    return {skill: {
-        "independent": accuracy(model, tok, device, skill, (4, 5), count),
-        "far": accuracy(model, tok, device, skill, (6, 7), count),
-    } for skill in SKILLS}
+    result = {}
+    for skill in SKILLS:
+        independent = evaluation(model, tok, device, skill, (4, 5), count)
+        far = evaluation(model, tok, device, skill, (6, 7), count)
+        result[skill] = {
+            "independent": independent.pop("accuracy"),
+            "far": far.pop("accuracy"),
+            "independent_details": independent,
+            "far_details": far,
+        }
+    return result
 
 
 def collect_rollout(model, tok, device, curriculum, rng, dialogues, progress,
@@ -545,13 +575,34 @@ def _file_hash(path: Path) -> str:
     return _sha256_bytes(path.read_bytes())
 
 
-def _config_dict(args):
-    excluded = {"resume", "max_rollouts", "overfit_test", "overfit_rollouts"}
-    return {k: v for k, v in vars(args).items() if k not in excluded}
+SCIENTIFIC_FILES = ("experiment.py", "legacy_pilot.py", "requirements.txt")
+
+def _config_dict(args, condition: str, seed: int):
+    return {
+        "condition": condition,
+        "seed": seed,
+        "budget": args.budget,
+        "rollout_dialogues": args.rollout_dialogues,
+        "clm_rollout_tokens": args.clm_rollout_tokens,
+        "diagnostic_interval": args.diagnostic_interval,
+        "diagnostic_items": args.diagnostic_items,
+        "hybrid_clm_weight": args.hybrid_clm_weight,
+        "policy_lr": args.policy_lr,
+        "target_kl": args.target_kl,
+        "retention_tokens": args.retention_tokens,
+        "retention_skills": args.retention_skills,
+        "layers": args.layers,
+        "hidden": args.hidden,
+    }
 
 
-def _config_hash(args) -> str:
-    return _sha256_bytes(json.dumps(_config_dict(args), sort_keys=True).encode())
+def _config_hash(args, condition: str, seed: int) -> str:
+    return _sha256_bytes(json.dumps(
+        _config_dict(args, condition, seed), sort_keys=True).encode())
+
+
+def _scientific_hashes() -> dict[str, str]:
+    return {name: _file_hash(ROOT / name) for name in SCIENTIFIC_FILES}
 
 
 def _code_commit() -> str:
@@ -591,8 +642,9 @@ def save_checkpoint(path: Path, model, optimizer, scheduler, visible, rollout,
         "seed": seed,
         "tokenizer_hash": _file_hash(tok_path),
         "code_commit": _code_commit(),
-        "configuration": _config_dict(args),
-        "configuration_hash": _config_hash(args),
+        "scientific_file_hashes": _scientific_hashes(),
+        "configuration": _config_dict(args, condition, seed),
+        "configuration_hash": _config_hash(args, condition, seed),
     }
     temp = path.with_suffix(path.suffix + ".tmp")
     torch.save(payload, temp)
@@ -600,14 +652,14 @@ def save_checkpoint(path: Path, model, optimizer, scheduler, visible, rollout,
 
 
 def load_checkpoint(path: Path, model, optimizer, scheduler, curriculum, rng,
-                    tok_path: Path, args):
+                    tok_path: Path, args, condition: str, seed: int):
     payload = torch.load(path, map_location="cpu", weights_only=False)
     if payload["tokenizer_hash"] != _file_hash(tok_path):
         raise ValueError("Tokenizer hash differs from checkpoint")
-    if payload["configuration_hash"] != _config_hash(args):
+    if payload["configuration_hash"] != _config_hash(args, condition, seed):
         raise ValueError("Configuration differs from checkpoint")
-    if payload["code_commit"] != _code_commit():
-        raise ValueError("Code commit differs from checkpoint")
+    if payload.get("scientific_file_hashes") != _scientific_hashes():
+        raise ValueError("Scientific files differ from checkpoint")
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     scheduler.load_state_dict(payload["lr_scheduler"])
@@ -650,31 +702,53 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
     trace_path = run_dir / "trace.json"
     checkpoint_path = run_dir / "latest.pt"
     trace = json.loads(trace_path.read_text(encoding="utf-8")) if trace_path.exists() else {
-        "condition": condition, "seed": seed, "config": _config_dict(args),
-        "configuration_hash": _config_hash(args), "events": [], "termination_reason": "running",
+        "condition": condition, "seed": seed, "config": _config_dict(args, condition, seed),
+        "configuration_hash": _config_hash(args, condition, seed),
+        "scientific_file_hashes": _scientific_hashes(),
+        "initial_policy_diagnostics": diagnostics(model, tok, device, args.diagnostic_items),
+        "events": [], "termination_reason": "running",
     }
     visible = 0; rollout = 0
     if resume_path:
         payload = load_checkpoint(resume_path, model, optimizer, scheduler,
-                                  curriculum, rng, tok_path, args)
+                                  curriculum, rng, tok_path, args, condition, seed)
         if payload["condition"] != condition or payload["seed"] != seed:
             raise ValueError("Resume condition or seed differs from checkpoint")
         visible, rollout = payload["visible_tokens"], payload["rollout"]
     next_diagnostic = ((visible // args.diagnostic_interval) + 1) * args.diagnostic_interval
     retention_start = budget - args.retention_tokens if budget > args.retention_tokens else None
+    retention_pre = trace.get("retention_pre")
+    retention_start_visible = trace.get("retention_start_visible")
     started = time.perf_counter()
+
+    def begin_retention():
+        nonlocal retention_pre, retention_start_visible
+        if (retention_start is None or visible < retention_start
+                or retention_pre is not None):
+            return
+        retention_start_visible = visible
+        retention_pre = {
+            skill: evaluation(
+                model, tok, device, skill, (6, 7), args.diagnostic_items,
+                list(range(900_000, 900_000 + args.diagnostic_items)))
+            for skill in args.retention_skills
+        }
+        trace["retention_pre"] = retention_pre
+        trace["retention_start_visible"] = retention_start_visible
+        _atomic_json(trace_path, trace)
+        save_checkpoint(run_dir / "retention_start.pt", model, optimizer,
+                        scheduler, visible, rollout, curriculum, rng,
+                        condition, seed, tok_path, args)
+        curriculum.set_withheld(args.retention_skills)
+
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats()
     while visible < budget and (args.max_rollouts is None or rollout < args.max_rollouts):
         progress = visible / budget
-        if retention_start is not None and visible >= retention_start and not curriculum.withheld_skills:
-            curriculum.set_withheld(args.retention_skills)
         step_started = time.perf_counter(); collection_metrics = {}
         if condition in ("iid_clm", "ordered_clm", "adaptive_clm"):
             used = 0; losses = []; optimizer_batches = 0
             while used < args.clm_rollout_tokens and visible < budget:
-                if retention_start is not None and visible >= retention_start and not curriculum.withheld_skills:
-                    curriculum.set_withheld(args.retention_skills)
                 situations = []
                 for _ in range(64):
                     available = [s for s in SKILLS if s not in curriculum.withheld_skills]
@@ -683,6 +757,7 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
                 loss, batch_used = clm_update(model, tok, device, situations, optimizer)
                 visible += batch_used; used += batch_used; optimizer_batches += 1
                 losses.append(loss); scheduler.step()
+                begin_retention()
             training_metrics = {
                 "clm_loss": float(np.mean(losses)),
                 "optimizer_batches": optimizer_batches,
@@ -703,6 +778,7 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
                                                   args.hybrid_clm_weight)
                 visible += clm_tokens; training_metrics["environment_clm_loss"] = clm_loss
             scheduler.step()
+            begin_retention()
         rollout += 1
         diagnostic_metrics = None
         if adaptive and visible >= next_diagnostic:
@@ -730,18 +806,59 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
                         rollout, curriculum, rng, condition, seed, tok_path, args)
         _atomic_json(trace_path, trace)
         print(f"  rollout={rollout} tokens={visible} tok/s={event['tokens_per_second']:.1f}", flush=True)
+        if args.session_seconds is not None and time.perf_counter() - started >= args.session_seconds:
+            break
     completed = visible >= budget
-    trace["termination_reason"] = "budget_complete" if completed else "max_rollouts_reached"
+    session_limited = (not completed and args.session_seconds is not None
+                       and time.perf_counter() - started >= args.session_seconds)
+    trace["termination_reason"] = (
+        "budget_complete" if completed else
+        "session_limit_reached" if session_limited else
+        "max_rollouts_reached")
     _atomic_json(trace_path, trace)
     final = diagnostics(model, tok, device, args.diagnostic_items) if completed else None
+    retention_post = None
+    retention_summary = None
+    if completed and retention_pre is not None:
+        retention_post = {
+            skill: evaluation(
+                model, tok, device, skill, (6, 7), args.diagnostic_items,
+                list(range(910_000, 910_000 + args.diagnostic_items)))
+            for skill in args.retention_skills
+        }
+        retention_summary = {}
+        for skill in args.retention_skills:
+            pre = retention_pre[skill]["accuracy"]
+            post = retention_post[skill]["accuracy"]
+            chance = 1 / len(make_situation(skill, 0, 6).candidates)
+            retention_summary[skill] = {
+                "absolute_retention": post,
+                "retention_drop": pre - post,
+                "chance": chance,
+                "retention_ratio": (
+                    (post - chance) / (pre - chance)
+                    if pre >= chance + .05 else None),
+            }
+    trace["termination_reason"] = (
+        "budget_complete" if completed else
+        "session_limit_reached" if session_limited else
+        "max_rollouts_reached")
+    trace["final_diagnostics"] = final
+    trace["retention_post"] = retention_post
+    trace["retention_summary"] = retention_summary
+    _atomic_json(trace_path, trace)
     return {"condition": condition, "seed": seed, "visible_tokens": visible,
             "rollouts": rollout, "completed": completed,
+            "termination_reason": trace["termination_reason"],
             "wall_seconds_this_session": time.perf_counter() - started,
             "diagnostics": final,
-            "retention": ({s: final[s]["far"] for s in args.retention_skills}
-                          if completed and retention_start is not None else None),
-            "retention_interval_tokens": (visible - retention_start
-                                          if completed and retention_start is not None else None),
+            "retention_pre": retention_pre,
+            "retention_post": retention_post,
+            "retention_summary": retention_summary,
+            "retention_start_visible": retention_start_visible,
+            "retention_interval_tokens": (
+                visible - retention_start_visible
+                if completed and retention_start_visible is not None else None),
             "curriculum": curriculum.state_dict(),
             "checkpoint": str(checkpoint_path), "trace": str(trace_path)}
 
@@ -758,13 +875,14 @@ def main():
     p.add_argument("--overfit-test", action="store_true")
     p.add_argument("--overfit-rollouts", type=int, default=30)
     p.add_argument("--hybrid-clm-weight", type=float, choices=(.1, .3, 1.0), default=.3)
-    p.add_argument("--policy-lr", type=float, default=1e-4,
+    p.add_argument("--policy-lr", type=float, default=3e-5,
                    help="Development-only PPO policy learning rate; freeze after calibration")
     p.add_argument("--target-kl", type=float, default=.03)
     p.add_argument("--retention-tokens", type=int, default=500_000)
     p.add_argument("--retention-skills", nargs="+", choices=SKILLS,
                    default=["turn", "entity"])
     p.add_argument("--max-rollouts", type=int)
+    p.add_argument("--session-seconds", type=float)
     p.add_argument("--resume", type=Path)
     p.add_argument("--layers", type=int, default=8)
     p.add_argument("--hidden", type=int, default=288)

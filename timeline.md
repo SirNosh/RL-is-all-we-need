@@ -47,5 +47,19 @@
 - Froze development seeds 4000, 4001, and 4002, and added a final 500k-token
   retention holdout for turn-taking and entity reference.
 - IID CLM development seed 4000 completed 5,000,756 tokens. Truth and
-  clarification transferred well, while turn/entity retention failed. Seed
-  4001 stopped at 36,830 tokens due to the command window and has no endpoint.
+  clarification transferred well, while final post-holdout turn/entity scores
+  were weak. Because no pre-holdout baseline was recorded, this does not
+  measure forgetting. Seed 4001 stopped at 36,830 tokens and has no endpoint.
+- Paused the remaining matrix after review identified two protocol defects:
+  matrix-level configuration hashing made single-run resume invalid, and the
+  retention result lacked a pre-holdout baseline.
+- Replaced Git-SHA resume validation with hashes of the tokenizer, executable
+  experiment/model files, pinned requirements, and an explicit per-run
+  scientific configuration. Session controls and outer matrix lists are
+  deliberately excluded.
+- Added pre/post retention evaluation on distinct seed bands, a dedicated
+  retention-start checkpoint, actual holdout-start token logging, graceful
+  session exits, the frozen 3e-5 PPO default, and candidate length/prior
+  diagnostics without changing the primary summed-log-probability rule.
+- Preserved v1 seed 4000 as `development_v1_pre_retention_baseline` and the
+  36,830-token seed 4001 checkpoint as `interrupted_unresumable_under_v1`.

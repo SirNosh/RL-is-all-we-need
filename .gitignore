@@ -14,6 +14,7 @@ results/*
 !results/stage0-20260726-205259.json
 !results/stage0-20260726-210155.json
 !results/stage0-20260726-211916.json
+!results/development_v1_manifest.json
 !results/runs/
 results/runs/*
 !results/runs/stage0-20260726-205259-adaptive_caregiver_rl-3200/

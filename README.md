@@ -73,6 +73,6 @@ performance is evaluated on different seeds. Traces also record raw and
 length-normalized accuracy, candidate token lengths and selections, and policy
 entropy.
 
-Corrected IID CLM development seeds 4000 and 4001 have completed. These are
-acquisition endpoints for one condition, not a condition comparison. See
-`STAGE0_REPORT.md` and the raw result JSON files under `results/`.
+All three corrected IID CLM development seeds have completed. These summarize
+one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
+the raw result JSON files under `results/`.

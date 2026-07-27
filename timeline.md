@@ -87,3 +87,15 @@
   than changing the metric after observing the endpoint.
 - Turn/entity were again not meaningfully above chance before withholding, so
   the second corrected run also provides no estimate of forgetting.
+- Corrected IID CLM seed 4002 completed at 5,002,094 tokens after recording its
+  retention baseline at 4,502,446. Primary far accuracy was turn 0%, truth
+  53.1%, entity 21.9%, property 47.7%, count 14.1%, and clarification 0%.
+  Clarification was again 100% under length normalization.
+- Completed the corrected three-seed IID condition. Mean primary far accuracy
+  was turn 16.7%, truth 65.9%, entity 20.6%, property 55.7%, count 25.3%, and
+  clarification 46.6%. The normalized means were 0%, 65.9%, 17.2%, 55.7%,
+  25.3%, and 100%, respectively.
+- Concluded only that IID CLM shows heterogeneous acquisition: truth/property
+  transfer, near-chance entity reference, poor far counting relative to
+  independent items, and severe candidate-length sensitivity for the two
+  conventional replies. Cross-condition evidence still does not exist.

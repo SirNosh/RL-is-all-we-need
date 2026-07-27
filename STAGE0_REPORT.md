@@ -210,3 +210,47 @@ Across the first two corrected IID seeds, truth and property transfer are the
 most consistent positive signals. Entity reference remains near chance.
 Counting and the two length-sensitive conventions vary substantially. A third
 IID seed is still required before the frozen condition summary.
+
+## Corrected IID CLM seed 4002 and condition summary
+
+Seed 4002 completed 5,002,094 visible tokens across 271 logical rollouts. Its
+retention baseline was recorded at 4,502,446 tokens.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 0.0% | 0.0% | 0.0% |
+| Truth judgment | 50.8% | 53.1% | 53.1% |
+| Entity reference | 13.3% | 21.9% | 14.1% |
+| Property binding | 53.1% | 47.7% | 47.7% |
+| Counting | 45.3% | 14.1% | 14.1% |
+| Clarification | 50.0% | 0.0% | 100.0% |
+
+Primary retention scores changed from 0% to 0% for turn-taking and from 19.5%
+to 22.7% for entity reference. Length-normalized entity scores changed from
+25.0% to 15.6%. As in the other IID seeds, the held-out skills did not show
+robust above-chance acquisition at the retention boundary.
+
+All three corrected IID seeds are now complete:
+
+| Skill | Primary far mean ± sample SD | Length-normalized far mean ± sample SD |
+|---|---:|---:|
+| Turn-taking | 16.7% ± 28.9% | 0.0% ± 0.0% |
+| Truth judgment | 65.9% ± 12.5% | 65.9% ± 12.5% |
+| Entity reference | 20.6% ± 2.3% | 17.2% ± 2.7% |
+| Property binding | 55.7% ± 7.5% | 55.7% ± 7.5% |
+| Counting | 25.3% ± 13.8% | 25.3% ± 13.8% |
+| Clarification | 46.6% ± 50.3% | 100.0% ± 0.0% |
+
+The three-seed IID result supports strong transfer for property binding and
+moderate transfer for truth judgment. Entity reference remains close to its
+16.7% chance level. Counting falls from 54.7% mean independent accuracy to
+25.3% far accuracy, consistent with substantial wording/family dependence.
+Turn-taking fails under length normalization. Clarification is wholly
+scoring-rule-sensitive: the normalized rule always selects its long canonical
+reply, while the frozen primary rule is highly variable.
+
+Pre-holdout primary accuracy averaged 0% for turn-taking and 15.4% for entity
+reference. Because neither retained skill was acquired robustly above chance,
+the IID condition does not provide a meaningful forgetting estimate. This is a
+completed within-condition development summary, not evidence for or against a
+caregiver-RL advantage.

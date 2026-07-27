@@ -70,6 +70,7 @@ class StageZeroTests(unittest.TestCase):
             diagnostic_items=2, overfit_test=False, overfit_rollouts=1,
             hybrid_clm_weight=.3, layers=1, hidden=32, device="cpu",
             policy_lr=1e-4, target_kl=.03, resume=None,
+            retention_tokens=500_000, retention_skills=["turn", "entity"],
         )
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -92,6 +93,14 @@ class StageZeroTests(unittest.TestCase):
             self.assertEqual(continuous["curriculum"], resumed["curriculum"])
             self.assertEqual(continuous["visible_tokens"], resumed["visible_tokens"])
             self.assertEqual(continuous["rollout"], resumed["rollout"])
+
+    def test_withheld_skills_are_not_sampled(self):
+        curriculum = Curriculum(True)
+        curriculum.set_withheld(["turn", "entity"])
+        rng = __import__("random").Random(5)
+        sampled = [curriculum.sample(rng, 0) for _ in range(500)]
+        self.assertNotIn("turn", sampled)
+        self.assertNotIn("entity", sampled)
 
 
 if __name__ == "__main__":

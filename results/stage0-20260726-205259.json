@@ -1,0 +1,86 @@
+{
+  "config": {
+    "budget": 500000,
+    "seeds": [
+      3200
+    ],
+    "conditions": [
+      "adaptive_caregiver_rl"
+    ],
+    "rollout_dialogues": 512,
+    "diagnostic_interval": 100000,
+    "diagnostic_items": 128,
+    "overfit_test": false,
+    "overfit_rollouts": 30,
+    "hybrid_clm_weight": 0.3,
+    "policy_lr": 3e-05,
+    "target_kl": 0.03,
+    "max_rollouts": 10,
+    "resume": null,
+    "layers": 8,
+    "hidden": 288,
+    "device": "cuda"
+  },
+  "results": [
+    {
+      "condition": "adaptive_caregiver_rl",
+      "seed": 3200,
+      "visible_tokens": 108568,
+      "rollouts": 10,
+      "completed": false,
+      "wall_seconds_this_session": 70.28935919993091,
+      "diagnostics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 5120
+        },
+        "review_selections": 0,
+        "total_selections": 5120
+      },
+      "checkpoint": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-205259-adaptive_caregiver_rl-3200\\latest.pt",
+      "trace": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-205259-adaptive_caregiver_rl-3200\\trace.json"
+    }
+  ]
+}

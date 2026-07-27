@@ -276,6 +276,7 @@ class Curriculum:
         self.review_opportunities = 0
         self.frontier_probes = 0
         self.total_selections = 0
+        self.withheld_skills: set[str] = set()
 
     def update_diagnostics(self, scores: dict[str, dict[str, float]], tokens: int):
         for skill in SKILLS:
@@ -287,14 +288,19 @@ class Curriculum:
 
     def eligible(self):
         if not self.adaptive:
-            return list(SKILLS)
+            return [s for s in SKILLS if s not in self.withheld_skills]
         result = [s for s in SKILLS if all(p in self.mastered for p in PREREQUISITES[s])]
-        return result or ["turn"]
+        result = [s for s in result if s not in self.withheld_skills]
+        available = [s for s in SKILLS if s not in self.withheld_skills]
+        return result or available[:1]
+
+    def set_withheld(self, skills):
+        self.withheld_skills = set(skills)
 
     def sample(self, rng: random.Random, progress: float) -> str:
         if self.adaptive:
             eligible = self.eligible()
-            locked = [s for s in SKILLS if s not in eligible]
+            locked = [s for s in SKILLS if s not in eligible and s not in self.withheld_skills]
             if locked and rng.random() < .05:
                 selected = rng.choice(locked)
                 self.frontier_probes += 1
@@ -313,12 +319,13 @@ class Curriculum:
             self.skill_selections[selected] += 1
             self.total_selections += 1
             return selected
-        current = min(len(SKILLS) - 1, int(progress * len(SKILLS)))
+        available = self.eligible()
+        current = min(len(available) - 1, int(progress * len(available)))
         if current and rng.random() < .20:
-            selected = rng.choice(SKILLS[:current])
+            selected = rng.choice(available[:current])
             self.review_selections += 1
         else:
-            selected = SKILLS[current]
+            selected = available[current]
         self.skill_selections[selected] += 1
         self.total_selections += 1
         return selected
@@ -331,6 +338,7 @@ class Curriculum:
             "review_selections": self.review_selections,
             "review_opportunities": self.review_opportunities,
             "frontier_probes": self.frontier_probes,
+            "withheld_skills": sorted(self.withheld_skills),
             "total_selections": self.total_selections,
         }
 
@@ -342,6 +350,7 @@ class Curriculum:
         self.review_selections = state["review_selections"]
         self.review_opportunities = state.get("review_opportunities", 0)
         self.frontier_probes = state.get("frontier_probes", 0)
+        self.withheld_skills = set(state.get("withheld_skills", []))
         self.total_selections = state["total_selections"]
 
 
@@ -652,16 +661,20 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
             raise ValueError("Resume condition or seed differs from checkpoint")
         visible, rollout = payload["visible_tokens"], payload["rollout"]
     next_diagnostic = ((visible // args.diagnostic_interval) + 1) * args.diagnostic_interval
+    retention_start = budget - args.retention_tokens if budget > args.retention_tokens else None
     started = time.perf_counter()
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats()
     while visible < budget and (args.max_rollouts is None or rollout < args.max_rollouts):
         progress = visible / budget
+        if retention_start is not None and visible >= retention_start and not curriculum.withheld_skills:
+            curriculum.set_withheld(args.retention_skills)
         step_started = time.perf_counter(); collection_metrics = {}
         if condition in ("iid_clm", "ordered_clm", "adaptive_clm"):
             situations = []
             for _ in range(64):
-                skill = rng.choice(SKILLS) if condition == "iid_clm" else curriculum.sample(rng, progress)
+                available = [s for s in SKILLS if s not in curriculum.withheld_skills]
+                skill = rng.choice(available) if condition == "iid_clm" else curriculum.sample(rng, progress)
                 situations.append(make_situation(skill, rng.randrange(1 << 30), rng.randrange(4)))
             loss, used = clm_update(model, tok, device, situations, optimizer)
             visible += used; training_metrics = {"clm_loss": loss}
@@ -714,7 +727,12 @@ def run_condition(condition, seed, budget, tok, tok_path, device, args,
     return {"condition": condition, "seed": seed, "visible_tokens": visible,
             "rollouts": rollout, "completed": completed,
             "wall_seconds_this_session": time.perf_counter() - started,
-            "diagnostics": final, "curriculum": curriculum.state_dict(),
+            "diagnostics": final,
+            "retention": ({s: final[s]["far"] for s in args.retention_skills}
+                          if completed and retention_start is not None else None),
+            "retention_interval_tokens": (visible - retention_start
+                                          if completed and retention_start is not None else None),
+            "curriculum": curriculum.state_dict(),
             "checkpoint": str(checkpoint_path), "trace": str(trace_path)}
 
 
@@ -732,6 +750,9 @@ def main():
     p.add_argument("--policy-lr", type=float, default=1e-4,
                    help="Development-only PPO policy learning rate; freeze after calibration")
     p.add_argument("--target-kl", type=float, default=.03)
+    p.add_argument("--retention-tokens", type=int, default=500_000)
+    p.add_argument("--retention-skills", nargs="+", choices=SKILLS,
+                   default=["turn", "entity"])
     p.add_argument("--max-rollouts", type=int)
     p.add_argument("--resume", type=Path)
     p.add_argument("--layers", type=int, default=8)

@@ -31,3 +31,18 @@
 - The mandatory 1,000-situation entity-reference overfit gate passed at 98.5
   percent after seven 512-dialogue rollouts. This licenses bounded development
   testing, not a confirmatory scientific claim.
+- Added atomic rollout-boundary checkpoints and traces. A CPU continuous versus
+  split run produced bit-identical parameters and curriculum state.
+- Resource calibration reduced peak allocated VRAM from roughly 11.8 GB to
+  5.7 GB by lowering candidate-scoring chunk size.
+- Calibration exposed excessive PPO drift. Froze a development setting of
+  3e-5 policy learning rate with a 0.03 target-KL safeguard; the overfit gate
+  re-passed at 95.5 percent after 68 rollouts.
+- Engineering seed 3200 completed 516,170 tokens with successful CUDA resume
+  but failed coverage: only turn, truth, and entity were sampled. Added a
+  logged 5 percent frontier-probe allocation without relaxing mastery status.
+- Engineering seed 3201 passed the mechanism-operation gate at 506,795 tokens:
+  all six skills were exposed, retries and five diagnostics executed, review
+  was 19.4 percent of opportunities, and no numerical/CUDA failure occurred.
+- Froze development seeds 4000, 4001, and 4002, and added a final 500k-token
+  retention holdout for turn-taking and entity reference.

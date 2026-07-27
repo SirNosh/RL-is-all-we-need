@@ -72,3 +72,7 @@ recorded at the first batch/rollout boundary after 4.5M tokens. A dedicated
 performance is evaluated on different seeds. Traces also record raw and
 length-normalized accuracy, candidate token lengths and selections, and policy
 entropy.
+
+Corrected IID CLM development seed 4000 completed at 5,000,756 tokens. It is a
+single acquisition endpoint, not a condition comparison. See
+`STAGE0_REPORT.md` and `results/stage0-20260726-222800.json`.

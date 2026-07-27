@@ -63,3 +63,18 @@
   diagnostics without changing the primary summed-log-probability rule.
 - Preserved v1 seed 4000 as `development_v1_pre_retention_baseline` and the
   36,830-token seed 4001 checkpoint as `interrupted_unresumable_under_v1`.
+- Published the corrected protocol as commit `87c5773` on draft PR #1; all 13
+  CPU tests passed.
+- An initial corrected-run launcher accidentally selected CPU-only PyTorch and
+  was stopped after 55,784 tokens. A second launcher lacked SentencePiece and
+  exited before training. Both were invalidated; the scientific run restarted
+  from zero under the verified Miniconda CUDA environment.
+- Corrected IID CLM seed 4000 completed at 5,000,756 tokens after one clean
+  session-limit resume. The retention baseline occurred at 4,501,006 tokens.
+  Turn was 0% before and after withholding; entity was 9.375% before and
+  16.406% after. Neither pre-score exceeded chance, so this measures weak
+  acquisition rather than forgetting.
+- The final corrected acquisition endpoint matches the v1 headline pattern:
+  truth 78.1%, property 62.5%, and clarification 100% far accuracy; turn 0%,
+  entity 18.0%, and counting 21.1%. Length-normalized scoring changed only
+  entity far accuracy, from 18.0% to 18.8%.

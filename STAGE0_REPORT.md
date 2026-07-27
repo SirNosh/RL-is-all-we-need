@@ -136,5 +136,45 @@ did not start.
 The corrected protocol uses per-run resume identity, executable-file hashes, a
 pre-holdout baseline and dedicated checkpoint, distinct post-holdout seeds,
 candidate-length diagnostics, and graceful rollout-boundary session exits.
-Development seeds 4000–4002 will restart from scratch under the corrected
-frozen commit.
+Development seeds 4000–4002 restart from scratch under corrected frozen commit
+`87c5773`.
+
+## Corrected IID CLM seed 4000
+
+The corrected run completed 5,000,756 visible tokens across 271 logical
+rollouts. A 1,000-second session stopped cleanly at 4,227,010 tokens and resumed
+to the identical run directory. The retention baseline was recorded at
+4,501,006 tokens, with 499,750 subsequent tokens withholding `turn` and
+`entity`.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 0.0% | 0.0% | 0.0% |
+| Truth judgment | 71.9% | 78.1% | 78.1% |
+| Entity reference | 14.1% | 18.0% | 18.8% |
+| Property binding | 50.0% | 62.5% | 62.5% |
+| Counting | 47.7% | 21.1% | 21.1% |
+| Clarification | 100.0% | 100.0% | 100.0% |
+
+| Retention skill | Pre-holdout far | Post-holdout far | Pre − post |
+|---|---:|---:|---:|
+| Turn-taking | 0.0% | 0.0% | 0.0 pp |
+| Entity reference | 9.4% | 16.4% | −7.0 pp |
+
+Chance is 25% for turn-taking and 16.7% for entity reference. Neither
+pre-holdout score was meaningfully above chance, so no retention ratio is
+reported and this run provides no evidence of forgetting: the two held-out
+skills had not been acquired at the retention boundary.
+
+Length normalization leaves the endpoint almost unchanged. The extreme
+turn/clarification scores are also not explained by a universal short-response
+preference: the final policy selected the longer canonical clarification reply
+on all 128 far items, while selecting the wrong `please tell me` reply on all
+turn items. Candidate selection and entropy details are preserved in the raw
+trace.
+
+The accurate single-seed conclusion is heterogeneous acquisition. IID CLM
+learned truth judgment, property binding, and the fixed clarification
+convention; counting transferred poorly from independent to far families;
+turn-taking and entity reference remained weak. No comparison among training
+conditions exists.

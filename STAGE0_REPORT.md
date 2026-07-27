@@ -254,3 +254,23 @@ reference. Because neither retained skill was acquired robustly above chance,
 the IID condition does not provide a meaningful forgetting estimate. This is a
 completed within-condition development summary, not evidence for or against a
 caregiver-RL advantage.
+
+## Ordered CLM progress
+
+Ordered CLM seed 4000 completed 5,002,265 visible tokens across 277 logical
+rollouts. Its retention baseline was recorded at 4,500,511 tokens.
+
+| Skill | Independent | Far | Length-normalized far | Paired primary far minus IID |
+|---|---:|---:|---:|---:|
+| Turn-taking | 0.0% | 0.0% | 0.0% | 0.0 pp |
+| Truth judgment | 71.9% | 78.1% | 78.1% | 0.0 pp |
+| Entity reference | 13.3% | 21.9% | 18.0% | +3.9 pp |
+| Property binding | 33.6% | 45.3% | 45.3% | −17.2 pp |
+| Counting | 24.2% | 22.7% | 22.7% | +1.6 pp |
+| Clarification | 0.0% | 50.0% | 100.0% | −50.0 pp |
+
+The clarification difference disappears under length normalization because
+both paired models then select the long canonical reply on every far item.
+Turn and entity were below chance at the ordered pre-holdout baseline, so this
+seed does not estimate forgetting. One paired seed does not support a
+condition-level ordering; ordered seeds 4001 and 4002 remain.

@@ -99,3 +99,9 @@
   transfer, near-chance entity reference, poor far counting relative to
   independent items, and severe candidate-length sensitivity for the two
   conventional replies. Cross-condition evidence still does not exist.
+- Ordered CLM seed 4000 completed at 5,002,265 tokens. Relative to paired IID
+  seed 4000, primary far differences were 0 pp turn, 0 pp truth, +3.9 pp
+  entity, −17.2 pp property, +1.6 pp count, and −50 pp clarification.
+- The paired clarification gap vanishes under length normalization (both
+  100%), reinforcing that candidate scoring must accompany all condition
+  comparisons. Deferred any condition verdict until ordered seeds 4001–4002.

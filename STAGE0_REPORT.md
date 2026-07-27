@@ -178,3 +178,35 @@ learned truth judgment, property binding, and the fixed clarification
 convention; counting transferred poorly from independent to far families;
 turn-taking and entity reference remained weak. No comparison among training
 conditions exists.
+
+## Corrected IID CLM seed 4001
+
+Seed 4001 completed 5,002,499 visible tokens across 271 logical rollouts,
+including one clean session-limit resume. Its retention baseline was recorded
+at 4,501,471 tokens.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 100.0% | 50.0% | 0.0% |
+| Truth judgment | 85.2% | 66.4% | 66.4% |
+| Entity reference | 14.1% | 21.9% | 18.8% |
+| Property binding | 32.0% | 57.0% | 57.0% |
+| Counting | 71.1% | 40.6% | 40.6% |
+| Clarification | 50.0% | 39.8% | 100.0% |
+
+Primary retention scores changed from 0% to 50% for turn-taking and from 17.2%
+to 22.7% for entity reference. The corresponding length-normalized scores
+changed from 0% to 0% and from 16.4% to 17.2%. Neither pre-holdout score was
+meaningfully above chance, so this again does not estimate forgetting.
+
+This seed demonstrates material candidate-length sensitivity. Under the frozen
+summed-log-probability rule, the turn policy selected `ready` for half of far
+items, while the secondary normalized rule selected the longer wrong reply.
+For clarification, the summed rule selected the long correct reply on 51 of
+128 items, whereas normalization selected it on all 128. The primary metric is
+not changed after observing this result; both views must be reported.
+
+Across the first two corrected IID seeds, truth and property transfer are the
+most consistent positive signals. Entity reference remains near chance.
+Counting and the two length-sensitive conventions vary substantially. A third
+IID seed is still required before the frozen condition summary.

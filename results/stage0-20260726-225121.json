@@ -1,0 +1,306 @@
+{
+  "config": {
+    "budget": 5000000,
+    "seeds": [
+      4001
+    ],
+    "conditions": [
+      "iid_clm"
+    ],
+    "rollout_dialogues": 512,
+    "clm_rollout_tokens": 16384,
+    "diagnostic_interval": 100000,
+    "diagnostic_items": 128,
+    "overfit_test": false,
+    "overfit_rollouts": 30,
+    "hybrid_clm_weight": 0.3,
+    "policy_lr": 3e-05,
+    "target_kl": 0.03,
+    "retention_tokens": 500000,
+    "retention_skills": [
+      "turn",
+      "entity"
+    ],
+    "max_rollouts": null,
+    "session_seconds": 1000.0,
+    "resume": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-223344-iid_clm-4001\\latest.pt",
+    "layers": 8,
+    "hidden": 288,
+    "device": "cuda"
+  },
+  "results": [
+    {
+      "condition": "iid_clm",
+      "seed": 4001,
+      "visible_tokens": 5002499,
+      "rollouts": 271,
+      "completed": true,
+      "termination_reason": "budget_complete",
+      "wall_seconds_this_session": 141.75036350009032,
+      "diagnostics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 0.5,
+          "independent_details": {
+            "length_normalized_accuracy": 0.0,
+            "mean_policy_entropy": 0.07135371211916208,
+            "candidate_selection_counts": {
+              "ready": 128
+            },
+            "candidate_token_length_counts": {
+              "2": 256,
+              "3": 128,
+              "4": 128
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.0,
+            "mean_policy_entropy": 0.8751282095909119,
+            "candidate_selection_counts": {
+              "ready": 64,
+              "please tell me": 64
+            },
+            "candidate_token_length_counts": {
+              "2": 256,
+              "3": 128,
+              "4": 128
+            }
+          }
+        },
+        "truth": {
+          "independent": 0.8515625,
+          "far": 0.6640625,
+          "independent_details": {
+            "length_normalized_accuracy": 0.8515625,
+            "mean_policy_entropy": 0.5331520126401301,
+            "candidate_selection_counts": {
+              "yes": 46,
+              "no": 82
+            },
+            "candidate_token_length_counts": {
+              "2": 256
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.6640625,
+            "mean_policy_entropy": 0.42403758858677065,
+            "candidate_selection_counts": {
+              "yes": 81,
+              "no": 47
+            },
+            "candidate_token_length_counts": {
+              "2": 256
+            }
+          }
+        },
+        "entity": {
+          "independent": 0.140625,
+          "far": 0.21875,
+          "independent_details": {
+            "length_normalized_accuracy": 0.15625,
+            "mean_policy_entropy": 0.5960551184944052,
+            "candidate_selection_counts": {
+              "Asha": 126,
+              "Keon": 2
+            },
+            "candidate_token_length_counts": {
+              "3": 256,
+              "4": 512
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.1875,
+            "mean_policy_entropy": 0.6791385170072317,
+            "candidate_selection_counts": {
+              "Asha": 128
+            },
+            "candidate_token_length_counts": {
+              "3": 256,
+              "4": 512
+            }
+          }
+        },
+        "property": {
+          "independent": 0.3203125,
+          "far": 0.5703125,
+          "independent_details": {
+            "length_normalized_accuracy": 0.3203125,
+            "mean_policy_entropy": 0.3215261247532908,
+            "candidate_selection_counts": {
+              "stone": 35,
+              "tile": 49,
+              "leaf": 9,
+              "shell": 35
+            },
+            "candidate_token_length_counts": {
+              "2": 512
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.5703125,
+            "mean_policy_entropy": 0.6043202488217503,
+            "candidate_selection_counts": {
+              "leaf": 47,
+              "shell": 47,
+              "tile": 34
+            },
+            "candidate_token_length_counts": {
+              "2": 512
+            }
+          }
+        },
+        "count": {
+          "independent": 0.7109375,
+          "far": 0.40625,
+          "independent_details": {
+            "length_normalized_accuracy": 0.7109375,
+            "mean_policy_entropy": 0.29513340965263524,
+            "candidate_selection_counts": {
+              "zero": 43,
+              "three": 25,
+              "five": 41,
+              "one": 9,
+              "four": 10
+            },
+            "candidate_token_length_counts": {
+              "2": 768
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.40625,
+            "mean_policy_entropy": 0.8009573186322996,
+            "candidate_selection_counts": {
+              "five": 14,
+              "zero": 26,
+              "one": 58,
+              "four": 10,
+              "three": 20
+            },
+            "candidate_token_length_counts": {
+              "2": 768
+            }
+          }
+        },
+        "clarify": {
+          "independent": 0.5,
+          "far": 0.3984375,
+          "independent_details": {
+            "length_normalized_accuracy": 1.0,
+            "mean_policy_entropy": 0.40163949131965637,
+            "candidate_selection_counts": {
+              "one": 64,
+              "please tell me the count": 64
+            },
+            "candidate_token_length_counts": {
+              "2": 384,
+              "6": 128
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 1.0,
+            "mean_policy_entropy": 0.5695758396759629,
+            "candidate_selection_counts": {
+              "please tell me the count": 51,
+              "one": 77
+            },
+            "candidate_token_length_counts": {
+              "2": 384,
+              "6": 128
+            }
+          }
+        }
+      },
+      "retention_pre": {
+        "turn": {
+          "accuracy": 0.0,
+          "length_normalized_accuracy": 0.0,
+          "mean_policy_entropy": 0.5379247586242855,
+          "candidate_selection_counts": {
+            "please tell me": 64,
+            "yes": 64
+          },
+          "candidate_token_length_counts": {
+            "2": 256,
+            "3": 128,
+            "4": 128
+          }
+        },
+        "entity": {
+          "accuracy": 0.171875,
+          "length_normalized_accuracy": 0.1640625,
+          "mean_policy_entropy": 0.6000458006747067,
+          "candidate_selection_counts": {
+            "Keon": 112,
+            "Asha": 16
+          },
+          "candidate_token_length_counts": {
+            "3": 256,
+            "4": 512
+          }
+        }
+      },
+      "retention_post": {
+        "turn": {
+          "accuracy": 0.5,
+          "length_normalized_accuracy": 0.0,
+          "mean_policy_entropy": 0.8751282095909119,
+          "candidate_selection_counts": {
+            "ready": 64,
+            "please tell me": 64
+          },
+          "candidate_token_length_counts": {
+            "2": 256,
+            "3": 128,
+            "4": 128
+          }
+        },
+        "entity": {
+          "accuracy": 0.2265625,
+          "length_normalized_accuracy": 0.171875,
+          "mean_policy_entropy": 0.6795617928728461,
+          "candidate_selection_counts": {
+            "Asha": 127,
+            "Keon": 1
+          },
+          "candidate_token_length_counts": {
+            "3": 256,
+            "4": 512
+          }
+        }
+      },
+      "retention_summary": {
+        "turn": {
+          "absolute_retention": 0.5,
+          "retention_drop": -0.5,
+          "chance": 0.25,
+          "retention_ratio": null
+        },
+        "entity": {
+          "absolute_retention": 0.2265625,
+          "retention_drop": -0.0546875,
+          "chance": 0.16666666666666666,
+          "retention_ratio": null
+        }
+      },
+      "retention_start_visible": 4501471,
+      "retention_interval_tokens": 501028,
+      "curriculum": {
+        "adaptive": false,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [],
+        "skill_selections": {},
+        "review_selections": 0,
+        "review_opportunities": 0,
+        "frontier_probes": 0,
+        "withheld_skills": [
+          "entity",
+          "turn"
+        ],
+        "total_selections": 0
+      },
+      "checkpoint": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-223344-iid_clm-4001\\latest.pt",
+      "trace": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-223344-iid_clm-4001\\trace.json"
+    }
+  ]
+}

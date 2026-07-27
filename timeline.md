@@ -78,3 +78,12 @@
   truth 78.1%, property 62.5%, and clarification 100% far accuracy; turn 0%,
   entity 18.0%, and counting 21.1%. Length-normalized scoring changed only
   entity far accuracy, from 18.0% to 18.8%.
+- Corrected IID CLM seed 4001 completed at 5,002,499 tokens after one clean
+  resume. Primary far accuracy was turn 50.0%, truth 66.4%, entity 21.9%,
+  property 57.0%, count 40.6%, and clarification 39.8%.
+- Seed 4001 exposed material scoring-rule sensitivity: length normalization
+  changed turn from 50% to 0% and clarification from 39.8% to 100%. Preserved
+  summed log probability as the frozen primary rule and reported both rather
+  than changing the metric after observing the endpoint.
+- Turn/entity were again not meaningfully above chance before withholding, so
+  the second corrected run also provides no estimate of forgetting.

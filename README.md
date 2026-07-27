@@ -1,48 +1,52 @@
-# Textual Developmental Pretraining
+# Stage-0 Textual Bootstrap Study
 
-This repository is a compact executable engineering pilot for the uploaded
-Experiment 1 protocol. It preserves the central controlled comparison:
+The active experiment asks whether a randomly initialized text model can learn
+six elementary communicative conventions from contingent textual caregiving.
 
-- the same random decoder architecture and tokenizer in every condition;
-- 36 competencies spanning language, mathematics, reasoning, science,
-  geography, and coding;
-- deterministic training and disjoint far-transfer surface forms;
-- IID, ordered, and adaptive CLM;
-- fixed and adaptive interactive RL;
-- adaptive hybrid training;
-- matched learner-visible token budgets and paired initialization seeds.
+The earlier 36-skill four-choice run is preserved in `legacy_pilot.py`,
+`REPORT.md`, and `results/20260726-193650.json`. It did not instantiate
+artificial childhood and is not evidence against that hypothesis.
 
-It intentionally does not claim that a short pilot is the locked confirmatory
-experiment. The uploaded protocol requires 60 runs of 50 million tokens plus
-retention and learning-to-learn branches. That is a substantial compute study,
-not a one-session run.
+The Stage-0 study covers:
 
-## Reproduce the executed pilot
+- turn-taking, yes/no judgment, entity reference, property binding, counting
+  0–5, and requesting missing information;
+- short textual replies rather than `<A>`–`<D>` actions;
+- multi-turn correction, demonstrations, retries, and spaced review;
+- tokenizer construction from training text only;
+- hidden diagnostics and independently authored transfer families;
+- clipped PPO using frozen rollout probabilities and two optimization epochs.
+
+`adaptive_clm` is available as an additional diagnostic-driven development
+control, but is not one of the five default confirmatory conditions.
+
+## Setup
 
 ```powershell
 python -m pip install -r requirements.txt
-python experiment.py --budget 500000 --seeds 1000 1001 1002
+python -m unittest -v
 ```
 
-Results are written incrementally to `results/`, so an interrupted run retains
-completed conditions.
+The reported legacy run used Python 3.12, PyTorch 2.6.0+cu124, NumPy 2.3.1,
+SentencePiece 0.2.0, and an RTX 4070 Super. NVIDIA users should install the
+PyTorch wheel appropriate to their CUDA runtime.
 
-The reported run used Python 3.12, PyTorch 2.6.0+cu124, NumPy 2.3.1,
-SentencePiece 0.2.0, and an RTX 4070 Super. Reviewers with an NVIDIA GPU should
-install the PyTorch wheel appropriate to their CUDA runtime before installing
-the remaining requirements.
+## Mandatory optimizer gate
 
-## Run the locked core training matrix
-
-The following launches the prescribed six conditions and ten paired seeds:
+Before scientific runs, PPO must reach 95% training accuracy on one skill and
+1,000 fixed situations:
 
 ```powershell
-python experiment.py --budget 50000000 --seeds 1000 1001 1002 1003 1004 1005 1006 1007 1008 1009
+python experiment.py --overfit-test
 ```
 
-The compact implementation is an engineering instrument, not yet the complete
-preregistered study: it uses deterministic multiple-choice responses to make
-RL bootstrap measurable, and it does not yet implement delayed retention,
-capstones, learning-to-learn branches, 100,000-sample generator validation, or
-the prescribed permutation analysis. Those omissions must be closed before
-results can support the scientific claim.
+## Stage-0 matrix
+
+Only after the optimizer gate passes:
+
+```powershell
+python experiment.py --budget 5000000 --seeds 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009
+```
+
+Seeds 1000–1002 were inspected during the legacy pilot and are excluded from
+the new confirmatory study.

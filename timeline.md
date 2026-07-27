@@ -19,3 +19,15 @@
   implementation failed the engineering-gate directionally and still lacks the
   complete caregiver/PPO mechanics. Scaling it would consume compute without
   producing a valid test of the locked hypothesis.
+- Accepted the external review's narrower verdict: the legacy run was a sparse
+  four-action contextual-bandit test, not an artificial-childhood experiment.
+- Replaced the active study with six Stage-0 competencies and eight independent
+  generator families, preserving the old source and raw result for audit.
+- Isolated the new tokenizer to training families; printable reserve strings
+  provide enough BPE merges without importing evaluation names or prompts.
+- Implemented short textual response candidates, contingent correction,
+  analogous retries, GAE, frozen rollout probabilities, two clipped PPO epochs,
+  diagnostic mastery gates, and 20 percent review.
+- The mandatory 1,000-situation entity-reference overfit gate passed at 98.5
+  percent after seven 512-dialogue rollouts. This licenses bounded development
+  testing, not a confirmatory scientific claim.

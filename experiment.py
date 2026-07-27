@@ -8,8 +8,11 @@ unconstrained byte-level production is a later ablation, not silently claimed.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import random
+import subprocess
 import time
 from collections import defaultdict
 from dataclasses import dataclass
@@ -24,6 +27,7 @@ import torch.nn.functional as F
 from legacy_pilot import Student
 
 ROOT = Path(__file__).resolve().parent
+SCORING_BATCH_SIZE = 32
 SKILLS = ("turn", "truth", "entity", "property", "count", "clarify")
 PREREQUISITES = {
     "turn": (), "truth": ("turn",), "entity": ("turn",),
@@ -200,10 +204,10 @@ def build_tokenizer(path: Path) -> None:
 def _candidate_scores(model, tok: Tokenizer, contexts: list[str],
                       candidate_lists: list[list[str]], device):
     """Differentiable log P(candidate + EOS | context), plus context value."""
-    if len(contexts) > 64:
-        chunks = [_candidate_scores(model, tok, contexts[i:i + 64],
-                                    candidate_lists[i:i + 64], device)
-                  for i in range(0, len(contexts), 64)]
+    if len(contexts) > SCORING_BATCH_SIZE:
+        chunks = [_candidate_scores(model, tok, contexts[i:i + SCORING_BATCH_SIZE],
+                                    candidate_lists[i:i + SCORING_BATCH_SIZE], device)
+                  for i in range(0, len(contexts), SCORING_BATCH_SIZE)]
         width = max(scores.size(1) for scores, _ in chunks)
         padded = [F.pad(scores, (0, width - scores.size(1)), value=-1e9)
                   for scores, _ in chunks]
@@ -267,6 +271,9 @@ class Curriculum:
         self.mastered: set[str] = set()
         self.streak = defaultdict(int)
         self.diagnostics: list[dict] = []
+        self.skill_selections = defaultdict(int)
+        self.review_selections = 0
+        self.total_selections = 0
 
     def update_diagnostics(self, scores: dict[str, dict[str, float]], tokens: int):
         for skill in SKILLS:
@@ -288,12 +295,39 @@ class Curriculum:
             review = [s for s in eligible if s in self.mastered]
             learning = [s for s in eligible if s not in self.mastered]
             if review and rng.random() < .20:
-                return rng.choice(review)
-            return rng.choice(learning or eligible)
+                selected = rng.choice(review)
+                self.review_selections += 1
+            else:
+                selected = rng.choice(learning or eligible)
+            self.skill_selections[selected] += 1
+            self.total_selections += 1
+            return selected
         current = min(len(SKILLS) - 1, int(progress * len(SKILLS)))
         if current and rng.random() < .20:
-            return rng.choice(SKILLS[:current])
-        return SKILLS[current]
+            selected = rng.choice(SKILLS[:current])
+            self.review_selections += 1
+        else:
+            selected = SKILLS[current]
+        self.skill_selections[selected] += 1
+        self.total_selections += 1
+        return selected
+
+    def state_dict(self):
+        return {
+            "adaptive": self.adaptive, "mastered": sorted(self.mastered),
+            "streak": dict(self.streak), "diagnostics": self.diagnostics,
+            "skill_selections": dict(self.skill_selections),
+            "review_selections": self.review_selections,
+            "total_selections": self.total_selections,
+        }
+
+    def load_state_dict(self, state):
+        self.mastered = set(state["mastered"])
+        self.streak = defaultdict(int, state["streak"])
+        self.diagnostics = state["diagnostics"]
+        self.skill_selections = defaultdict(int, state["skill_selections"])
+        self.review_selections = state["review_selections"]
+        self.total_selections = state["total_selections"]
 
 
 @torch.no_grad()
@@ -322,12 +356,14 @@ def diagnostics(model, tok, device, count=128):
 
 def collect_rollout(model, tok, device, curriculum, rng, dialogues, progress,
                     fixed_skill=None, fixed_seeds=None):
-    model.eval(); transitions: list[Transition] = []
-    situations = []
+    model.eval(); transitions: list[Transition] = []; started = time.perf_counter()
+    situations = []; dialogue_ids = []
     for i in range(dialogues):
         skill = fixed_skill or curriculum.sample(rng, progress)
         seed = fixed_seeds[i % len(fixed_seeds)] if fixed_seeds else rng.randrange(1 << 30)
-        situations.append(make_situation(skill, seed, rng.randrange(4)))
+        family = rng.randrange(4)
+        situations.append(make_situation(skill, seed, family))
+        dialogue_ids.append(f"{skill}:{seed}:{family}")
     active = list(range(dialogues))
     contexts = ["Caregiver: " + s.prompt + "\nChild:" for s in situations]
     visible = sum(len(tok.encode(c)) for c in contexts)
@@ -369,7 +405,26 @@ def collect_rollout(model, tok, device, curriculum, rng, dialogues, progress,
             t.advantage = gae; t.return_ = gae + t.old_value
             next_value = t.old_value
     model.train()
-    return transitions, visible
+    skill_rewards, skill_counts, action_counts = defaultdict(float), defaultdict(int), defaultdict(lambda: defaultdict(int))
+    first_attempts = [sequence[0] for sequence in by_dialogue.values()]
+    for t in transitions:
+        skill_rewards[t.skill] += t.reward
+        skill_counts[t.skill] += 1
+        action_counts[t.skill][t.candidates[t.action]] += 1
+    metrics = {
+        "collection_seconds": time.perf_counter() - started,
+        "dialogues": dialogues,
+        "transitions": len(transitions),
+        "retries": len(transitions) - dialogues,
+        "attempt1_accuracy": float(np.mean([t.reward > 0 for t in first_attempts])),
+        "eventual_success": float(np.mean([any(t.reward > 0 for t in sequence) for sequence in by_dialogue.values()])),
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {s: skill_rewards[s] / skill_counts[s] for s in skill_counts},
+        "transitions_by_skill": dict(skill_counts),
+        "candidate_distribution": {s: dict(counts) for s, counts in action_counts.items()},
+        "dialogue_ids_hash": _sha256_bytes("\n".join(dialogue_ids).encode()),
+    }
+    return transitions, visible, metrics
 
 
 def ppo_update(model, tok, device, transitions, optimizer, rng):
@@ -444,13 +499,95 @@ def make_model(tok, device, seed, layers=8, hidden=288, policy_lr=1e-4):
     return model, optimizer
 
 
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def _file_hash(path: Path) -> str:
+    return _sha256_bytes(path.read_bytes())
+
+
+def _config_dict(args):
+    excluded = {"resume", "max_rollouts", "overfit_test", "overfit_rollouts"}
+    return {k: v for k, v in vars(args).items() if k not in excluded}
+
+
+def _config_hash(args) -> str:
+    return _sha256_bytes(json.dumps(_config_dict(args), sort_keys=True).encode())
+
+
+def _code_commit() -> str:
+    try:
+        sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        dirty = subprocess.run(["git", "diff", "--quiet"], cwd=ROOT,
+                               stdout=subprocess.DEVNULL,
+                               stderr=subprocess.DEVNULL).returncode != 0
+        return sha + ("-dirty" if dirty else "")
+    except (OSError, subprocess.CalledProcessError):
+        return "unknown"
+
+
+def _atomic_json(path: Path, payload) -> None:
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    os.replace(temp, path)
+
+
+def save_checkpoint(path: Path, model, optimizer, scheduler, visible, rollout,
+                    curriculum, rng, condition, seed, tok_path, args):
+    payload = {
+        "model": model.state_dict(),
+        "optimizer": optimizer.state_dict(),
+        "lr_scheduler": scheduler.state_dict(),
+        "visible_tokens": visible,
+        "rollout": rollout,
+        "curriculum": curriculum.state_dict(),
+        "skill_selection_state": curriculum.state_dict(),
+        "diagnostic_history": curriculum.diagnostics,
+        "python_rng": random.getstate(),
+        "local_python_rng": rng.getstate(),
+        "numpy_rng": np.random.get_state(),
+        "torch_cpu_rng": torch.get_rng_state(),
+        "torch_cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+        "condition": condition,
+        "seed": seed,
+        "tokenizer_hash": _file_hash(tok_path),
+        "code_commit": _code_commit(),
+        "configuration": _config_dict(args),
+        "configuration_hash": _config_hash(args),
+    }
+    temp = path.with_suffix(path.suffix + ".tmp")
+    torch.save(payload, temp)
+    os.replace(temp, path)
+
+
+def load_checkpoint(path: Path, model, optimizer, scheduler, curriculum, rng,
+                    tok_path: Path, args):
+    payload = torch.load(path, map_location=next(model.parameters()).device, weights_only=False)
+    if payload["tokenizer_hash"] != _file_hash(tok_path):
+        raise ValueError("Tokenizer hash differs from checkpoint")
+    if payload["configuration_hash"] != _config_hash(args):
+        raise ValueError("Configuration differs from checkpoint")
+    model.load_state_dict(payload["model"])
+    optimizer.load_state_dict(payload["optimizer"])
+    scheduler.load_state_dict(payload["lr_scheduler"])
+    curriculum.load_state_dict(payload["curriculum"])
+    random.setstate(payload["python_rng"])
+    rng.setstate(payload["local_python_rng"])
+    np.random.set_state(payload["numpy_rng"])
+    torch.set_rng_state(payload["torch_cpu_rng"])
+    if payload["torch_cuda_rng"] is not None and torch.cuda.is_available():
+        torch.cuda.set_rng_state_all(payload["torch_cuda_rng"])
+    return payload
+
+
 def overfit_test(tok, device, args):
     model, optimizer = make_model(tok, device, 731, args.layers, args.hidden)
     rng = random.Random(731); curriculum = Curriculum(False)
     fixed = list(range(1000)); history = []
     for rollout in range(args.overfit_rollouts):
-        transitions, _ = collect_rollout(model, tok, device, curriculum, rng,
-                                          min(512, len(fixed)), 0, "entity", fixed)
+        transitions, _, _ = collect_rollout(model, tok, device, curriculum, rng,
+                                             min(512, len(fixed)), 0, "entity", fixed)
         metrics = ppo_update(model, tok, device, transitions, optimizer, rng)
         train_acc = accuracy(model, tok, device, "entity", (0, 1, 2, 3), 1000, fixed)
         history.append({"rollout": rollout + 1, "accuracy": train_acc, **metrics})
@@ -460,40 +597,91 @@ def overfit_test(tok, device, args):
     return {"passed": False, "accuracy": history[-1]["accuracy"], "history": history}
 
 
-def run_condition(condition, seed, budget, tok, device, args):
+def run_condition(condition, seed, budget, tok, tok_path, device, args,
+                  run_dir: Path, resume_path: Path | None = None):
     policy_lr = 3e-4 if condition in ("iid_clm", "ordered_clm", "adaptive_clm", "adaptive_hybrid") else 1e-4
     model, optimizer = make_model(tok, device, seed, args.layers, args.hidden, policy_lr)
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lambda _: 1.0)
     adaptive = condition in ("adaptive_caregiver_rl", "adaptive_hybrid", "adaptive_clm")
     curriculum = Curriculum(adaptive); rng = random.Random(seed + 19)
-    visible = 0; next_diagnostic = args.diagnostic_interval; logs = []; started = time.perf_counter()
-    while visible < budget:
+    run_dir.mkdir(parents=True, exist_ok=True)
+    trace_path = run_dir / "trace.json"
+    checkpoint_path = run_dir / "latest.pt"
+    trace = json.loads(trace_path.read_text(encoding="utf-8")) if trace_path.exists() else {
+        "condition": condition, "seed": seed, "config": _config_dict(args),
+        "configuration_hash": _config_hash(args), "events": [], "termination_reason": "running",
+    }
+    visible = 0; rollout = 0
+    if resume_path:
+        payload = load_checkpoint(resume_path, model, optimizer, scheduler,
+                                  curriculum, rng, tok_path, args)
+        if payload["condition"] != condition or payload["seed"] != seed:
+            raise ValueError("Resume condition or seed differs from checkpoint")
+        visible, rollout = payload["visible_tokens"], payload["rollout"]
+    next_diagnostic = ((visible // args.diagnostic_interval) + 1) * args.diagnostic_interval
+    started = time.perf_counter()
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats()
+    while visible < budget and (args.max_rollouts is None or rollout < args.max_rollouts):
         progress = visible / budget
+        step_started = time.perf_counter(); collection_metrics = {}
         if condition in ("iid_clm", "ordered_clm", "adaptive_clm"):
             situations = []
             for _ in range(64):
                 skill = rng.choice(SKILLS) if condition == "iid_clm" else curriculum.sample(rng, progress)
                 situations.append(make_situation(skill, rng.randrange(1 << 30), rng.randrange(4)))
             loss, used = clm_update(model, tok, device, situations, optimizer)
-            visible += used; logs.append({"clm_loss": loss})
+            visible += used; training_metrics = {"clm_loss": loss}
         else:
-            transitions, used = collect_rollout(model, tok, device, curriculum, rng,
-                                                args.rollout_dialogues, progress)
+            transitions, used, collection_metrics = collect_rollout(
+                model, tok, device, curriculum, rng, args.rollout_dialogues, progress)
+            update_started = time.perf_counter()
             metrics = ppo_update(model, tok, device, transitions, optimizer, rng)
-            visible += used; logs.append(metrics)
+            metrics["ppo_update_seconds"] = time.perf_counter() - update_started
+            visible += used; training_metrics = metrics
             if condition == "adaptive_hybrid":
                 env = [make_situation(rng.choice(SKILLS), rng.randrange(1 << 30), rng.randrange(4)) for _ in range(64)]
                 # Environment-only text: no canonical child answer is included.
                 texts = [Situation(s.skill, s.prompt + " " + s.explanation, [""], 0, "") for s in env]
                 clm_loss, clm_tokens = clm_update(model, tok, device, texts, optimizer,
                                                   args.hybrid_clm_weight)
-                visible += clm_tokens; logs[-1]["environment_clm_loss"] = clm_loss
+                visible += clm_tokens; training_metrics["environment_clm_loss"] = clm_loss
+        scheduler.step(); rollout += 1
+        diagnostic_metrics = None
         if adaptive and visible >= next_diagnostic:
-            curriculum.update_diagnostics(diagnostics(model, tok, device, args.diagnostic_items), visible)
+            diagnostic_metrics = diagnostics(model, tok, device, args.diagnostic_items)
+            curriculum.update_diagnostics(diagnostic_metrics, visible)
             next_diagnostic += args.diagnostic_interval
-    final = diagnostics(model, tok, device, args.diagnostic_items)
+        elapsed = time.perf_counter() - step_started
+        event = {
+            "rollout": rollout, "visible_tokens": visible,
+            "rollout_wall_seconds": elapsed,
+            "tokens_per_second": used / max(elapsed, 1e-9),
+            "training_metrics": training_metrics,
+            "collection_metrics": collection_metrics,
+            "diagnostic_metrics": diagnostic_metrics,
+            "curriculum": curriculum.state_dict(),
+            "gpu_peak_allocated_mb": torch.cuda.max_memory_allocated() / 2**20 if device.type == "cuda" else 0,
+            "gpu_peak_reserved_mb": torch.cuda.max_memory_reserved() / 2**20 if device.type == "cuda" else 0,
+        }
+        trace["events"].append(event)
+        trace["current_checkpoint"] = str(checkpoint_path)
+        trace["visible_tokens"] = visible
+        trace["wall_seconds_this_session"] = time.perf_counter() - started
+        trace["termination_reason"] = "running"
+        save_checkpoint(checkpoint_path, model, optimizer, scheduler, visible,
+                        rollout, curriculum, rng, condition, seed, tok_path, args)
+        _atomic_json(trace_path, trace)
+        print(f"  rollout={rollout} tokens={visible} tok/s={event['tokens_per_second']:.1f}", flush=True)
+    completed = visible >= budget
+    trace["termination_reason"] = "budget_complete" if completed else "max_rollouts_reached"
+    _atomic_json(trace_path, trace)
+    final = diagnostics(model, tok, device, args.diagnostic_items) if completed else None
     return {"condition": condition, "seed": seed, "visible_tokens": visible,
-            "wall_seconds": time.perf_counter() - started, "diagnostics": final,
-            "curriculum": curriculum.diagnostics, "last_optimizer_metrics": logs[-1]}
+            "rollouts": rollout, "completed": completed,
+            "wall_seconds_this_session": time.perf_counter() - started,
+            "diagnostics": final, "curriculum": curriculum.state_dict(),
+            "checkpoint": str(checkpoint_path), "trace": str(trace_path)}
 
 
 def main():
@@ -507,6 +695,8 @@ def main():
     p.add_argument("--overfit-test", action="store_true")
     p.add_argument("--overfit-rollouts", type=int, default=30)
     p.add_argument("--hybrid-clm-weight", type=float, choices=(.1, .3, 1.0), default=.3)
+    p.add_argument("--max-rollouts", type=int)
+    p.add_argument("--resume", type=Path)
     p.add_argument("--layers", type=int, default=8)
     p.add_argument("--hidden", type=int, default=288)
     p.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
@@ -522,11 +712,18 @@ def main():
         print(path)
         raise SystemExit(0 if result["passed"] else 2)
     results = []
+    if args.resume and (len(args.seeds) != 1 or len(args.conditions) != 1):
+        p.error("--resume requires exactly one seed and one condition")
     for seed in args.seeds:
         for condition in args.conditions:
             print(f"running {condition} seed={seed}", flush=True)
-            results.append(run_condition(condition, seed, args.budget, tok, device, args))
-            (out / f"{run_id}.json").write_text(json.dumps({"config": vars(args), "results": results}, indent=2), encoding="utf-8")
+            run_dir = args.resume.parent if args.resume else out / "runs" / f"{run_id}-{condition}-{seed}"
+            results.append(run_condition(condition, seed, args.budget, tok,
+                                         tokenizer_path, device, args, run_dir,
+                                         args.resume))
+            _atomic_json(out / f"{run_id}.json",
+                         {"config": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
+                          "results": results})
 
 
 if __name__ == "__main__":

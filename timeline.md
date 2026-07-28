@@ -246,3 +246,27 @@
   points. Adaptive scheduling therefore does not produce a broad advantage.
 - Audited seed 4002: 298/346 target-KL early stops, mean KL 0.0157, maximum
   KL 0.093, 23,582 retries, and no NaN/OOM/CUDA failure.
+
+## 2026-07-28 15:50 EDT
+
+- Committed and pushed the complete three-seed adaptive-caregiver condition at
+  commit `f41621f`, and updated draft PR #1 with the aggregate comparison.
+- After confirming the resource ledger and GPU were clear, started adaptive
+  hybrid seed 4000 with the frozen 0.3 CLM weight. This begins the fifth and
+  final Stage-0 condition; no protocol parameters were changed.
+- Hybrid seed 4000 session 1 ended cleanly at 2,104,666 tokens and 122
+  rollouts, with turn mastered. The hybrid progressed faster than the pure
+  adaptive-RL runs. Released, checked availability, and resumed unchanged.
+- Hybrid seed 4000 session 2 ended cleanly at 3,893,134 tokens and 238 total
+  rollouts, with turn still the only mastered skill. Released and reacquired
+  the clear GPU for the expected endpoint session.
+- Hybrid seed 4000 completed at 5,013,900 tokens and 308 rollouts. Primary far
+  accuracy was 100% turn, 78.1% truth, 10.9% entity, 48.4% property, 31.3%
+  count, and 50% clarification.
+- Length normalization reversed the conventional-reply results to 0% turn and
+  100% clarification. Primary turn stayed 100% across withholding, while
+  normalized turn fell from 100% to 0%; recorded this as scoring-sensitive,
+  not rule-invariant, retention.
+- Audited 308 finite rollouts: 257 target-KL early stops, mean KL 0.0224,
+  maximum KL 0.768, 15,349 retries, and no NaN/OOM/CUDA failure. The KL
+  excursion is the largest observed and remains an explicit warning.

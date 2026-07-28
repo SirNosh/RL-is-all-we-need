@@ -505,3 +505,39 @@ suite. Primary turn had no pre/post drop in any adaptive seed, but normalized
 turn dropped in seed 4002, so only primary retention is consistent across all
 three. Adaptive hybrid remains before the five-condition comparison is
 complete.
+
+## Adaptive hybrid progress
+
+Adaptive hybrid seed 4000 completed 5,013,900 visible tokens across 308
+rollouts and three bounded sessions, using the frozen 0.3 CLM auxiliary
+weight.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 50.0% | 100.0% | 0.0% |
+| Truth judgment | 100.0% | 78.1% | 78.1% |
+| Entity reference | 7.0% | 10.9% | 14.1% |
+| Property binding | 35.9% | 48.4% | 48.4% |
+| Counting | 25.8% | 31.3% | 31.3% |
+| Clarification | 0.0% | 50.0% | 100.0% |
+
+Compared with paired IID seed 4000, primary differences were +100, 0, âˆ’7.0,
+âˆ’14.1, +10.2, and âˆ’50 percentage points. Compared with adaptive caregiver
+seed 4000 they were 0, +11.7, âˆ’8.6, +4.7, +15.6, and +50 points. One seed
+does not identify a hybrid effect.
+
+The conventional-reply skills are strongly scoring-sensitive. Primary turn
+was 100% before and after withholding, but length-normalized turn fell from
+100% to 0%; final clarification moved oppositely from 50% primary to 100%
+normalized. The candidate policy therefore does not support a rule-invariant
+turn-retention claim for this seed. Entity fell from 20.3% to 14.8% primary
+and was not robustly acquired.
+
+The hybrid made 157,696 selections, including 25,529 reviews and 7,790
+frontier probes, and executed 15,349 retries. Target-KL early stopping fired on
+257/308 rollouts; mean rollout KL was 0.0224 and the maximum was 0.768. Peak
+allocated VRAM was 8,859.3 MiB. No value was non-finite and no OOM or CUDA
+failure occurred, but the KL maximum is the largest stability excursion so
+far and must remain visible in the interpretation.
+
+Adaptive hybrid seeds 4001â€“4002 remain.

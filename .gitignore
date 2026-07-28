@@ -27,6 +27,7 @@ results/*
 !results/stage0-20260728-125832.json
 !results/stage0-20260728-142636.json
 !results/stage0-20260728-152114.json
+!results/stage0-20260728-161445.json
 !results/runs/
 results/runs/*
 !results/runs/stage0-20260726-205259-adaptive_caregiver_rl-3200/
@@ -74,3 +75,6 @@ results/runs/stage0-20260728-131650-adaptive_caregiver_rl-4001/*
 !results/runs/stage0-20260728-142853-adaptive_caregiver_rl-4002/
 results/runs/stage0-20260728-142853-adaptive_caregiver_rl-4002/*
 !results/runs/stage0-20260728-142853-adaptive_caregiver_rl-4002/trace.json
+!results/runs/stage0-20260728-153956-adaptive_hybrid-4000/
+results/runs/stage0-20260728-153956-adaptive_hybrid-4000/*
+!results/runs/stage0-20260728-153956-adaptive_hybrid-4000/trace.json

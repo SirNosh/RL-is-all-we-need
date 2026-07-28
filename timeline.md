@@ -135,3 +135,13 @@
   stopping fired on 187/298 rollouts and the maximum rollout-mean KL was 0.284;
   retained this as a monitoring item rather than recalibrating after endpoints
   had begun.
+- Fixed caregiver RL seed 4001 completed at 5,040,652 tokens across 308 PPO
+  rollouts and four resumed sessions. Far accuracy was turn 100%, truth 78.1%,
+  entity 14.8%, property 49.2%, count 25.8%, and clarification 0% primary/100%
+  normalized.
+- Turn was again 100% before and after withholding under both scoring rules.
+  This reproduces the fixed-caregiver turn acquisition/retention signal in a
+  second seed, while entity and the other far skills do not show broad RL
+  superiority.
+- PPO remained finite but target-KL early stopping fired on 209/308 rollouts;
+  mean rollout KL was 0.0237 and the maximum was 0.314.

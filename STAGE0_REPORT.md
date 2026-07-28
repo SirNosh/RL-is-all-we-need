@@ -347,4 +347,23 @@ The run executed 48,728 retries and exposed all six skills. Rollout-mean KL
 averaged 0.0225, while 187 of 298 rollouts triggered target-KL early stopping;
 the largest rollout mean was 0.284. No NaN, OOM, or CUDA failure occurred.
 Entity-stage PPO peaked near 10.0 GB allocated VRAM and required exclusive use
-of the 12 GB card. Fixed seeds 4001 and 4002 remain.
+of the 12 GB card.
+
+Fixed caregiver RL seed 4001 completed 5,040,652 visible tokens across 308 PPO
+rollouts. Far accuracy was 100% turn, 78.1% truth, 14.8% entity, 49.2%
+property, 25.8% counting, and 0% clarification. Length normalization changed
+entity to 12.5% and clarification to 100%.
+
+Turn-taking was again 100% before and after withholding under both scoring
+rules, with retention ratio 1.0. Entity fell from 19.5% to 9.4% primary
+accuracy, but its baseline was not sufficiently above 16.7% chance for a ratio.
+
+Against paired IID seed 4001, primary differences were +50.0 turn, +11.7
+truth, −7.0 entity, −7.8 property, −14.8 count, and −39.8 clarification
+percentage points. Under length normalization the clarification difference is
+zero. This second seed supports a fixed-caregiver advantage specifically for
+turn acquisition/retention, not a general performance advantage.
+
+The run executed 44,950 retries. Target-KL early stopping fired on 209 of 308
+rollouts; mean rollout KL was 0.0237 and the maximum was 0.314. No NaN, OOM, or
+CUDA failure occurred. Fixed seed 4002 remains.

@@ -565,3 +565,87 @@ hybrid result rather than a footnote.
 
 Across the first two hybrid seeds, primary turn spans 0â€“100% and normalized
 turn is 0% in both. Seed 4002 remains before estimating the condition.
+
+Adaptive hybrid seed 4002 completed 5,007,577 visible tokens across 271
+rollouts and three bounded sessions. Primary far accuracy was 100% turn,
+60.9% truth, 17.2% entity, 64.1% property, 24.2% counting, and 0%
+clarification. Length normalization left all far scores unchanged except
+clarification, which became 100%.
+
+Turn was 100% before and after withholding under the primary rule. Under
+length normalization it changed from 0% pre-holdout to 100% post-holdout, so
+the secondary rule is not a coherent forgetting measure for this policy.
+Entity changed from 20.3% to 18.8% primary and lacked a robustly acquired
+baseline.
+
+The run made 138,752 selections, including 24,929 reviews and 6,954 frontier
+probes, and executed 29,349 retries. Target-KL early stopping fired on 248/271
+rollouts; mean rollout KL was 0.0422 and the maximum was 0.325. Peak allocated
+VRAM was 10,210.6 MiB. All values were finite and no OOM or CUDA failure
+occurred.
+
+The complete adaptive-hybrid condition is:
+
+| Skill | Hybrid primary far mean +/- SD | Hybrid - IID paired mean +/- SD | Hybrid - fixed paired mean +/- SD |
+|---|---:|---:|---:|
+| Turn-taking | 66.7% +/- 57.7% | +50.0 +/- 86.6 pp | -33.3 +/- 57.7 pp |
+| Truth judgment | 72.4% +/- 9.9% | +6.5 +/- 6.0 pp | -0.3 +/- 0.5 pp |
+| Entity reference | 15.4% +/- 3.9% | -5.2 +/- 1.6 pp | +0.8 +/- 2.8 pp |
+| Property binding | 65.1% +/- 17.2% | +9.4 +/- 20.8 pp | +19.3 +/- 17.9 pp |
+| Counting | 24.7% +/- 6.3% | -0.5 +/- 18.5 pp | -0.8 +/- 7.7 pp |
+| Clarification | 16.7% +/- 28.9% | -29.9 +/- 26.4 pp | +16.7 +/- 28.9 pp |
+
+Length-normalized hybrid performance is 33.3% +/- 57.7% turn, 14.1% +/- 0.0%
+entity, and 100% +/- 0.0% clarification. Relative to IID, normalized paired
+differences are +33.3 +/- 57.7 turn, -3.1 +/- 2.7 entity, and 0 clarification.
+The auxiliary CLM loss therefore does not stabilize turn learning and makes
+the conventional-reply outcomes highly scoring-dependent.
+
+## Complete five-condition result
+
+All 15 prespecified development endpoints completed.
+
+| Skill | IID CLM | Ordered CLM | Fixed caregiver | Adaptive caregiver | Adaptive hybrid |
+|---|---:|---:|---:|---:|---:|
+| Turn-taking | 16.7% +/- 28.9% | 16.7% +/- 28.9% | 100.0% +/- 0.0% | 83.3% +/- 28.9% | 66.7% +/- 57.7% |
+| Truth judgment | 65.9% +/- 12.5% | 81.0% +/- 5.0% | 72.7% +/- 9.5% | 65.9% +/- 12.5% | 72.4% +/- 9.9% |
+| Entity reference | 20.6% +/- 2.3% | 19.8% +/- 3.6% | 14.6% +/- 1.2% | 19.3% +/- 3.5% | 15.4% +/- 3.9% |
+| Property binding | 55.7% +/- 7.5% | 58.6% +/- 15.6% | 45.8% +/- 5.9% | 46.6% +/- 9.3% | 65.1% +/- 17.2% |
+| Counting | 25.3% +/- 13.8% | 18.5% +/- 4.3% | 25.5% +/- 2.0% | 29.4% +/- 14.5% | 24.7% +/- 6.3% |
+| Clarification | 46.6% +/- 50.3% | 83.3% +/- 28.9% | 0.0% +/- 0.0% | 0.0% +/- 0.0% | 16.7% +/- 28.9% |
+
+The strongest result is interaction-specific. Fixed contingent caregiving
+raises paired turn-taking by 83.3 +/- 28.9 points over IID under primary
+scoring and by 100 points in every seed under length normalization. Ordered
+CLM does not improve turn, so curriculum order alone does not explain the
+effect. Fixed turn is also 100% before and after withholding in all seeds under
+both scoring rules.
+
+Adaptive caregiver retains a large turn advantage over IID but is less robust
+than fixed caregiving. Hybrid training weakens it further: one hybrid seed
+loses turn before withholding, and the condition is highly sensitive to
+length normalization. The adaptive mechanisms tested here therefore do not
+improve on the simple fixed contingent caregiver.
+
+There is no broad artificial-childhood advantage across the remaining skill
+suite. Ordered CLM has a directional truth advantage; hybrid has a directional
+property advantage with large seed variation. Entity stays at or below chance,
+counting has no consistent condition contrast, and clarification is dominated
+by the frozen scoring-rule/response-length interaction. None of these
+three-seed development estimates warrants a confirmatory claim.
+
+PPO remained finite and every checkpoint/resume completed without OOM or CUDA
+failure. Frequent target-KL stops and hybrid rollout-mean KL excursions up to
+1.039 are material stability limitations. They were reported rather than
+retuned after the matrix began.
+
+### Verdict
+
+This is a narrow positive result for the project, not broad validation and not
+a negative result for the larger artificial-childhood hypothesis. At this
+scale, contingent interaction reliably teaches and preserves the convention
+that is intrinsically interactive: taking a turn. It does not bootstrap a
+general suite of elementary language skills, and added adaptive/hybrid
+complexity does not outperform the simpler fixed caregiver. The next
+experiment should target that boundary directly rather than enlarging this
+Stage-0 implementation.

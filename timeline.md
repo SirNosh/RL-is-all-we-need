@@ -289,3 +289,27 @@
 - Audited 308 finite rollouts: 283 target-KL early stops, mean KL 0.0287,
   maximum KL 1.039, 15,150 retries, and no NaN/OOM/CUDA failure. Hybrid
   instability is now a central observed result.
+
+## 2026-07-28 17:33 EDT
+
+- Committed and pushed hybrid seed 4001 and its instability evidence at commit
+  `2dae651`.
+- Started final matrix endpoint, hybrid seed 4002, after the required resource
+  checks. Session 1 ended cleanly at 2,062,145 tokens and 89 rollouts, with
+  truth and turn mastered. Released the GPU before the next resume.
+- Hybrid seed 4002 session 2 ended cleanly at 3,835,124 tokens and 197 total
+  rollouts, with truth and turn still mastered. Released and rechecked the GPU
+  before the expected final endpoint session.
+- Hybrid seed 4002 completed at 5,007,577 tokens and 271 rollouts, completing
+  all 15 endpoints. Far accuracy was 100% turn, 60.9% truth, 17.2% entity,
+  64.1% property, 24.2% count, and 0% clarification primary/100% normalized.
+- Audited seed 4002: 248 target-KL early stops, mean KL 0.0422, maximum KL
+  0.325, 29,349 retries, and no NaN/OOM/CUDA failure.
+- Aggregated the five-condition matrix. Fixed caregiver is the only condition
+  with rule-invariant 100% turn acquisition and retention in all seeds.
+  Adaptive and hybrid preserve a narrower turn advantage over IID but add
+  seed/scoring instability and no broad skill-suite benefit.
+- Final scientific verdict: narrow positive evidence for contingent
+  interaction teaching an intrinsically interactive convention; no broad
+  validation of artificial childhood at this scale, and no evidence that the
+  added adaptive/hybrid complexity outperforms the fixed caregiver.

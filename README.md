@@ -77,8 +77,9 @@ All three corrected IID CLM development seeds have completed. These summarize
 one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
-All three IID CLM, ordered CLM, fixed caregiver RL, and adaptive caregiver RL
-seeds are complete. The adaptive hybrid condition remains.
+All 15 endpoints are complete: three seeds each for IID CLM, ordered CLM,
+fixed caregiver RL, adaptive caregiver RL, and adaptive hybrid. The exact
+review paths are listed in `results/development_v2_manifest.json`.
 
 Adaptive caregiver primary far performance averaged 83.3% turn, 65.9% truth,
 19.3% entity, 46.6% property, 29.4% counting, and 0% clarification. Relative
@@ -91,8 +92,14 @@ advantage over IID, but it is less seed-robust than fixed caregiving: adaptive
 minus fixed is âˆ’16.7 points primary and âˆ’33.3 points length-normalized for
 turn. It does not improve the broader suite.
 
-Adaptive hybrid seeds 4000â€“4001 are complete. Primary turn varies from 100%
-to 0%; seed 4001 lost turn before the holdout despite early mastery. Length
-normalization scores turn at 0% in both seeds and clarification at 100% in
-both, versus primary clarification of 50% and 0%. Seed 4002 remains, so this
-is not yet a condition estimate.
+The complete hybrid condition averages 66.7% turn, 72.4% truth, 15.4% entity,
+65.1% property, 24.7% counting, and 16.7% clarification under primary scoring.
+Its turn and property estimates have large seed variance. Length normalization
+changes hybrid turn to 33.3% and clarification to 100%, exposing a major
+conventional-reply scoring dependency.
+
+The Stage-0 result is narrow but positive: fixed contingent caregiving teaches
+and retains turn-taking robustly, while IID and ordered CLM do not. Adaptive
+and hybrid scheduling weaken that robustness, and no interactive condition
+produces a broad advantage across the other five skills. These are
+three-development-seed estimates, not confirmatory statistics.

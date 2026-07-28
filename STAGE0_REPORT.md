@@ -463,3 +463,45 @@ Across the first two adaptive seeds, turn performance varies from 50% to 100%.
 That variance already rules out treating adaptive scheduling as a seed-robust
 replication of the fixed condition. Seed 4002 is still required for the
 prespecified condition estimate; the adaptive hybrid condition also remains.
+
+Adaptive caregiver seed 4002 completed 5,000,930 visible tokens across 346 PPO
+rollouts and four bounded sessions. Primary far accuracy was 100% turn, 53.1%
+truth, 15.6% entity, 39.1% property, 28.1% counting, and 0% clarification.
+Length normalization reduced turn to 50% while leaving the other far scores
+unchanged.
+
+Turn was 100% primary before and after withholding, but length-normalized
+accuracy fell from 100% to 50%. This scoring-rule divergence means seed 4002
+supports primary retention but not rule-invariant retention. Entity fell from
+16.4% to 9.4% primary and again lacked an above-chance baseline. Truth was
+marked mastered only at 4,907,614 tokens.
+
+The run made 177,152 selections, including 29,203 reviews and 8,930 frontier
+probes, and executed 23,582 retries. Target-KL early stopping fired on 298/346
+rollouts; mean rollout KL was 0.0157 and the maximum was 0.093. Peak allocated
+VRAM was 8,927.2 MiB. All values were finite and no OOM or CUDA failure
+occurred.
+
+The complete adaptive-caregiver condition is:
+
+| Skill | Adaptive primary far mean Â± SD | Adaptive âˆ’ IID paired mean Â± SD | Adaptive âˆ’ fixed paired mean Â± SD |
+|---|---:|---:|---:|
+| Turn-taking | 83.3% Â± 28.9% | +66.7 Â± 57.7 pp | âˆ’16.7 Â± 28.9 pp |
+| Truth judgment | 65.9% Â± 12.5% | 0.0 Â± 11.7 pp | âˆ’6.8 Â± 6.1 pp |
+| Entity reference | 19.3% Â± 3.5% | âˆ’1.3 Â± 4.3 pp | +4.7 Â± 4.1 pp |
+| Property binding | 46.6% Â± 9.3% | âˆ’9.1 Â± 9.4 pp | +0.8 Â± 6.7 pp |
+| Counting | 29.4% Â± 14.5% | +4.2 Â± 9.8 pp | +3.9 Â± 13.6 pp |
+| Clarification | 0.0% Â± 0.0% | âˆ’46.6 Â± 50.3 pp | 0.0 Â± 0.0 pp |
+
+Length-normalized adaptive turn averages 66.7% Â± 28.9%, which remains +66.7
+Â± 28.9 points above paired IID but is âˆ’33.3 Â± 28.9 points below fixed
+caregiving. Normalized entity is 12.8%, below chance; clarification is 0% and
+100 points below IID in every seed.
+
+The adaptive curriculum preserves the same narrow scientific signal as fixed
+caregivingâ€”contingent interaction teaches turn-taking far better than IID
+CLMâ€”but weakens its seed robustness and does not improve the wider skill
+suite. Primary turn had no pre/post drop in any adaptive seed, but normalized
+turn dropped in seed 4002, so only primary retention is consistent across all
+three. Adaptive hybrid remains before the five-condition comparison is
+complete.

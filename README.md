@@ -77,9 +77,16 @@ All three corrected IID CLM development seeds have completed. These summarize
 one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
-All three ordered CLM and fixed caregiver RL seeds are complete. Adaptive
-caregiver RL seeds 4000â€“4001 are also complete; seed 4002 and the adaptive
-hybrid condition remain. Adaptive turn-taking was 100% in seed 4000 but 50% in
-seed 4001, with no pre/post retention drop in either. This is progress, not a
-condition-level result, and already shows that adaptive scheduling does not
-reproduce the fixed caregiver's 100% turn score in every seed.
+All three IID CLM, ordered CLM, fixed caregiver RL, and adaptive caregiver RL
+seeds are complete. The adaptive hybrid condition remains.
+
+Adaptive caregiver primary far performance averaged 83.3% turn, 65.9% truth,
+19.3% entity, 46.6% property, 29.4% counting, and 0% clarification. Relative
+to paired IID seeds, those differences were +66.7, 0, âˆ’1.3, âˆ’9.1, +4.2, and
+âˆ’46.6 percentage points. Length normalization reduces adaptive turn to 66.7%
+but leaves a +66.7-point paired advantage over IID.
+
+Adaptive scheduling therefore retains a large interaction-specific turn
+advantage over IID, but it is less seed-robust than fixed caregiving: adaptive
+minus fixed is âˆ’16.7 points primary and âˆ’33.3 points length-normalized for
+turn. It does not improve the broader suite.

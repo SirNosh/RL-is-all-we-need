@@ -214,3 +214,35 @@
   maximum KL 0.582, 22,787 retries, 8,877 frontier probes, and no
   NaN/OOM/CUDA failure. The KL maximum is retained as an explicit stability
   warning.
+
+## 2026-07-28 14:39 EDT
+
+- Committed and pushed adaptive seed 4001, including its raw endpoint and
+  trace, at commit `724082f`.
+- Checked the shared ledger and live GPU state, then started adaptive caregiver
+  seed 4002. This is the third paired seed required for the adaptive condition
+  estimate; the protocol and 1,000-second session boundary remain unchanged.
+- Seed 4002 session 1 ended cleanly at 1,078,827 tokens and 63 rollouts. Turn
+  was mastered; the adaptive path was slower than seeds 4000â€“4001. Released
+  the GPU and resumed from the checkpoint only after the ledger/live check.
+- Seed 4002 session 2 ended cleanly at 2,683,088 tokens and 174 total
+  rollouts. Turn remained the only mastered skill. Released, checked shared
+  availability, and started session 3 from the exact saved boundary.
+- Seed 4002 session 3 ended cleanly at 3,911,368 tokens and 265 total
+  rollouts, with turn still the only mastered skill. Released and reacquired
+  the available GPU for the expected endpoint session.
+- Seed 4002 completed at 5,000,930 tokens and 346 rollouts. Primary far
+  accuracy was 100% turn, 53.1% truth, 15.6% entity, 39.1% property, 28.1%
+  count, and 0% clarification. Length normalization reduced turn to 50%.
+- Turn stayed 100% primary across the holdout but fell from 100% to 50% under
+  length normalization. Recorded this as scoring-sensitive retention rather
+  than claiming rule-invariant retention.
+- The complete adaptive condition averages 83.3% turn primary and 66.7%
+  normalized. Its paired turn advantage over IID is +66.7 points under either
+  reported condition mean, but adaptive trails fixed by 16.7 points primary
+  and 33.3 points normalized.
+- Across the broader suite, adaptive minus IID paired primary means are 0
+  truth, âˆ’1.3 entity, âˆ’9.1 property, +4.2 count, and âˆ’46.6 clarification
+  points. Adaptive scheduling therefore does not produce a broad advantage.
+- Audited seed 4002: 298/346 target-KL early stops, mean KL 0.0157, maximum
+  KL 0.093, 23,582 retries, and no NaN/OOM/CUDA failure.

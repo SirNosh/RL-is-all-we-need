@@ -436,4 +436,30 @@ skills. It executed 25,426 retries. Target-KL early stopping fired on 301/341
 rollouts; mean rollout KL was 0.0180 and the maximum was 0.263. Peak allocated
 VRAM was 9,964.6 MiB. No NaN, OOM, or CUDA failure occurred.
 
-Adaptive caregiver seeds 4001â€“4002 and the adaptive hybrid condition remain.
+Adaptive caregiver seed 4001 completed 5,005,901 visible tokens across 346 PPO
+rollouts and five bounded sessions. Primary far accuracy was 50.0% turn, 78.1%
+truth, 22.7% entity, 57.0% property, 44.5% counting, and 0% clarification;
+length normalization did not change these scores.
+
+Compared with paired IID seed 4001, the differences were 0, +11.7, +0.8, 0,
++3.9, and âˆ’39.8 percentage points. Compared with fixed caregiver seed 4001,
+they were âˆ’50, 0, +7.8, +7.8, +18.7, and 0 points.
+
+Turn was marked mastered at 210,911 tokens but was only 50% at both the
+pre-holdout and post-holdout evaluations, giving a retention ratio of 1.0.
+This is retention of partial acquisition, not replication of the fixed
+caregiver's 100% acquisition. Entity was 16.4% before and after withholding
+under the primary score and again does not support a forgetting estimate.
+Truth was marked mastered at 3,510,995 tokens.
+
+The run made 177,152 total selections, including 31,979 reviews and 8,877
+frontier probes, and executed 22,787 retries. Target-KL early stopping fired on
+307/346 rollouts; mean rollout KL was 0.0188 and the maximum was 0.582. Peak
+allocated VRAM was 10,602.5 MiB. All values remained finite and no OOM or CUDA
+failure occurred, but the maximum KL is a stronger stability warning than in
+the prior completed caregiver runs.
+
+Across the first two adaptive seeds, turn performance varies from 50% to 100%.
+That variance already rules out treating adaptive scheduling as a seed-robust
+replication of the fixed condition. Seed 4002 is still required for the
+prespecified condition estimate; the adaptive hybrid condition also remains.

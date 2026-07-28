@@ -184,3 +184,33 @@
 - Audited 341 finite rollouts: 301 target-KL early stops, mean KL 0.0180,
   maximum KL 0.263, 25,426 retries, 8,638 frontier probes, and no
   NaN/OOM/CUDA failure.
+
+## 2026-07-28 13:27 EDT
+
+- Committed and pushed the complete adaptive seed-4000 result, raw trace,
+  report, and timeline to draft PR #1 at commit `3f10315`; updated the PR body
+  without promoting the one-seed observation to a condition-level claim.
+- After confirming the shared ledger had no later resource claim and the GPU
+  had no compute process, started adaptive caregiver seed 4001 under the same
+  frozen configuration and a bounded 1,000-second session.
+- Seed 4001 session 1 ended cleanly at 1,566,816 tokens and 95 rollouts. Turn
+  was mastered, all six skills had received exposure, and the checkpoint was
+  released between sessions before beginning the first resume.
+- Seed 4001 session 2 ended cleanly at 3,055,693 tokens and 202 total
+  rollouts. Turn remained the only mastered skill. Released the GPU, checked
+  the shared state, and began session 3 from the saved rollout boundary.
+- Seed 4001 session 3 ended cleanly at 3,839,664 tokens and 260 total
+  rollouts. Truth joined turn as mastered; the expanded adaptive stage reduced
+  throughput as expected. Released and reacquired the clear GPU for the likely
+  endpoint session.
+- Seed 4001 session 4 stopped cleanly one rollout shy of budget at 4,978,912
+  tokens. A short fifth session completed the endpoint at 5,005,901 tokens and
+  346 rollouts.
+- Far accuracy was 50% turn, 78.1% truth, 22.7% entity, 57.0% property, 44.5%
+  count, and 0% clarification. Turn stayed 50% before and after withholding;
+  this is retention of partial acquisition and not replication of the fixed
+  caregiver's 100% turn result.
+- Audited 346 finite rollouts: 307 target-KL early stops, mean KL 0.0188,
+  maximum KL 0.582, 22,787 retries, 8,877 frontier probes, and no
+  NaN/OOM/CUDA failure. The KL maximum is retained as an explicit stability
+  warning.

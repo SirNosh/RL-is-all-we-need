@@ -78,8 +78,8 @@ one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
 All three ordered CLM and fixed caregiver RL seeds are complete. Adaptive
-caregiver RL seed 4000 is also complete; seeds 4001â€“4002 and the adaptive
-hybrid condition remain. The first adaptive seed acquired and retained
-turn-taking at 100%; its other primary far scores were 66.4% truth, 19.5%
-entity, 43.8% property, 15.6% counting, and 0% clarification. This is progress,
-not a condition-level result.
+caregiver RL seeds 4000â€“4001 are also complete; seed 4002 and the adaptive
+hybrid condition remain. Adaptive turn-taking was 100% in seed 4000 but 50% in
+seed 4001, with no pre/post retention drop in either. This is progress, not a
+condition-level result, and already shows that adaptive scheduling does not
+reproduce the fixed caregiver's 100% turn score in every seed.

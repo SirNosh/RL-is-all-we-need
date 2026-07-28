@@ -77,5 +77,9 @@ All three corrected IID CLM development seeds have completed. These summarize
 one condition, not a cross-condition comparison. See `STAGE0_REPORT.md` and
 the raw result JSON files under `results/`.
 
-All three ordered CLM seeds are also complete. The caregiver-RL conditions
-remain; all three fixed caregiver RL seeds are complete.
+All three ordered CLM and fixed caregiver RL seeds are complete. Adaptive
+caregiver RL seed 4000 is also complete; seeds 4001â€“4002 and the adaptive
+hybrid condition remain. The first adaptive seed acquired and retained
+turn-taking at 100%; its other primary far scores were 66.4% truth, 19.5%
+entity, 43.8% property, 15.6% counting, and 0% clarification. This is progress,
+not a condition-level result.

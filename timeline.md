@@ -157,3 +157,30 @@
   for artificial childhood: caregiver contingency reliably teaches the
   interaction-specific turn convention but does not improve the wider skill
   suite. Entity stays near/below chance and later-syllabus skills show tradeoffs.
+
+## 2026-07-28 12:51 EDT
+
+- Began the adaptive-caregiver condition with seed 4000 using the frozen
+  scientific configuration. Two bounded sessions completed cleanly at
+  1,549,121 and 3,019,960 visible tokens; the third session is in progress.
+- Preserved session boundaries so the shared RTX 4070 SUPER can be released
+  between resumptions. Each GPU acquisition and release is recorded in the
+  append-only shared resource ledger after checking both that ledger and live
+  GPU use.
+- The first session produced 90 PPO rollouts, 15 diagnostics, and 2,280
+  frontier probes. Turn-taking was mastered; truth and entity became eligible;
+  no OOM, CUDA, NaN, or trace failure occurred. No comparative interpretation
+  will be made until the seed reaches its endpoint, and no condition-level
+  claim until all three paired seeds complete.
+- Adaptive caregiver seed 4000 completed at 5,007,180 tokens across 341
+  rollouts and four bounded sessions. Far accuracy was 100% turn, 66.4% truth,
+  19.5% entity, 43.8% property, 15.6% count, and 0% clarification.
+- Turn was acquired early and retained at 100% under both scoring rules. Truth
+  was marked mastered only at 4.31M tokens. Entity was not robustly above
+  chance at the retention baseline, so it does not support a forgetting claim.
+- Recorded the result as one adaptive seed only. Its paired primary differences
+  from IID were +100, âˆ’11.7, +1.5, âˆ’18.7, âˆ’5.5, and âˆ’100 percentage points
+  across the six skills; this does not yet identify an adaptive effect.
+- Audited 341 finite rollouts: 301 target-KL early stops, mean KL 0.0180,
+  maximum KL 0.263, 25,426 retries, 8,638 frontier probes, and no
+  NaN/OOM/CUDA failure.

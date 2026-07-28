@@ -402,4 +402,38 @@ both scoring rules, with retention ratio 1.0. Entity primary accuracy averaged
 
 Across fixed seeds, PPO remained finite and completed without OOM. Seed 4002
 executed 60,239 retries; target-KL early stopping fired on 169/271 rollouts,
-with mean rollout KL 0.0251 and maximum 0.259. The adaptive conditions remain.
+with mean rollout KL 0.0251 and maximum 0.259.
+
+## Adaptive caregiver RL progress
+
+Adaptive caregiver RL seed 4000 completed 5,007,180 visible tokens across 341
+PPO rollouts and four bounded sessions.
+
+| Skill | Independent | Far | Length-normalized far |
+|---|---:|---:|---:|
+| Turn-taking | 100.0% | 100.0% | 100.0% |
+| Truth judgment | 87.5% | 66.4% | 66.4% |
+| Entity reference | 17.2% | 19.5% | 13.3% |
+| Property binding | 53.1% | 43.8% | 43.8% |
+| Counting | 50.8% | 15.6% | 15.6% |
+| Clarification | 0.0% | 0.0% | 0.0% |
+
+Compared with paired IID seed 4000, primary far differences were +100,
+âˆ’11.7, +1.5, âˆ’18.7, âˆ’5.5, and âˆ’100 percentage points. Compared with fixed
+caregiver seed 4000 they were 0, âˆ’11.7, +6.2, âˆ’5.5, âˆ’7.8, and 0 points.
+One seed does not identify an adaptive condition effect.
+
+Turn-taking was first marked mastered at 204,371 tokens and remained 100%
+before and after the final holdout under both scoring rules, with retention
+ratio 1.0. Truth was marked mastered at 4,312,952 tokens. Entity changed from
+16.4% to 15.6% primary and from 18.8% to 14.8% length-normalized; its baseline
+was not robustly above 16.7% chance, so this is not a meaningful forgetting
+estimate.
+
+The adaptive curriculum made 174,592 total skill selections, including 31,420
+spaced-review selections and 8,638 frontier probes, and exposed all six
+skills. It executed 25,426 retries. Target-KL early stopping fired on 301/341
+rollouts; mean rollout KL was 0.0180 and the maximum was 0.263. Peak allocated
+VRAM was 9,964.6 MiB. No NaN, OOM, or CUDA failure occurred.
+
+Adaptive caregiver seeds 4001â€“4002 and the adaptive hybrid condition remain.

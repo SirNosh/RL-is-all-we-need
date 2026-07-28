@@ -366,4 +366,40 @@ turn acquisition/retention, not a general performance advantage.
 
 The run executed 44,950 retries. Target-KL early stopping fired on 209 of 308
 rollouts; mean rollout KL was 0.0237 and the maximum was 0.314. No NaN, OOM, or
-CUDA failure occurred. Fixed seed 4002 remains.
+CUDA failure occurred.
+
+Fixed caregiver RL seed 4002 completed 5,038,048 visible tokens across 271 PPO
+rollouts. Far accuracy was 100% turn, 61.7% truth, 15.6% entity, 39.1%
+property, 27.3% counting, and 0% clarification under both scoring rules. Turn
+was again 100% before and after withholding; entity was near chance.
+
+The complete fixed-caregiver condition is:
+
+| Skill | Fixed primary far mean ± SD | Fixed − IID paired mean ± SD |
+|---|---:|---:|
+| Turn-taking | 100.0% ± 0.0% | +83.3 ± 28.9 pp |
+| Truth judgment | 72.7% ± 9.5% | +6.8 ± 6.1 pp |
+| Entity reference | 14.6% ± 1.2% | −6.0 ± 1.2 pp |
+| Property binding | 45.8% ± 5.9% | −9.9 ± 3.0 pp |
+| Counting | 25.5% ± 2.0% | +0.3 ± 14.2 pp |
+| Clarification | 0.0% ± 0.0% | −46.6 ± 50.3 pp |
+
+Length normalization strengthens the turn contrast to +100 points in every
+seed. It changes the paired clarification mean to −66.7 points and leaves the
+truth/property/count conclusions unchanged.
+
+The robust fixed-caregiver result is skill-specific: contingent interaction
+acquires and retains the turn-taking convention at 100% in 3/3 seeds, whereas
+both CLM baselines score 0% under length normalization. This does not generalize
+to the broader Stage-0 suite. Entity reference is below chance, property is
+about 10 points below IID, counting is unchanged on average, and clarification
+fails under the primary scoring rule.
+
+Turn retention was 100% before and after withholding in every fixed seed under
+both scoring rules, with retention ratio 1.0. Entity primary accuracy averaged
+18.2% pre-holdout and 11.5% post-holdout, but the normalized baseline averaged
+13.5%, below chance; entity forgetting is therefore not robustly established.
+
+Across fixed seeds, PPO remained finite and completed without OOM. Seed 4002
+executed 60,239 retries; target-KL early stopping fired on 169/271 rollouts,
+with mean rollout KL 0.0251 and maximum 0.259. The adaptive conditions remain.

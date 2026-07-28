@@ -145,3 +145,15 @@
   superiority.
 - PPO remained finite but target-KL early stopping fired on 209/308 rollouts;
   mean rollout KL was 0.0237 and the maximum was 0.314.
+- Fixed caregiver RL seed 4002 completed at 5,038,048 tokens across 271 PPO
+  rollouts, completing the three-seed fixed condition. Far accuracy was turn
+  100%, truth 61.7%, entity 15.6%, property 39.1%, count 27.3%, clarification
+  0%.
+- The complete fixed-caregiver condition acquired and retained turn-taking at
+  100% in 3/3 seeds under both scoring rules. Paired primary differences from
+  IID averaged +83.3 pp turn, +6.8 truth, −6.0 entity, −9.9 property, +0.3
+  count, and −46.6 clarification.
+- Interpreted this as a narrow positive interaction result, not broad support
+  for artificial childhood: caregiver contingency reliably teaches the
+  interaction-specific turn convention but does not improve the wider skill
+  suite. Entity stays near/below chance and later-syllabus skills show tradeoffs.

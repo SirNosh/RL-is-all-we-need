@@ -270,3 +270,22 @@
 - Audited 308 finite rollouts: 257 target-KL early stops, mean KL 0.0224,
   maximum KL 0.768, 15,349 retries, and no NaN/OOM/CUDA failure. The KL
   excursion is the largest observed and remains an explicit warning.
+
+## 2026-07-28 16:39 EDT
+
+- Committed and pushed hybrid seed 4000, including the raw result and trace, at
+  commit `187c045`.
+- Confirmed the shared ledger and live GPU were clear, then started adaptive
+  hybrid seed 4001 under the unchanged frozen protocol.
+- Hybrid seed 4001 session 1 ended cleanly at 2,150,415 tokens and 123
+  rollouts, with turn mastered. Released the GPU, rechecked the ledger/live
+  state, and resumed from the exact checkpoint.
+- Hybrid seed 4001 session 2 ended cleanly at 3,980,611 tokens and 241 total
+  rollouts; a third session completed at 5,011,302 tokens and 308 rollouts.
+- Final far accuracy was 0% turn, 78.1% truth, 18.0% entity, 82.8% property,
+  18.8% count, and 0% clarification primary/100% normalized. Turn was already
+  0% at the pre-holdout baseline despite early mastery, so this is maintenance
+  failure rather than holdout forgetting.
+- Audited 308 finite rollouts: 283 target-KL early stops, mean KL 0.0287,
+  maximum KL 1.039, 15,150 retries, and no NaN/OOM/CUDA failure. Hybrid
+  instability is now a central observed result.

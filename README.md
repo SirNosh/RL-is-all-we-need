@@ -91,8 +91,8 @@ advantage over IID, but it is less seed-robust than fixed caregiving: adaptive
 minus fixed is âˆ’16.7 points primary and âˆ’33.3 points length-normalized for
 turn. It does not improve the broader suite.
 
-Adaptive hybrid seed 4000 is complete. Its primary far scores are 100% turn,
-78.1% truth, 10.9% entity, 48.4% property, 31.3% counting, and 50%
-clarification. Length normalization reverses the conventional-reply result to
-0% turn and 100% clarification. Seeds 4001â€“4002 remain, so this is not yet a
-condition estimate.
+Adaptive hybrid seeds 4000â€“4001 are complete. Primary turn varies from 100%
+to 0%; seed 4001 lost turn before the holdout despite early mastery. Length
+normalization scores turn at 0% in both seeds and clarification at 100% in
+both, versus primary clarification of 50% and 0%. Seed 4002 remains, so this
+is not yet a condition estimate.

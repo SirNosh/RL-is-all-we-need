@@ -540,4 +540,28 @@ allocated VRAM was 8,859.3 MiB. No value was non-finite and no OOM or CUDA
 failure occurred, but the KL maximum is the largest stability excursion so
 far and must remain visible in the interpretation.
 
-Adaptive hybrid seeds 4001â€“4002 remain.
+Adaptive hybrid seed 4001 completed 5,011,302 visible tokens across 308
+rollouts and three bounded sessions. Primary far accuracy was 0% turn, 78.1%
+truth, 18.0% entity, 82.8% property, 18.8% counting, and 0% clarification.
+Length normalization left all scores unchanged except clarification, which
+became 100%.
+
+Compared with paired IID seed 4001, primary differences were âˆ’50, +11.7,
+âˆ’3.9, +25.8, âˆ’21.9, and âˆ’39.8 percentage points. Compared with adaptive
+caregiver seed 4001 they were âˆ’50, 0, âˆ’4.7, +25.8, âˆ’25.8, and 0 points.
+
+Turn was marked mastered at 210,166 tokens but was already 0% at the
+pre-holdout evaluation and remained 0% post-holdout under both rules. This is
+failure to maintain acquisition before withholding, not evidence of holdout
+forgetting. Entity rose from 16.4% to 24.2% primary but lacked an
+above-chance baseline.
+
+The run made 157,696 selections, including 25,470 reviews and 8,032 frontier
+probes, and executed 15,150 retries. Target-KL early stopping fired on 283/308
+rollouts; mean rollout KL was 0.0287 and the maximum was 1.039. Peak allocated
+VRAM was 8,968.3 MiB. All values were finite and no OOM or CUDA failure
+occurred, but the KL excursion and turn collapse make stability a central
+hybrid result rather than a footnote.
+
+Across the first two hybrid seeds, primary turn spans 0â€“100% and normalized
+turn is 0% in both. Seed 4002 remains before estimating the condition.

@@ -10,7 +10,15 @@ import sentencepiece as spm
 CONCEPTS = ("code", "math", "sentence")
 SOCIAL = ("hi", "bye")
 RESPONSE_VOCAB = ("hi", "bye", "code", "math", "sentence", "yes", "no", "again", "unknown")
-CONDITIONS = ("iid_clm", "ordered_clm", "trial_only_rl", "yoked_caregiver_rl", "contingent_caregiver_rl")
+CONCEPT_CANDIDATES = ("code", "math", "sentence", "unknown")
+SOCIAL_CANDIDATES = RESPONSE_VOCAB
+CONDITIONS = (
+    "iid_clm",
+    "ordered_clm",
+    "trial_only_rl",
+    "yoked_caregiver_rl",
+    "contingent_caregiver_rl",
+)
 
 
 @dataclass(frozen=True)
@@ -43,10 +51,18 @@ class CaregiverLanguage:
         return CaregiverLanguage(
             {"source": "built-in deterministic control"},
             {
-                "demonstration": ("Caregiver: look.\n{object}\nCaregiver: this is {label}.\nCaregiver: say {label}.\nChild: {label}",),
-                "question": ("Caregiver: look at another one.\n{object}\nCaregiver: what is this?\nChild:",),
-                "correction": ("Caregiver: not quite. this is {label}.\nCaregiver: {label}.",),
-                "analogy": ("Caregiver: look again.\n{object}\nCaregiver: what is this?\nChild:",),
+                "demonstration": (
+                    "Caregiver: look.\n{object}\nCaregiver: this is {label}.\nCaregiver: say {label}.\nChild: {label}",
+                ),
+                "question": (
+                    "Caregiver: look at another one.\n{object}\nCaregiver: what is this?\nChild:",
+                ),
+                "correction": (
+                    "Caregiver: not quite. this is {label}.\nCaregiver: {label}.",
+                ),
+                "analogy": (
+                    "Caregiver: look again.\n{object}\nCaregiver: what is this?\nChild:",
+                ),
             },
         )
 
@@ -60,7 +76,7 @@ class CaregiverLanguage:
         missing = required - set(groups)
         if missing:
             raise ValueError(f"caregiver cache missing {sorted(missing)}")
-        normalized = {}
+        normalized: dict[str, tuple[str, ...]] = {}
         for key in required:
             values = tuple(map(str, groups[key]))
             if not values:
@@ -89,23 +105,34 @@ def make_exemplar(concept: str, seed: int, family: int) -> Exemplar:
     if concept == "code":
         name, n = r.choice(("x", "total", "count", "value", "item", "result")), r.randint(1, 9)
         examples = (
-            f"{name} = {n}", f'print("{r.choice(("hi", "ready", "done"))}")',
-            f"for {name} in range({n}):\n    print({name})", f"def add_{name}(a, b):\n    return a + b",
-            f"if {name} > {n}:\n    {name} = {name} - 1", f"items = []\nitems.append({n})",
-            f"class Counter:\n    def step(self):\n        self.value += {n}", f"squares = [k * k for k in range({n})]",
+            f"{name} = {n}",
+            f'print("{r.choice(("hi", "ready", "done"))}")',
+            f"for {name} in range({n}):\n    print({name})",
+            f"def add_{name}(a, b):\n    return a + b",
+            f"if {name} > {n}:\n    {name} = {name} - 1",
+            f"items = []\nitems.append({n})",
+            f"class Counter:\n    def step(self):\n        self.value += {n}",
+            f"squares = [k * k for k in range({n})]",
         )
     elif concept == "math":
         a, b = r.randint(1, 12), r.randint(1, 12)
         examples = (
-            f"{a} + {b} = {a+b}", f"{a+b} - {a} = {b}", f"{a} < {a+b}", f"1/{a} + 1/{a} = 2/{a}",
-            f"Solve: q + {a} = {a+b}", f"The area is {a} × {b} = {a*b} square units.",
-            f"f(t) = t² + {a}t + {b}", "A triangle has angles 90°, 45°, and 45°.",
+            f"{a} + {b} = {a+b}",
+            f"{a+b} - {a} = {b}",
+            f"{a} < {a+b}",
+            f"1/{a} + 1/{a} = 2/{a}",
+            f"Solve: q + {a} = {a+b}",
+            f"The area is {a} × {b} = {a*b} square units.",
+            f"f(t) = t² + {a}t + {b}",
+            "A triangle has angles 90°, 45°, and 45°.",
         )
     else:
         animal, place = r.choice(("dog", "cat", "bird", "fox")), r.choice(("garden", "river", "room", "hill"))
         examples = (
-            f"The {animal} ran to the {place}.", f"Is the {animal} near the {place}?",
-            f"Please open the door before the {animal} arrives.", f"Yesterday, the {animal} rested beside the {place}.",
+            f"The {animal} ran to the {place}.",
+            f"Is the {animal} near the {place}?",
+            f"Please open the door before the {animal} arrives.",
+            f"Yesterday, the {animal} rested beside the {place}.",
             f"Although it was late, the {animal} quietly crossed the {place}.",
             f"The {animal} was followed by a friend who knew the way home.",
             f"After the rain stopped, everyone returned to the {place}; the {animal} stayed outside.",
@@ -117,8 +144,26 @@ def make_exemplar(concept: str, seed: int, family: int) -> Exemplar:
 def make_social_lesson(seed: int, greeting: bool) -> Lesson:
     if greeting:
         utterance = random.Random(seed * 101).choice(("hi", "hello"))
-        return Lesson("hi", f"Caregiver: {utterance}\nChild:", "hi", "Caregiver: hi\nChild: hi", "Caregiver: say hi.", "Caregiver: hello\nChild:", "hi", utterance)
-    return Lesson("bye", "Caregiver: we are finished. bye.\nChild:", "bye", "Caregiver: bye\nChild: bye", "Caregiver: say bye.", "Caregiver: goodbye.\nChild:", "bye", "bye")
+        return Lesson(
+            "hi",
+            f"Caregiver: {utterance}\nChild:",
+            "hi",
+            "Caregiver: hi\nChild: hi",
+            "Caregiver: say hi.",
+            "Caregiver: hello\nChild:",
+            "hi",
+            utterance,
+        )
+    return Lesson(
+        "bye",
+        "Caregiver: we are finished. bye.\nChild:",
+        "bye",
+        "Caregiver: bye\nChild: bye",
+        "Caregiver: say bye.",
+        "Caregiver: goodbye.\nChild:",
+        "bye",
+        "bye",
+    )
 
 
 def make_lesson(concept: str, seed: int, family: int, caregiver: CaregiverLanguage) -> Lesson:
@@ -143,7 +188,13 @@ def ordered_sequence(progress: float) -> tuple[str, tuple[str, ...]]:
     return seq[i], seq[:i]
 
 
-def sample_lesson(rng: random.Random, progress: float, ordered: bool, caregiver: CaregiverLanguage, withheld=frozenset()) -> Lesson:
+def sample_lesson(
+    rng: random.Random,
+    progress: float,
+    ordered: bool,
+    caregiver: CaregiverLanguage,
+    withheld=frozenset(),
+) -> Lesson:
     if ordered:
         current, previous = ordered_sequence(progress)
         review = [x for x in previous if x not in withheld]
@@ -153,8 +204,8 @@ def sample_lesson(rng: random.Random, progress: float, ordered: bool, caregiver:
             available = [x for x in (current,) + previous if x not in withheld]
             concept = available[0] if available else "sentence"
     else:
-        population = [x for x in ("hi", "bye") + CONCEPTS if x not in withheld]
-        weights = {"hi": .05, "bye": .05, "code": .30, "math": .30, "sentence": .30}
+        population = [x for x in SOCIAL + CONCEPTS if x not in withheld]
+        weights = {"hi": 0.05, "bye": 0.05, "code": 0.30, "math": 0.30, "sentence": 0.30}
         concept = rng.choices(population, weights=[weights[x] for x in population], k=1)[0]
     if concept in SOCIAL:
         return make_social_lesson(rng.randrange(1_000_000), concept == "hi")
@@ -186,10 +237,20 @@ def build_tokenizer(path: Path, caregiver: CaregiverLanguage, vocab_size: int = 
                     lesson = make_lesson(concept, seed, family, caregiver)
                     f.write(canonical_transcript(lesson) + "\n" + lesson.correction + "\n" + lesson.analogous_prompt + " " + concept + "\n")
             f.write(make_social_lesson(seed, True).demonstration + "\n" + make_social_lesson(seed, False).demonstration + "\n")
-        for response in RESPONSE_VOCAB:
-            f.write(response + "\n")
         alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+-=*/()[]{}:;,.!?<>\"'"
         for a in alphabet:
             for b in alphabet:
                 f.write(f"reserve {a}{b}\n")
-    spm.SentencePieceTrainer.train(input=str(corpus), model_prefix=str(path.with_suffix("")), model_type="bpe", vocab_size=vocab_size, byte_fallback=True, pad_id=0, unk_id=1, bos_id=2, eos_id=3, character_coverage=1.0)
+    spm.SentencePieceTrainer.train(
+        input=str(corpus),
+        model_prefix=str(path.with_suffix("")),
+        model_type="bpe",
+        vocab_size=vocab_size,
+        byte_fallback=True,
+        pad_id=0,
+        unk_id=1,
+        bos_id=2,
+        eos_id=3,
+        user_defined_symbols=list(RESPONSE_VOCAB),
+        character_coverage=1.0,
+    )

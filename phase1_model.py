@@ -19,6 +19,8 @@ class Block(nn.Module):
         self.gate, self.up, self.down = nn.Linear(d, ff, bias=False), nn.Linear(d, ff, bias=False), nn.Linear(ff, d, bias=False)
         self.heads = heads
         hd = d // heads
+        if hd % 2:
+            raise ValueError("head dimension must be even for RoPE")
         self.register_buffer("rope_inv_freq", 1.0 / (10000 ** (torch.arange(0, hd, 2).float() / hd)), persistent=False)
 
     def _rope(self, x):
@@ -43,7 +45,15 @@ class Student(nn.Module):
         self.emb = nn.Embedding(vocab, d)
         self.blocks = nn.ModuleList([Block(d, heads, ff) for _ in range(layers)])
         self.norm, self.lm, self.value = nn.RMSNorm(d), nn.Linear(d, vocab, bias=False), nn.Linear(d, 1)
+        self.apply(self._init_weights)
         self.lm.weight = self.emb.weight
+
+    @staticmethod
+    def _init_weights(module):
+        if isinstance(module, (nn.Linear, nn.Embedding)):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if isinstance(module, nn.Linear) and module.bias is not None:
+                nn.init.zeros_(module.bias)
 
     def forward(self, ids):
         x = self.emb(ids)
@@ -54,15 +64,44 @@ class Student(nn.Module):
 
 
 def candidate_scores(model: Student, tok: Tokenizer, contexts: Sequence[str], candidates: Sequence[str], device):
-    if len(contexts) > SCORE_CONTEXT_BATCH:
-        chunks = [candidate_scores(model, tok, contexts[i:i+SCORE_CONTEXT_BATCH], candidates, device) for i in range(0, len(contexts), SCORE_CONTEXT_BATCH)]
+    """Return logits for a discrete shared textual response lexicon.
+
+    Response words are frozen SentencePiece symbols. SentencePiece emits a common
+    whitespace marker followed by one response symbol. The fast path therefore
+    appends the common marker once and reads the next-token logits for every
+    candidate. A generic length-normalized fallback is retained for custom caches.
+    """
+    batch_limit = 64 if device.type == "cpu" else SCORE_CONTEXT_BATCH
+    if len(contexts) > batch_limit:
+        chunks = [candidate_scores(model, tok, contexts[i:i + batch_limit], candidates, device) for i in range(0, len(contexts), batch_limit)]
         return torch.cat([x[0] for x in chunks]), torch.cat([x[1] for x in chunks])
+    encoded_labels = [tok.encode(" " + c) for c in candidates]
+    if encoded_labels and all(len(x) == 2 and x[0] == encoded_labels[0][0] for x in encoded_labels):
+        separator = encoded_labels[0][0]
+        label_ids = torch.tensor([x[1] for x in encoded_labels], dtype=torch.long, device=device)
+        context_ids = [tok.encode(c) for c in contexts]
+        rows = [prefix + [separator] for prefix in context_ids]
+        width = max(map(len, rows))
+        ids = torch.full((len(rows), width), tok.pad, dtype=torch.long, device=device)
+        for i, row in enumerate(rows):
+            ids[i, :len(row)] = torch.tensor(row, device=device)
+        with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=device.type == "cuda"):
+            logits, values = model(ids)
+        scores = torch.empty((len(rows), len(candidates)), device=device)
+        context_values = torch.empty(len(rows), device=device)
+        for i, prefix in enumerate(context_ids):
+            scores[i] = logits[i, len(prefix), label_ids]
+            context_values[i] = values[i, len(prefix) - 1]
+        return scores, context_values
+
     encoded = [tok.encode(" " + c) + [tok.eos] for c in candidates]
+    lengths = torch.tensor([len(x) for x in encoded], dtype=torch.float32, device=device)
     context_ids = [tok.encode(c) for c in contexts]
     rows, starts = [], []
     for prefix in context_ids:
         for response in encoded:
-            rows.append(prefix + response); starts.append(len(prefix))
+            rows.append(prefix + response)
+            starts.append(len(prefix))
     width = max(map(len, rows))
     ids = torch.full((len(rows), width), tok.pad, dtype=torch.long, device=device)
     for i, row in enumerate(rows):
@@ -77,8 +116,8 @@ def candidate_scores(model: Student, tok: Tokenizer, contexts: Sequence[str], ca
         for j, response in enumerate(encoded):
             start = starts[cursor]
             pos = torch.arange(start - 1, start + len(response) - 1, device=device)
-            targets = ids[cursor, start:start+len(response)]
-            scores[owner, j] = logp[cursor, pos, targets].sum()
+            targets = ids[cursor, start:start + len(response)]
+            scores[owner, j] = logp[cursor, pos, targets].sum() / lengths[j]
             if j == 0:
                 context_values[owner] = values[cursor, start - 1]
             cursor += 1
@@ -91,7 +130,8 @@ def clm_loss(model: Student, tok: Tokenizer, texts: Sequence[str], device):
     ids = torch.full((len(rows), width), tok.pad, dtype=torch.long, device=device)
     mask = torch.zeros_like(ids, dtype=torch.bool)
     for i, row in enumerate(rows):
-        ids[i, :len(row)] = torch.tensor(row, device=device); mask[i, :len(row)] = True
+        ids[i, :len(row)] = torch.tensor(row, device=device)
+        mask[i, :len(row)] = True
     with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=device.type == "cuda"):
         logits, _ = model(ids[:, :-1])
         losses = F.cross_entropy(logits.reshape(-1, logits.size(-1)), ids[:, 1:].reshape(-1), reduction="none")

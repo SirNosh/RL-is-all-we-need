@@ -42,12 +42,21 @@ class Phase1VocabularyTests(unittest.TestCase):
         self.assertAlmostEqual(expected, 0.0)
         self.assertEqual(centered_reward(2, 2), 1.0)
 
-    def test_yoked_feedback_teaches_an_unrelated_object(self):
+    def test_yoked_feedback_teaches_and_retries_an_unrelated_concept(self):
         lesson = make_lesson("code", 9, 1, self.caregiver)
-        text, retry, target = feedback("yoked_caregiver_rl", lesson, random.Random(3), self.caregiver)
-        self.assertNotIn("this is code", text)
-        self.assertEqual(target, "code")
-        self.assertIn("what", retry.lower())
+        text, retry, target, concept = feedback("yoked_caregiver_rl", lesson, random.Random(3), self.caregiver)
+        self.assertNotEqual(concept, "code")
+        self.assertEqual(target, concept)
+        self.assertIn(concept, text)
+        self.assertIn("Child:", retry)
+
+    def test_contingent_feedback_stays_on_target(self):
+        lesson = make_lesson("math", 12, 2, self.caregiver)
+        text, retry, target, concept = feedback("contingent_caregiver_rl", lesson, random.Random(4), self.caregiver)
+        self.assertEqual(concept, "math")
+        self.assertEqual(target, "math")
+        self.assertIn("math", text)
+        self.assertIn("Child:", retry)
 
     def test_frozen_caregiver_cache_is_valid(self):
         rendered = self.caregiver.render("demonstration", 3, object="x = 1", label="code")

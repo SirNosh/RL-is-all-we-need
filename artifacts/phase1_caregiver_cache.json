@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "schema": 1,
+    "authoring_model": "GPT-5.6 Thinking via ChatGPT",
+    "authored_at": "2026-07-29",
+    "purpose": "Frozen child-directed surface language for Phase-1 vocabulary acquisition",
+    "constraints": [
+      "No evaluation exemplar appears in this file",
+      "The deterministic controller supplies object text and verified labels",
+      "The caregiver cache controls wording only and never assigns rewards"
+    ]
+  },
+  "templates": {
+    "demonstration": [
+      "Caregiver: look.\n{object}\nCaregiver: this is {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: see this.\n{object}\nCaregiver: it is {label}.\nCaregiver: say the word {label}.\nChild: {label}",
+      "Caregiver: look here.\n{object}\nCaregiver: the word is {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: here is one.\n{object}\nCaregiver: this kind is {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: watch.\n{object}\nCaregiver: we call this {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: I will show you.\n{object}\nCaregiver: this is called {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: look at this one.\n{object}\nCaregiver: its name is {label}.\nCaregiver: say {label}.\nChild: {label}",
+      "Caregiver: see the thing below.\n{object}\nCaregiver: this is {label}.\nCaregiver: now say {label}.\nChild: {label}"
+    ],
+    "question": [
+      "Caregiver: look at another one.\n{object}\nCaregiver: what is this?\nChild:",
+      "Caregiver: now see this.\n{object}\nCaregiver: what is it?\nChild:",
+      "Caregiver: here is a new one.\n{object}\nCaregiver: name it.\nChild:",
+      "Caregiver: look again.\n{object}\nCaregiver: which word fits?\nChild:",
+      "Caregiver: see this new thing.\n{object}\nCaregiver: what kind is it?\nChild:",
+      "Caregiver: I will show one more.\n{object}\nCaregiver: tell me its name.\nChild:",
+      "Caregiver: look at the thing below.\n{object}\nCaregiver: what did I show?\nChild:",
+      "Caregiver: this one is new.\n{object}\nCaregiver: say what it is.\nChild:"
+    ],
+    "correction": [
+      "Caregiver: not quite. this is {label}.\nCaregiver: say {label}.",
+      "Caregiver: no. the word is {label}.\nCaregiver: {label}.",
+      "Caregiver: try again. this kind is {label}.\nCaregiver: say {label}.",
+      "Caregiver: that was not the word. it is {label}.\nCaregiver: {label}.",
+      "Caregiver: listen. we call this {label}.\nCaregiver: say {label}.",
+      "Caregiver: the right name is {label}.\nCaregiver: say the word {label}.",
+      "Caregiver: look once more. this is {label}.\nCaregiver: {label}.",
+      "Caregiver: not that one. this one is {label}.\nCaregiver: say {label}."
+    ],
+    "analogy": [
+      "Caregiver: try one more.\n{object}\nCaregiver: what is this?\nChild:",
+      "Caregiver: here is another one.\n{object}\nCaregiver: what is it?\nChild:",
+      "Caregiver: now look at this.\n{object}\nCaregiver: name it.\nChild:",
+      "Caregiver: see one more example.\n{object}\nCaregiver: which word fits?\nChild:",
+      "Caregiver: let us try again.\n{object}\nCaregiver: what kind is it?\nChild:",
+      "Caregiver: I will show a similar one.\n{object}\nCaregiver: tell me its name.\nChild:",
+      "Caregiver: look at a new example.\n{object}\nCaregiver: what did I show?\nChild:",
+      "Caregiver: one more turn.\n{object}\nCaregiver: say what it is.\nChild:"
+    ]
+  }
+}

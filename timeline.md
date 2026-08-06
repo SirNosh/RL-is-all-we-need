@@ -19,3 +19,309 @@
   implementation failed the engineering-gate directionally and still lacks the
   complete caregiver/PPO mechanics. Scaling it would consume compute without
   producing a valid test of the locked hypothesis.
+- Accepted the external review's narrower verdict: the legacy run was a sparse
+  four-action contextual-bandit test, not an artificial-childhood experiment.
+- Replaced the active study with six Stage-0 competencies and eight independent
+  generator families, preserving the old source and raw result for audit.
+- Isolated the new tokenizer to training families; printable reserve strings
+  provide enough BPE merges without importing evaluation names or prompts.
+- Implemented short textual response candidates, contingent correction,
+  analogous retries, GAE, frozen rollout probabilities, two clipped PPO epochs,
+  diagnostic mastery gates, and 20 percent review.
+- The mandatory 1,000-situation entity-reference overfit gate passed at 98.5
+  percent after seven 512-dialogue rollouts. This licenses bounded development
+  testing, not a confirmatory scientific claim.
+- Added atomic rollout-boundary checkpoints and traces. A CPU continuous versus
+  split run produced bit-identical parameters and curriculum state.
+- Resource calibration reduced peak allocated VRAM from roughly 11.8 GB to
+  5.7 GB by lowering candidate-scoring chunk size.
+- Calibration exposed excessive PPO drift. Froze a development setting of
+  3e-5 policy learning rate with a 0.03 target-KL safeguard; the overfit gate
+  re-passed at 95.5 percent after 68 rollouts.
+- Engineering seed 3200 completed 516,170 tokens with successful CUDA resume
+  but failed coverage: only turn, truth, and entity were sampled. Added a
+  logged 5 percent frontier-probe allocation without relaxing mastery status.
+- Engineering seed 3201 passed the mechanism-operation gate at 506,795 tokens:
+  all six skills were exposed, retries and five diagnostics executed, review
+  was 19.4 percent of opportunities, and no numerical/CUDA failure occurred.
+- Froze development seeds 4000, 4001, and 4002, and added a final 500k-token
+  retention holdout for turn-taking and entity reference.
+- IID CLM development seed 4000 completed 5,000,756 tokens. Truth and
+  clarification transferred well, while final post-holdout turn/entity scores
+  were weak. Because no pre-holdout baseline was recorded, this does not
+  measure forgetting. Seed 4001 stopped at 36,830 tokens and has no endpoint.
+- Paused the remaining matrix after review identified two protocol defects:
+  matrix-level configuration hashing made single-run resume invalid, and the
+  retention result lacked a pre-holdout baseline.
+- Replaced Git-SHA resume validation with hashes of the tokenizer, executable
+  experiment/model files, pinned requirements, and an explicit per-run
+  scientific configuration. Session controls and outer matrix lists are
+  deliberately excluded.
+- Added pre/post retention evaluation on distinct seed bands, a dedicated
+  retention-start checkpoint, actual holdout-start token logging, graceful
+  session exits, the frozen 3e-5 PPO default, and candidate length/prior
+  diagnostics without changing the primary summed-log-probability rule.
+- Preserved v1 seed 4000 as `development_v1_pre_retention_baseline` and the
+  36,830-token seed 4001 checkpoint as `interrupted_unresumable_under_v1`.
+- Published the corrected protocol as commit `87c5773` on draft PR #1; all 13
+  CPU tests passed.
+- An initial corrected-run launcher accidentally selected CPU-only PyTorch and
+  was stopped after 55,784 tokens. A second launcher lacked SentencePiece and
+  exited before training. Both were invalidated; the scientific run restarted
+  from zero under the verified Miniconda CUDA environment.
+- Corrected IID CLM seed 4000 completed at 5,000,756 tokens after one clean
+  session-limit resume. The retention baseline occurred at 4,501,006 tokens.
+  Turn was 0% before and after withholding; entity was 9.375% before and
+  16.406% after. Neither pre-score exceeded chance, so this measures weak
+  acquisition rather than forgetting.
+- The final corrected acquisition endpoint matches the v1 headline pattern:
+  truth 78.1%, property 62.5%, and clarification 100% far accuracy; turn 0%,
+  entity 18.0%, and counting 21.1%. Length-normalized scoring changed only
+  entity far accuracy, from 18.0% to 18.8%.
+- Corrected IID CLM seed 4001 completed at 5,002,499 tokens after one clean
+  resume. Primary far accuracy was turn 50.0%, truth 66.4%, entity 21.9%,
+  property 57.0%, count 40.6%, and clarification 39.8%.
+- Seed 4001 exposed material scoring-rule sensitivity: length normalization
+  changed turn from 50% to 0% and clarification from 39.8% to 100%. Preserved
+  summed log probability as the frozen primary rule and reported both rather
+  than changing the metric after observing the endpoint.
+- Turn/entity were again not meaningfully above chance before withholding, so
+  the second corrected run also provides no estimate of forgetting.
+- Corrected IID CLM seed 4002 completed at 5,002,094 tokens after recording its
+  retention baseline at 4,502,446. Primary far accuracy was turn 0%, truth
+  53.1%, entity 21.9%, property 47.7%, count 14.1%, and clarification 0%.
+  Clarification was again 100% under length normalization.
+- Completed the corrected three-seed IID condition. Mean primary far accuracy
+  was turn 16.7%, truth 65.9%, entity 20.6%, property 55.7%, count 25.3%, and
+  clarification 46.6%. The normalized means were 0%, 65.9%, 17.2%, 55.7%,
+  25.3%, and 100%, respectively.
+- Concluded only that IID CLM shows heterogeneous acquisition: truth/property
+  transfer, near-chance entity reference, poor far counting relative to
+  independent items, and severe candidate-length sensitivity for the two
+  conventional replies. Cross-condition evidence still does not exist.
+- Ordered CLM seed 4000 completed at 5,002,265 tokens. Relative to paired IID
+  seed 4000, primary far differences were 0 pp turn, 0 pp truth, +3.9 pp
+  entity, −17.2 pp property, +1.6 pp count, and −50 pp clarification.
+- The paired clarification gap vanishes under length normalization (both
+  100%), reinforcing that candidate scoring must accompany all condition
+  comparisons. Deferred any condition verdict until ordered seeds 4001–4002.
+- Ordered CLM seed 4001 completed at 5,002,787 tokens. Paired primary far
+  differences from IID were 0 pp turn, +11.7 truth, 0 entity, −2.3 property,
+  −26.6 count, and +60.2 clarification; the clarification gap was again zero
+  under length normalization.
+- Primary turn accuracy was 50% before and after withholding, but normalized
+  accuracy was 0% at both points. Recorded the nominal retention ratio of 1.0
+  while treating it as scoring-rule-sensitive rather than robust retention.
+- Ordered CLM seed 4002 completed at 5,000,103 tokens, completing the
+  three-seed ordered condition.
+- Paired ordered-minus-IID primary far differences averaged 0 pp turn, +15.1
+  truth, −0.8 entity, +2.9 property, −6.8 count, and +36.7 clarification.
+  Under length normalization the clarification difference was 0 for all seeds.
+- Treated improved truth judgment as the only reasonably consistent first
+  cross-condition signal. Property/count contrasts varied by seed, entity
+  stayed near chance, and retention remained uninterpretable because the held
+  skills were not robustly acquired before withholding.
+- Fixed caregiver RL seed 4000 completed at 5,019,278 tokens across 298 PPO
+  rollouts and three bounded sessions. Far accuracy was turn 100%, truth 78.1%,
+  entity 13.3%, property 49.2%, count 23.4%, and clarification 0%.
+- Turn remained 100% before and after a 489,573-token holdout under both
+  scoring rules, the first robust retention observation for a prespecified
+  skill. Entity was near chance and did not support a forgetting estimate.
+- Corrected the RL resource forecast after entity-stage PPO peaked near 10 GB
+  allocated and essentially filled the 12 GB card. Reserved subsequent
+  caregiver-RL sessions exclusively up to 11 GB physical VRAM rather than
+  changing frozen minibatching mid-comparison.
+- The fixed run completed without numerical/CUDA failure, but target-KL early
+  stopping fired on 187/298 rollouts and the maximum rollout-mean KL was 0.284;
+  retained this as a monitoring item rather than recalibrating after endpoints
+  had begun.
+- Fixed caregiver RL seed 4001 completed at 5,040,652 tokens across 308 PPO
+  rollouts and four resumed sessions. Far accuracy was turn 100%, truth 78.1%,
+  entity 14.8%, property 49.2%, count 25.8%, and clarification 0% primary/100%
+  normalized.
+- Turn was again 100% before and after withholding under both scoring rules.
+  This reproduces the fixed-caregiver turn acquisition/retention signal in a
+  second seed, while entity and the other far skills do not show broad RL
+  superiority.
+- PPO remained finite but target-KL early stopping fired on 209/308 rollouts;
+  mean rollout KL was 0.0237 and the maximum was 0.314.
+- Fixed caregiver RL seed 4002 completed at 5,038,048 tokens across 271 PPO
+  rollouts, completing the three-seed fixed condition. Far accuracy was turn
+  100%, truth 61.7%, entity 15.6%, property 39.1%, count 27.3%, clarification
+  0%.
+- The complete fixed-caregiver condition acquired and retained turn-taking at
+  100% in 3/3 seeds under both scoring rules. Paired primary differences from
+  IID averaged +83.3 pp turn, +6.8 truth, −6.0 entity, −9.9 property, +0.3
+  count, and −46.6 clarification.
+- Interpreted this as a narrow positive interaction result, not broad support
+  for artificial childhood: caregiver contingency reliably teaches the
+  interaction-specific turn convention but does not improve the wider skill
+  suite. Entity stays near/below chance and later-syllabus skills show tradeoffs.
+
+## 2026-07-28 12:51 EDT
+
+- Began the adaptive-caregiver condition with seed 4000 using the frozen
+  scientific configuration. Two bounded sessions completed cleanly at
+  1,549,121 and 3,019,960 visible tokens; the third session is in progress.
+- Preserved session boundaries so the shared RTX 4070 SUPER can be released
+  between resumptions. Each GPU acquisition and release is recorded in the
+  append-only shared resource ledger after checking both that ledger and live
+  GPU use.
+- The first session produced 90 PPO rollouts, 15 diagnostics, and 2,280
+  frontier probes. Turn-taking was mastered; truth and entity became eligible;
+  no OOM, CUDA, NaN, or trace failure occurred. No comparative interpretation
+  will be made until the seed reaches its endpoint, and no condition-level
+  claim until all three paired seeds complete.
+- Adaptive caregiver seed 4000 completed at 5,007,180 tokens across 341
+  rollouts and four bounded sessions. Far accuracy was 100% turn, 66.4% truth,
+  19.5% entity, 43.8% property, 15.6% count, and 0% clarification.
+- Turn was acquired early and retained at 100% under both scoring rules. Truth
+  was marked mastered only at 4.31M tokens. Entity was not robustly above
+  chance at the retention baseline, so it does not support a forgetting claim.
+- Recorded the result as one adaptive seed only. Its paired primary differences
+  from IID were +100, âˆ’11.7, +1.5, âˆ’18.7, âˆ’5.5, and âˆ’100 percentage points
+  across the six skills; this does not yet identify an adaptive effect.
+- Audited 341 finite rollouts: 301 target-KL early stops, mean KL 0.0180,
+  maximum KL 0.263, 25,426 retries, 8,638 frontier probes, and no
+  NaN/OOM/CUDA failure.
+
+## 2026-07-28 13:27 EDT
+
+- Committed and pushed the complete adaptive seed-4000 result, raw trace,
+  report, and timeline to draft PR #1 at commit `3f10315`; updated the PR body
+  without promoting the one-seed observation to a condition-level claim.
+- After confirming the shared ledger had no later resource claim and the GPU
+  had no compute process, started adaptive caregiver seed 4001 under the same
+  frozen configuration and a bounded 1,000-second session.
+- Seed 4001 session 1 ended cleanly at 1,566,816 tokens and 95 rollouts. Turn
+  was mastered, all six skills had received exposure, and the checkpoint was
+  released between sessions before beginning the first resume.
+- Seed 4001 session 2 ended cleanly at 3,055,693 tokens and 202 total
+  rollouts. Turn remained the only mastered skill. Released the GPU, checked
+  the shared state, and began session 3 from the saved rollout boundary.
+- Seed 4001 session 3 ended cleanly at 3,839,664 tokens and 260 total
+  rollouts. Truth joined turn as mastered; the expanded adaptive stage reduced
+  throughput as expected. Released and reacquired the clear GPU for the likely
+  endpoint session.
+- Seed 4001 session 4 stopped cleanly one rollout shy of budget at 4,978,912
+  tokens. A short fifth session completed the endpoint at 5,005,901 tokens and
+  346 rollouts.
+- Far accuracy was 50% turn, 78.1% truth, 22.7% entity, 57.0% property, 44.5%
+  count, and 0% clarification. Turn stayed 50% before and after withholding;
+  this is retention of partial acquisition and not replication of the fixed
+  caregiver's 100% turn result.
+- Audited 346 finite rollouts: 307 target-KL early stops, mean KL 0.0188,
+  maximum KL 0.582, 22,787 retries, 8,877 frontier probes, and no
+  NaN/OOM/CUDA failure. The KL maximum is retained as an explicit stability
+  warning.
+
+## 2026-07-28 14:39 EDT
+
+- Committed and pushed adaptive seed 4001, including its raw endpoint and
+  trace, at commit `724082f`.
+- Checked the shared ledger and live GPU state, then started adaptive caregiver
+  seed 4002. This is the third paired seed required for the adaptive condition
+  estimate; the protocol and 1,000-second session boundary remain unchanged.
+- Seed 4002 session 1 ended cleanly at 1,078,827 tokens and 63 rollouts. Turn
+  was mastered; the adaptive path was slower than seeds 4000â€“4001. Released
+  the GPU and resumed from the checkpoint only after the ledger/live check.
+- Seed 4002 session 2 ended cleanly at 2,683,088 tokens and 174 total
+  rollouts. Turn remained the only mastered skill. Released, checked shared
+  availability, and started session 3 from the exact saved boundary.
+- Seed 4002 session 3 ended cleanly at 3,911,368 tokens and 265 total
+  rollouts, with turn still the only mastered skill. Released and reacquired
+  the available GPU for the expected endpoint session.
+- Seed 4002 completed at 5,000,930 tokens and 346 rollouts. Primary far
+  accuracy was 100% turn, 53.1% truth, 15.6% entity, 39.1% property, 28.1%
+  count, and 0% clarification. Length normalization reduced turn to 50%.
+- Turn stayed 100% primary across the holdout but fell from 100% to 50% under
+  length normalization. Recorded this as scoring-sensitive retention rather
+  than claiming rule-invariant retention.
+- The complete adaptive condition averages 83.3% turn primary and 66.7%
+  normalized. Its paired turn advantage over IID is +66.7 points under either
+  reported condition mean, but adaptive trails fixed by 16.7 points primary
+  and 33.3 points normalized.
+- Across the broader suite, adaptive minus IID paired primary means are 0
+  truth, âˆ’1.3 entity, âˆ’9.1 property, +4.2 count, and âˆ’46.6 clarification
+  points. Adaptive scheduling therefore does not produce a broad advantage.
+- Audited seed 4002: 298/346 target-KL early stops, mean KL 0.0157, maximum
+  KL 0.093, 23,582 retries, and no NaN/OOM/CUDA failure.
+
+## 2026-07-28 15:50 EDT
+
+- Committed and pushed the complete three-seed adaptive-caregiver condition at
+  commit `f41621f`, and updated draft PR #1 with the aggregate comparison.
+- After confirming the resource ledger and GPU were clear, started adaptive
+  hybrid seed 4000 with the frozen 0.3 CLM weight. This begins the fifth and
+  final Stage-0 condition; no protocol parameters were changed.
+- Hybrid seed 4000 session 1 ended cleanly at 2,104,666 tokens and 122
+  rollouts, with turn mastered. The hybrid progressed faster than the pure
+  adaptive-RL runs. Released, checked availability, and resumed unchanged.
+- Hybrid seed 4000 session 2 ended cleanly at 3,893,134 tokens and 238 total
+  rollouts, with turn still the only mastered skill. Released and reacquired
+  the clear GPU for the expected endpoint session.
+- Hybrid seed 4000 completed at 5,013,900 tokens and 308 rollouts. Primary far
+  accuracy was 100% turn, 78.1% truth, 10.9% entity, 48.4% property, 31.3%
+  count, and 50% clarification.
+- Length normalization reversed the conventional-reply results to 0% turn and
+  100% clarification. Primary turn stayed 100% across withholding, while
+  normalized turn fell from 100% to 0%; recorded this as scoring-sensitive,
+  not rule-invariant, retention.
+- Audited 308 finite rollouts: 257 target-KL early stops, mean KL 0.0224,
+  maximum KL 0.768, 15,349 retries, and no NaN/OOM/CUDA failure. The KL
+  excursion is the largest observed and remains an explicit warning.
+
+## 2026-07-28 16:39 EDT
+
+- Committed and pushed hybrid seed 4000, including the raw result and trace, at
+  commit `187c045`.
+- Confirmed the shared ledger and live GPU were clear, then started adaptive
+  hybrid seed 4001 under the unchanged frozen protocol.
+- Hybrid seed 4001 session 1 ended cleanly at 2,150,415 tokens and 123
+  rollouts, with turn mastered. Released the GPU, rechecked the ledger/live
+  state, and resumed from the exact checkpoint.
+- Hybrid seed 4001 session 2 ended cleanly at 3,980,611 tokens and 241 total
+  rollouts; a third session completed at 5,011,302 tokens and 308 rollouts.
+- Final far accuracy was 0% turn, 78.1% truth, 18.0% entity, 82.8% property,
+  18.8% count, and 0% clarification primary/100% normalized. Turn was already
+  0% at the pre-holdout baseline despite early mastery, so this is maintenance
+  failure rather than holdout forgetting.
+- Audited 308 finite rollouts: 283 target-KL early stops, mean KL 0.0287,
+  maximum KL 1.039, 15,150 retries, and no NaN/OOM/CUDA failure. Hybrid
+  instability is now a central observed result.
+
+## 2026-07-28 17:33 EDT
+
+- Committed and pushed hybrid seed 4001 and its instability evidence at commit
+  `2dae651`.
+- Started final matrix endpoint, hybrid seed 4002, after the required resource
+  checks. Session 1 ended cleanly at 2,062,145 tokens and 89 rollouts, with
+  truth and turn mastered. Released the GPU before the next resume.
+- Hybrid seed 4002 session 2 ended cleanly at 3,835,124 tokens and 197 total
+  rollouts, with truth and turn still mastered. Released and rechecked the GPU
+  before the expected final endpoint session.
+- Hybrid seed 4002 completed at 5,007,577 tokens and 271 rollouts, completing
+  all 15 endpoints. Far accuracy was 100% turn, 60.9% truth, 17.2% entity,
+  64.1% property, 24.2% count, and 0% clarification primary/100% normalized.
+- Audited seed 4002: 248 target-KL early stops, mean KL 0.0422, maximum KL
+  0.325, 29,349 retries, and no NaN/OOM/CUDA failure.
+- Aggregated the five-condition matrix. Fixed caregiver is the only condition
+  with rule-invariant 100% turn acquisition and retention in all seeds.
+  Adaptive and hybrid preserve a narrower turn advantage over IID but add
+  seed/scoring instability and no broad skill-suite benefit.
+- Final scientific verdict: narrow positive evidence for contingent
+  interaction teaching an intrinsically interactive convention; no broad
+  validation of artificial childhood at this scale, and no evidence that the
+  added adaptive/hybrid complexity outperforms the fixed caregiver.
+
+## 2026-08-06 EDT
+
+- Publishing the complete workspace to GitHub per user request. The tracked
+  reports and curated traces are already present; 185 ignored logs, checkpoints,
+  and generated outputs total about 5.25 GB. Package those ignored results into
+  chunks below GitHub's 100 MB single-file limit rather than silently omitting
+  them.
+
+- Scope was narrowed to exclude the 5.25 GB results set. Keep tracked project
+  files, archive the remaining tokenizer corpora, and omit disposable
+  `__pycache__` files.

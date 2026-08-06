@@ -1,0 +1,295 @@
+{
+  "config": {
+    "budget": 5000000,
+    "seeds": [
+      4002
+    ],
+    "conditions": [
+      "iid_clm"
+    ],
+    "rollout_dialogues": 512,
+    "clm_rollout_tokens": 16384,
+    "diagnostic_interval": 100000,
+    "diagnostic_items": 128,
+    "overfit_test": false,
+    "overfit_rollouts": 30,
+    "hybrid_clm_weight": 0.3,
+    "policy_lr": 3e-05,
+    "target_kl": 0.03,
+    "retention_tokens": 500000,
+    "retention_skills": [
+      "turn",
+      "entity"
+    ],
+    "max_rollouts": null,
+    "session_seconds": 1000.0,
+    "resume": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-225530-iid_clm-4002\\latest.pt",
+    "layers": 8,
+    "hidden": 288,
+    "device": "cuda"
+  },
+  "results": [
+    {
+      "condition": "iid_clm",
+      "seed": 4002,
+      "visible_tokens": 5002094,
+      "rollouts": 271,
+      "completed": true,
+      "termination_reason": "budget_complete",
+      "wall_seconds_this_session": 115.8274451000616,
+      "diagnostics": {
+        "turn": {
+          "independent": 0.0,
+          "far": 0.0,
+          "independent_details": {
+            "length_normalized_accuracy": 0.0,
+            "mean_policy_entropy": 0.8027694523334503,
+            "candidate_selection_counts": {
+              "yes": 64,
+              "please tell me": 64
+            },
+            "candidate_token_length_counts": {
+              "2": 256,
+              "3": 128,
+              "4": 128
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.0,
+            "mean_policy_entropy": 0.3458462655544281,
+            "candidate_selection_counts": {
+              "yes": 128
+            },
+            "candidate_token_length_counts": {
+              "2": 256,
+              "3": 128,
+              "4": 128
+            }
+          }
+        },
+        "truth": {
+          "independent": 0.5078125,
+          "far": 0.53125,
+          "independent_details": {
+            "length_normalized_accuracy": 0.5078125,
+            "mean_policy_entropy": 0.6687312126159668,
+            "candidate_selection_counts": {
+              "yes": 128
+            },
+            "candidate_token_length_counts": {
+              "2": 256
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.53125,
+            "mean_policy_entropy": 0.668884864076972,
+            "candidate_selection_counts": {
+              "yes": 128
+            },
+            "candidate_token_length_counts": {
+              "2": 256
+            }
+          }
+        },
+        "entity": {
+          "independent": 0.1328125,
+          "far": 0.21875,
+          "independent_details": {
+            "length_normalized_accuracy": 0.203125,
+            "mean_policy_entropy": 0.673742750659585,
+            "candidate_selection_counts": {
+              "Asha": 128
+            },
+            "candidate_token_length_counts": {
+              "3": 256,
+              "4": 512
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.140625,
+            "mean_policy_entropy": 0.5632619583047926,
+            "candidate_selection_counts": {
+              "Asha": 128
+            },
+            "candidate_token_length_counts": {
+              "3": 256,
+              "4": 512
+            }
+          }
+        },
+        "property": {
+          "independent": 0.53125,
+          "far": 0.4765625,
+          "independent_details": {
+            "length_normalized_accuracy": 0.53125,
+            "mean_policy_entropy": 0.5469075532164425,
+            "candidate_selection_counts": {
+              "stone": 40,
+              "shell": 63,
+              "tile": 25
+            },
+            "candidate_token_length_counts": {
+              "2": 512
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.4765625,
+            "mean_policy_entropy": 0.5158726186491549,
+            "candidate_selection_counts": {
+              "stone": 36,
+              "shell": 70,
+              "tile": 22
+            },
+            "candidate_token_length_counts": {
+              "2": 512
+            }
+          }
+        },
+        "count": {
+          "independent": 0.453125,
+          "far": 0.140625,
+          "independent_details": {
+            "length_normalized_accuracy": 0.453125,
+            "mean_policy_entropy": 1.0888744495377978,
+            "candidate_selection_counts": {
+              "zero": 14,
+              "one": 26,
+              "five": 85,
+              "three": 3
+            },
+            "candidate_token_length_counts": {
+              "2": 768
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 0.140625,
+            "mean_policy_entropy": 1.3509064964018762,
+            "candidate_selection_counts": {
+              "five": 128
+            },
+            "candidate_token_length_counts": {
+              "2": 768
+            }
+          }
+        },
+        "clarify": {
+          "independent": 0.5,
+          "far": 0.0,
+          "independent_details": {
+            "length_normalized_accuracy": 1.0,
+            "mean_policy_entropy": 0.35123972687870264,
+            "candidate_selection_counts": {
+              "one": 64,
+              "please tell me the count": 64
+            },
+            "candidate_token_length_counts": {
+              "2": 384,
+              "6": 128
+            }
+          },
+          "far_details": {
+            "length_normalized_accuracy": 1.0,
+            "mean_policy_entropy": 0.47257372876629233,
+            "candidate_selection_counts": {
+              "one": 60,
+              "five": 68
+            },
+            "candidate_token_length_counts": {
+              "2": 384,
+              "6": 128
+            }
+          }
+        }
+      },
+      "retention_pre": {
+        "turn": {
+          "accuracy": 0.0,
+          "length_normalized_accuracy": 0.0,
+          "mean_policy_entropy": 0.10075668815989047,
+          "candidate_selection_counts": {
+            "yes": 128
+          },
+          "candidate_token_length_counts": {
+            "2": 256,
+            "3": 128,
+            "4": 128
+          }
+        },
+        "entity": {
+          "accuracy": 0.1953125,
+          "length_normalized_accuracy": 0.25,
+          "mean_policy_entropy": 0.4379973008617526,
+          "candidate_selection_counts": {
+            "Asha": 64,
+            "Keon": 63,
+            "Inez": 1
+          },
+          "candidate_token_length_counts": {
+            "3": 256,
+            "4": 512
+          }
+        }
+      },
+      "retention_post": {
+        "turn": {
+          "accuracy": 0.0,
+          "length_normalized_accuracy": 0.0,
+          "mean_policy_entropy": 0.3458462655544281,
+          "candidate_selection_counts": {
+            "yes": 128
+          },
+          "candidate_token_length_counts": {
+            "2": 256,
+            "3": 128,
+            "4": 128
+          }
+        },
+        "entity": {
+          "accuracy": 0.2265625,
+          "length_normalized_accuracy": 0.15625,
+          "mean_policy_entropy": 0.5575249922694638,
+          "candidate_selection_counts": {
+            "Asha": 128
+          },
+          "candidate_token_length_counts": {
+            "3": 256,
+            "4": 512
+          }
+        }
+      },
+      "retention_summary": {
+        "turn": {
+          "absolute_retention": 0.0,
+          "retention_drop": 0.0,
+          "chance": 0.25,
+          "retention_ratio": null
+        },
+        "entity": {
+          "absolute_retention": 0.2265625,
+          "retention_drop": -0.03125,
+          "chance": 0.16666666666666666,
+          "retention_ratio": null
+        }
+      },
+      "retention_start_visible": 4502446,
+      "retention_interval_tokens": 499648,
+      "curriculum": {
+        "adaptive": false,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [],
+        "skill_selections": {},
+        "review_selections": 0,
+        "review_opportunities": 0,
+        "frontier_probes": 0,
+        "withheld_skills": [
+          "entity",
+          "turn"
+        ],
+        "total_selections": 0
+      },
+      "checkpoint": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-225530-iid_clm-4002\\latest.pt",
+      "trace": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-225530-iid_clm-4002\\trace.json"
+    }
+  ]
+}

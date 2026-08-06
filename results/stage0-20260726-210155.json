@@ -1,0 +1,248 @@
+{
+  "config": {
+    "budget": 500000,
+    "seeds": [
+      3201
+    ],
+    "conditions": [
+      "adaptive_caregiver_rl"
+    ],
+    "rollout_dialogues": 512,
+    "diagnostic_interval": 100000,
+    "diagnostic_items": 128,
+    "overfit_test": false,
+    "overfit_rollouts": 30,
+    "hybrid_clm_weight": 0.3,
+    "policy_lr": 3e-05,
+    "target_kl": 0.03,
+    "max_rollouts": null,
+    "resume": null,
+    "layers": 8,
+    "hidden": 288,
+    "device": "cuda"
+  },
+  "results": [
+    {
+      "condition": "adaptive_caregiver_rl",
+      "seed": 3201,
+      "visible_tokens": 506795,
+      "rollouts": 30,
+      "completed": true,
+      "wall_seconds_this_session": 441.9671130999923,
+      "diagnostics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 1.0,
+          "far": 0.53125
+        },
+        "entity": {
+          "independent": 0.171875,
+          "far": 0.1875
+        },
+        "property": {
+          "independent": 0.4609375,
+          "far": 0.375
+        },
+        "count": {
+          "independent": 0.140625,
+          "far": 0.296875
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 5,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 101022,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4296875,
+                "far": 0.640625
+              },
+              "entity": {
+                "independent": 0.171875,
+                "far": 0.1953125
+              },
+              "property": {
+                "independent": 0.421875,
+                "far": 0.46875
+              },
+              "count": {
+                "independent": 0.1328125,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 204731,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.2265625
+              },
+              "property": {
+                "independent": 0.5,
+                "far": 0.3984375
+              },
+              "count": {
+                "independent": 0.1640625,
+                "far": 0.15625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311808,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.75
+              },
+              "entity": {
+                "independent": 0.171875,
+                "far": 0.1953125
+              },
+              "property": {
+                "independent": 0.5,
+                "far": 0.375
+              },
+              "count": {
+                "independent": 0.2109375,
+                "far": 0.1875
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 402595,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.53125
+              },
+              "entity": {
+                "independent": 0.171875,
+                "far": 0.15625
+              },
+              "property": {
+                "independent": 0.5078125,
+                "far": 0.3984375
+              },
+              "count": {
+                "independent": 0.140625,
+                "far": 0.3125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 506795,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.53125
+              },
+              "entity": {
+                "independent": 0.171875,
+                "far": 0.1875
+              },
+              "property": {
+                "independent": 0.4609375,
+                "far": 0.375
+              },
+              "count": {
+                "independent": 0.140625,
+                "far": 0.296875
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 9505,
+          "count": 184,
+          "clarify": 224,
+          "property": 201,
+          "truth": 2611,
+          "entity": 2635
+        },
+        "review_selections": 1227,
+        "review_opportunities": 6323,
+        "frontier_probes": 759,
+        "total_selections": 15360
+      },
+      "checkpoint": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-210155-adaptive_caregiver_rl-3201\\latest.pt",
+      "trace": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-210155-adaptive_caregiver_rl-3201\\trace.json"
+    }
+  ]
+}

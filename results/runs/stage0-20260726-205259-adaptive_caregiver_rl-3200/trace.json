@@ -1,0 +1,6065 @@
+{
+  "condition": "adaptive_caregiver_rl",
+  "seed": 3200,
+  "config": {
+    "budget": 500000,
+    "seeds": [
+      3200
+    ],
+    "conditions": [
+      "adaptive_caregiver_rl"
+    ],
+    "rollout_dialogues": 512,
+    "diagnostic_interval": 100000,
+    "diagnostic_items": 128,
+    "hybrid_clm_weight": 0.3,
+    "policy_lr": 3e-05,
+    "target_kl": 0.03,
+    "layers": 8,
+    "hidden": 288,
+    "device": "cuda"
+  },
+  "configuration_hash": "5621d33db84ba61eb69b0a5e9da94041c2ebdeda3acbd9c87b9ec5f7601a2853",
+  "events": [
+    {
+      "rollout": 1,
+      "visible_tokens": 14107,
+      "rollout_wall_seconds": 1.4786860999884084,
+      "tokens_per_second": 9540.226286099927,
+      "training_metrics": {
+        "kl": 0.03209549933671951,
+        "clip_fraction": 0.0,
+        "entropy": 0.5611399412155151,
+        "value_error": 1.0592025518417358,
+        "explained_variance": -0.18290832580446592,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 1,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 0.6048803000012413
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.873121100012213,
+        "dialogues": 512,
+        "transitions": 675,
+        "retries": 163,
+        "attempt1_accuracy": 0.7578125,
+        "eventual_success": 0.974609375,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.596740740740744
+        },
+        "transitions_by_skill": {
+          "turn": 675
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 499,
+            "yes": 176
+          }
+        },
+        "dialogue_ids_hash": "901718e6cfe7c923a18711390bb6262537ce8df0e49d9ab9b9f33359e80ebd29"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 512
+        },
+        "review_selections": 0,
+        "total_selections": 512
+      },
+      "gpu_peak_allocated_mb": 5438.39306640625,
+      "gpu_peak_reserved_mb": 5868.0
+    },
+    {
+      "rollout": 2,
+      "visible_tokens": 25909,
+      "rollout_wall_seconds": 0.9789205999113619,
+      "tokens_per_second": 12056.136116727579,
+      "training_metrics": {
+        "kl": 0.029160726815462112,
+        "clip_fraction": 0.0,
+        "entropy": 0.36226561665534973,
+        "value_error": 0.46591898798942566,
+        "explained_variance": -0.23240911695620015,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 1,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 0.44015389995183796
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5378326999489218,
+        "dialogues": 512,
+        "transitions": 583,
+        "retries": 71,
+        "attempt1_accuracy": 0.875,
+        "eventual_success": 0.99609375,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.7983704974271035
+        },
+        "transitions_by_skill": {
+          "turn": 583
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 510,
+            "yes": 72,
+            "not ready": 1
+          }
+        },
+        "dialogue_ids_hash": "cf84fb269034e6f8dd86d38a012716792f3c815ee55634e649edd093bc48a8f5"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 1024
+        },
+        "review_selections": 0,
+        "total_selections": 1024
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6912.0
+    },
+    {
+      "rollout": 3,
+      "visible_tokens": 36666,
+      "rollout_wall_seconds": 1.762976299971342,
+      "tokens_per_second": 6101.613504489459,
+      "training_metrics": {
+        "kl": 0.02521799939374129,
+        "clip_fraction": 0.0375,
+        "entropy": 0.08692899122834205,
+        "value_error": 0.0807268638163805,
+        "explained_variance": -0.4694529830830336,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 5,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 1.1184433000162244
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.643871400039643,
+        "dialogues": 512,
+        "transitions": 539,
+        "retries": 27,
+        "attempt1_accuracy": 0.94921875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9175324675324686
+        },
+        "transitions_by_skill": {
+          "turn": 539
+        },
+        "candidate_distribution": {
+          "turn": {
+            "yes": 27,
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "b1727375beb6922af428a9733cebe7fde7addb542a1f09ef1125ba8636832d9c"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 1536
+        },
+        "review_selections": 0,
+        "total_selections": 1536
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6912.0
+    },
+    {
+      "rollout": 4,
+      "visible_tokens": 46889,
+      "rollout_wall_seconds": 3.544150899979286,
+      "tokens_per_second": 2884.47086157075,
+      "training_metrics": {
+        "kl": 0.000435600315945016,
+        "clip_fraction": 0.0008680555555555555,
+        "entropy": 0.030636303437252838,
+        "value_error": 0.005997280202185114,
+        "explained_variance": -2.5234016531239214,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.999443299951963
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5440233999397606,
+        "dialogues": 512,
+        "transitions": 513,
+        "retries": 1,
+        "attempt1_accuracy": 0.998046875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9967836257309942
+        },
+        "transitions_by_skill": {
+          "turn": 513
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 1
+          }
+        },
+        "dialogue_ids_hash": "0f5ca0b78a22fccac6870abfdcd9de4f86f82fa319cdf1f6a216c620585d6781"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 2048
+        },
+        "review_selections": 0,
+        "total_selections": 2048
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6912.0
+    },
+    {
+      "rollout": 5,
+      "visible_tokens": 57188,
+      "rollout_wall_seconds": 3.5251839000266045,
+      "tokens_per_second": 2921.5497097675593,
+      "training_metrics": {
+        "kl": 0.0015622784073154132,
+        "clip_fraction": 0.009548611111111112,
+        "entropy": 0.014846785511407588,
+        "value_error": 0.007550898399333366,
+        "explained_variance": 0.05450976973482968,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.951028299983591
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5734036999056116,
+        "dialogues": 512,
+        "transitions": 518,
+        "retries": 6,
+        "attempt1_accuracy": 0.98828125,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9808880308880311
+        },
+        "transitions_by_skill": {
+          "turn": 518
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 4,
+            "not ready": 2
+          }
+        },
+        "dialogue_ids_hash": "4b834b83af4bcc8e71a42355e768dcea402d78f441d66cf23800f64c35bc5c8d"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 2560
+        },
+        "review_selections": 0,
+        "total_selections": 2560
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 6,
+      "visible_tokens": 67472,
+      "rollout_wall_seconds": 3.395469499984756,
+      "tokens_per_second": 3028.7416806559945,
+      "training_metrics": {
+        "kl": 4.176981747150421e-07,
+        "clip_fraction": 0.0,
+        "entropy": 0.01659911312162876,
+        "value_error": 0.00040741264820098877,
+        "explained_variance": -63720.81233018637,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.769346500048414
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6253844000166282,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "d8e680e9e4a76b9aacc9fb5c0335b7857deb8962ec8edba580e07599a44499b3"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 3072
+        },
+        "review_selections": 0,
+        "total_selections": 3072
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 7,
+      "visible_tokens": 77745,
+      "rollout_wall_seconds": 3.431783700012602,
+      "tokens_per_second": 2993.4870312375097,
+      "training_metrics": {
+        "kl": 0.0013195034633908006,
+        "clip_fraction": 0.001736111111111111,
+        "entropy": 0.015297384466975927,
+        "value_error": 0.0043967591417539455,
+        "explained_variance": 0.22098158205894103,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.802933400031179
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6281594999600202,
+        "dialogues": 512,
+        "transitions": 514,
+        "retries": 2,
+        "attempt1_accuracy": 0.99609375,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9935797665369651
+        },
+        "transitions_by_skill": {
+          "turn": 514
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 2
+          }
+        },
+        "dialogue_ids_hash": "86568499a507abf5268e2b19da5ef87a02c1e50ba106c63fa26b621e510014b1"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 3584
+        },
+        "review_selections": 0,
+        "total_selections": 3584
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 8,
+      "visible_tokens": 87988,
+      "rollout_wall_seconds": 3.648913800017908,
+      "tokens_per_second": 2807.1367429808097,
+      "training_metrics": {
+        "kl": 0.00042727755175696477,
+        "clip_fraction": 0.0008680555555555555,
+        "entropy": 0.006937275925237272,
+        "value_error": 0.0043406126658535665,
+        "explained_variance": 0.11001786696307747,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.981180700007826
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6668744999915361,
+        "dialogues": 512,
+        "transitions": 513,
+        "retries": 1,
+        "attempt1_accuracy": 0.998046875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9967836257309942
+        },
+        "transitions_by_skill": {
+          "turn": 513
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 1
+          }
+        },
+        "dialogue_ids_hash": "faa634f3668daa970dfe6d74dcc7ae787ef3c8e24d6ad17fe2c511c80b5bf5a0"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 4096
+        },
+        "review_selections": 0,
+        "total_selections": 4096
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 9,
+      "visible_tokens": 98290,
+      "rollout_wall_seconds": 3.4810108999954537,
+      "tokens_per_second": 2959.485131176537,
+      "training_metrics": {
+        "kl": 5.296897143125534e-09,
+        "clip_fraction": 0.0,
+        "entropy": 0.0062819332524668425,
+        "value_error": 0.0013235658407211304,
+        "explained_variance": -114439.91796875,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.7959065000759438
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6843712000409141,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "d9e32e93a471b5b0f68827b0e20a26a35750081a501067006c3f2d9d0de0753e"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {},
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 4608
+        },
+        "review_selections": 0,
+        "total_selections": 4608
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 10,
+      "visible_tokens": 108568,
+      "rollout_wall_seconds": 4.56624129996635,
+      "tokens_per_second": 2250.866593510015,
+      "training_metrics": {
+        "kl": 4.394678398966789e-08,
+        "clip_fraction": 0.0,
+        "entropy": 0.008047071314649656,
+        "value_error": 0.00046296417713165283,
+        "explained_variance": -19089.413115918636,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.7228877000743523
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6372511000372469,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "a5b8186079d232b5d7a7744446156e1c9ac3f6930f297919cdd6b1bf1e297f5c"
+      },
+      "diagnostic_metrics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 0.4921875,
+          "far": 0.46875
+        },
+        "entity": {
+          "independent": 0.1328125,
+          "far": 0.21875
+        },
+        "property": {
+          "independent": 0.4921875,
+          "far": 0.3359375
+        },
+        "count": {
+          "independent": 0.1796875,
+          "far": 0.1484375
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          }
+        ],
+        "skill_selections": {
+          "turn": 5120
+        },
+        "review_selections": 0,
+        "total_selections": 5120
+      },
+      "gpu_peak_allocated_mb": 5664.150390625,
+      "gpu_peak_reserved_mb": 6946.0
+    },
+    {
+      "rollout": 11,
+      "visible_tokens": 118804,
+      "rollout_wall_seconds": 3.6210418000118807,
+      "tokens_per_second": 2826.810781352045,
+      "training_metrics": {
+        "kl": 3.083318006247282e-06,
+        "clip_fraction": 0.0,
+        "entropy": 0.01673744386062026,
+        "value_error": 0.00016404688358306885,
+        "explained_variance": -2564.770410001278,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.909970600041561
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.7104158999864012,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "5eb8005f2d9b65ff3e39a0b5a4a5862dcd9c31655cb5e3b47778d3d29e1e0d90"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 5632
+        },
+        "review_selections": 0,
+        "total_selections": 5632
+      },
+      "gpu_peak_allocated_mb": 1265.21875,
+      "gpu_peak_reserved_mb": 1342.0
+    },
+    {
+      "rollout": 12,
+      "visible_tokens": 129110,
+      "rollout_wall_seconds": 3.7684810999780893,
+      "tokens_per_second": 2734.788825147596,
+      "training_metrics": {
+        "kl": 0.002874869698037704,
+        "clip_fraction": 0.005208333333333333,
+        "entropy": 0.023558751679956913,
+        "value_error": 0.004600684346062028,
+        "explained_variance": 0.13223506008551222,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 3.0880469999974594
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6796809999505058,
+        "dialogues": 512,
+        "transitions": 516,
+        "retries": 4,
+        "attempt1_accuracy": 0.9921875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9872093023255816
+        },
+        "transitions_by_skill": {
+          "turn": 516
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 4
+          }
+        },
+        "dialogue_ids_hash": "e780ab2adf99eed6c443f8ad28708b0b71980c27e248f173f7fc885a2a852390"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 6144
+        },
+        "review_selections": 0,
+        "total_selections": 6144
+      },
+      "gpu_peak_allocated_mb": 2170.21728515625,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 13,
+      "visible_tokens": 139377,
+      "rollout_wall_seconds": 3.865999100031331,
+      "tokens_per_second": 2655.717121071444,
+      "training_metrics": {
+        "kl": 0.0006368931693335375,
+        "clip_fraction": 0.003472222222222222,
+        "entropy": 0.012643006888942586,
+        "value_error": 0.005268832668662071,
+        "explained_variance": -0.6973236063568078,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 3.21690060000401
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6483249999582767,
+        "dialogues": 512,
+        "transitions": 514,
+        "retries": 2,
+        "attempt1_accuracy": 0.99609375,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9935797665369651
+        },
+        "transitions_by_skill": {
+          "turn": 514
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 2
+          }
+        },
+        "dialogue_ids_hash": "d06669b95557df25ec94f50b148373a12dae11f9da21e134a22c3f52a450c7d0"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 6656
+        },
+        "review_selections": 0,
+        "total_selections": 6656
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 14,
+      "visible_tokens": 149616,
+      "rollout_wall_seconds": 3.706895099952817,
+      "tokens_per_second": 2762.1499189794517,
+      "training_metrics": {
+        "kl": 0.0003541695574919383,
+        "clip_fraction": 0.0008680555555555555,
+        "entropy": 0.008742465534143977,
+        "value_error": 0.0025702420130579006,
+        "explained_variance": -0.5247633301977366,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 3.123278700048104
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5828935001045465,
+        "dialogues": 512,
+        "transitions": 513,
+        "retries": 1,
+        "attempt1_accuracy": 0.998046875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9967836257309942
+        },
+        "transitions_by_skill": {
+          "turn": 513
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "not ready": 1
+          }
+        },
+        "dialogue_ids_hash": "3f97ccaa187de0949be41f66f7c51e004be8f9b1223a9a9c2d0587f7fcd2fc4f"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 7168
+        },
+        "review_selections": 0,
+        "total_selections": 7168
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 15,
+      "visible_tokens": 159895,
+      "rollout_wall_seconds": 3.646909700008109,
+      "tokens_per_second": 2818.550730767242,
+      "training_metrics": {
+        "kl": 2.5029294192790985e-09,
+        "clip_fraction": 0.0,
+        "entropy": 0.009426290751434863,
+        "value_error": 0.00033496320247650146,
+        "explained_variance": -5771.31403440237,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 3.106811200035736
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5390254000667483,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "a1f2515c69504262b21c00e679f9e9f9646e97fe0bc51c26f214229dbe70114a"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 7680
+        },
+        "review_selections": 0,
+        "total_selections": 7680
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 16,
+      "visible_tokens": 170153,
+      "rollout_wall_seconds": 3.5420355000533164,
+      "tokens_per_second": 2896.0748699005394,
+      "training_metrics": {
+        "kl": 0.0005446771780649821,
+        "clip_fraction": 0.0008680555555555555,
+        "entropy": 0.0060832624116705526,
+        "value_error": 0.0009507374036022358,
+        "explained_variance": 0.11184601625448576,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.8987898000050336
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6424621000187472,
+        "dialogues": 512,
+        "transitions": 513,
+        "retries": 1,
+        "attempt1_accuracy": 0.998046875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9967836257309942
+        },
+        "transitions_by_skill": {
+          "turn": 513
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 1
+          }
+        },
+        "dialogue_ids_hash": "ac2e970879e965b5d49a46bca1720f172057f08b477995d07572db88e950c199"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 8192
+        },
+        "review_selections": 0,
+        "total_selections": 8192
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 17,
+      "visible_tokens": 180416,
+      "rollout_wall_seconds": 3.6037234999239445,
+      "tokens_per_second": 2847.8877472748945,
+      "training_metrics": {
+        "kl": 2.6775524020195007e-09,
+        "clip_fraction": 0.0,
+        "entropy": 0.004162761208135635,
+        "value_error": 0.000324055552482605,
+        "explained_variance": -6808.96454320848,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.995642099995166
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6073632000479847,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "90b00b6dc5a5c32b8cb730d2afa1c091b43a0347ab85543c8e8935c6e768011b"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 8704
+        },
+        "review_selections": 0,
+        "total_selections": 8704
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 18,
+      "visible_tokens": 190612,
+      "rollout_wall_seconds": 3.447297399980016,
+      "tokens_per_second": 2957.6792533359917,
+      "training_metrics": {
+        "kl": 1.4668330550193787e-08,
+        "clip_fraction": 0.0,
+        "entropy": 0.004392489354358986,
+        "value_error": 9.177625179290771e-05,
+        "explained_variance": -1523.738036096096,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 16,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.838349199970253
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.608265700051561,
+        "dialogues": 512,
+        "transitions": 512,
+        "retries": 0,
+        "attempt1_accuracy": 1.0,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "turn": 512
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512
+          }
+        },
+        "dialogue_ids_hash": "62934c4d4760ee7a8e7094a78908ca5249eaf060e8566c7a078850bfe739ed1b"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [],
+        "streak": {
+          "turn": 1,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 9216
+        },
+        "review_selections": 0,
+        "total_selections": 9216
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2498.0
+    },
+    {
+      "rollout": 19,
+      "visible_tokens": 200837,
+      "rollout_wall_seconds": 4.255194599973038,
+      "tokens_per_second": 2402.9453318221426,
+      "training_metrics": {
+        "kl": 0.0007588536892500189,
+        "clip_fraction": 0.0008680555555555555,
+        "entropy": 0.0036728311226599747,
+        "value_error": 0.0012162044004071504,
+        "explained_variance": 0.19162555183150842,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 18,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 2.6656175000825897
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.5535127999028191,
+        "dialogues": 512,
+        "transitions": 513,
+        "retries": 1,
+        "attempt1_accuracy": 0.998046875,
+        "eventual_success": 1.0,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9967836257309942
+        },
+        "transitions_by_skill": {
+          "turn": 513
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 512,
+            "yes": 1
+          }
+        },
+        "dialogue_ids_hash": "ede28d853ed3c3b7db28d80282be48281063fc858743c3c55af5bf99f3c1393b"
+      },
+      "diagnostic_metrics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 0.4921875,
+          "far": 0.46875
+        },
+        "entity": {
+          "independent": 0.1328125,
+          "far": 0.21875
+        },
+        "property": {
+          "independent": 0.3125,
+          "far": 0.1953125
+        },
+        "count": {
+          "independent": 0.1875,
+          "far": 0.1953125
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 2,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 9728
+        },
+        "review_selections": 0,
+        "total_selections": 9728
+      },
+      "gpu_peak_allocated_mb": 2175.12939453125,
+      "gpu_peak_reserved_mb": 2674.0
+    },
+    {
+      "rollout": 20,
+      "visible_tokens": 228630,
+      "rollout_wall_seconds": 20.1661005000351,
+      "tokens_per_second": 1378.203981476321,
+      "training_metrics": {
+        "kl": 0.011548361362656578,
+        "clip_fraction": 0.1637369804084301,
+        "entropy": 0.9263473507016897,
+        "value_error": 0.3331709052436054,
+        "explained_variance": 0.10493883563130701,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 32,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 19.237729100044817
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.9276514999801293,
+        "dialogues": 512,
+        "transitions": 984,
+        "retries": 472,
+        "attempt1_accuracy": 0.451171875,
+        "eventual_success": 0.72265625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "truth": 0.2458115183246063,
+          "entity": -0.08636363636363639,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "truth": 382,
+          "entity": 506,
+          "turn": 96
+        },
+        "candidate_distribution": {
+          "truth": {
+            "no": 378,
+            "yes": 4
+          },
+          "entity": {
+            "Lina": 127,
+            "Niko": 107,
+            "Mira": 102,
+            "Sela": 51,
+            "Omar": 60,
+            "Tavi": 59
+          },
+          "turn": {
+            "ready": 96
+          }
+        },
+        "dialogue_ids_hash": "9873877201ee13256e4406c6be7c3659c6db8b4c5bef62e6b1df0032b9c2369a"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 2,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 9824,
+          "truth": 214,
+          "entity": 202
+        },
+        "review_selections": 96,
+        "total_selections": 10240
+      },
+      "gpu_peak_allocated_mb": 8015.521484375,
+      "gpu_peak_reserved_mb": 12746.0
+    },
+    {
+      "rollout": 21,
+      "visible_tokens": 256468,
+      "rollout_wall_seconds": 29.261330600013025,
+      "tokens_per_second": 951.3579672958416,
+      "training_metrics": {
+        "kl": 0.009199941472616047,
+        "clip_fraction": 0.154878162429668,
+        "entropy": 0.9321637470275164,
+        "value_error": 0.24319162778556347,
+        "explained_variance": 0.35631754878031674,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 32,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 28.187432099948637
+      },
+      "collection_metrics": {
+        "collection_seconds": 1.0729970999527723,
+        "dialogues": 512,
+        "transitions": 981,
+        "retries": 469,
+        "attempt1_accuracy": 0.455078125,
+        "eventual_success": 0.72265625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "truth": 0.21415094339622545,
+          "turn": 1.0,
+          "entity": -0.07848605577689248
+        },
+        "transitions_by_skill": {
+          "truth": 371,
+          "turn": 108,
+          "entity": 502
+        },
+        "candidate_distribution": {
+          "truth": {
+            "no": 358,
+            "yes": 13
+          },
+          "turn": {
+            "ready": 108
+          },
+          "entity": {
+            "Niko": 79,
+            "Mira": 141,
+            "Lina": 99,
+            "Omar": 78,
+            "Tavi": 54,
+            "Sela": 51
+          }
+        },
+        "dialogue_ids_hash": "84c45e17e9743e337cf39742589559eaccba7aff8b90b0eaa8d719e0c2a43437"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 2,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 9932,
+          "truth": 414,
+          "entity": 406
+        },
+        "review_selections": 204,
+        "total_selections": 10752
+      },
+      "gpu_peak_allocated_mb": 8230.75341796875,
+      "gpu_peak_reserved_mb": 14770.0
+    },
+    {
+      "rollout": 22,
+      "visible_tokens": 283741,
+      "rollout_wall_seconds": 18.694500699988566,
+      "tokens_per_second": 1458.8782250823463,
+      "training_metrics": {
+        "kl": 0.006702541279082652,
+        "clip_fraction": 0.09980468754656613,
+        "entropy": 0.9023155672475696,
+        "value_error": 0.21965747349895537,
+        "explained_variance": 0.41477231523325986,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 32,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 17.74546260002535
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.9481728000100702,
+        "dialogues": 512,
+        "transitions": 970,
+        "retries": 458,
+        "attempt1_accuracy": 0.46875,
+        "eventual_success": 0.72265625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": -0.08326488706365502,
+          "truth": 0.2410290237467008,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "entity": 487,
+          "truth": 379,
+          "turn": 104
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Omar": 78,
+            "Tavi": 28,
+            "Lina": 122,
+            "Mira": 128,
+            "Niko": 75,
+            "Sela": 56
+          },
+          "truth": {
+            "no": 360,
+            "yes": 19
+          },
+          "turn": {
+            "ready": 104
+          }
+        },
+        "dialogue_ids_hash": "540c847f9c1bfb19ec444178aff14544d401400fe2be1e52e58d39cbc090e1bd"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 2,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10036,
+          "truth": 625,
+          "entity": 603
+        },
+        "review_selections": 308,
+        "total_selections": 11264
+      },
+      "gpu_peak_allocated_mb": 8230.75341796875,
+      "gpu_peak_reserved_mb": 14770.0
+    },
+    {
+      "rollout": 23,
+      "visible_tokens": 311488,
+      "rollout_wall_seconds": 23.84425830002874,
+      "tokens_per_second": 1163.6763723519366,
+      "training_metrics": {
+        "kl": 0.013783642381895334,
+        "clip_fraction": 0.1875,
+        "entropy": 1.001402722671628,
+        "value_error": 0.224724514875561,
+        "explained_variance": 0.41476842076044673,
+        "early_stopped_for_kl": false,
+        "optimizer_minibatches": 32,
+        "epochs_completed": 2,
+        "ppo_update_seconds": 21.981234600069
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.8946358999237418,
+        "dialogues": 512,
+        "transitions": 980,
+        "retries": 468,
+        "attempt1_accuracy": 0.451171875,
+        "eventual_success": 0.728515625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": -0.07616387337057734,
+          "truth": 0.2757183908045966,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "entity": 537,
+          "truth": 348,
+          "turn": 95
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Niko": 81,
+            "Mira": 155,
+            "Omar": 80,
+            "Lina": 123,
+            "Sela": 66,
+            "Tavi": 32
+          },
+          "truth": {
+            "no": 291,
+            "yes": 57
+          },
+          "turn": {
+            "ready": 95
+          }
+        },
+        "dialogue_ids_hash": "ac115c12842c27f9d4a1f24b43838b0c3f4ff917333804f9bc50ac1b5f83f357"
+      },
+      "diagnostic_metrics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 0.4921875,
+          "far": 0.46875
+        },
+        "entity": {
+          "independent": 0.1328125,
+          "far": 0.21875
+        },
+        "property": {
+          "independent": 0.4765625,
+          "far": 0.421875
+        },
+        "count": {
+          "independent": 0.1875,
+          "far": 0.1953125
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 3,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10131,
+          "truth": 824,
+          "entity": 821
+        },
+        "review_selections": 403,
+        "total_selections": 11776
+      },
+      "gpu_peak_allocated_mb": 8230.75341796875,
+      "gpu_peak_reserved_mb": 14770.0
+    },
+    {
+      "rollout": 24,
+      "visible_tokens": 337138,
+      "rollout_wall_seconds": 9.748978000017814,
+      "tokens_per_second": 2631.0450182524905,
+      "training_metrics": {
+        "kl": 0.019758788144422904,
+        "clip_fraction": 0.171875,
+        "entropy": 1.0482948571443558,
+        "value_error": 0.21231746301054955,
+        "explained_variance": 0.4990757818849849,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 8,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 8.937832199968398
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.8102102000266314,
+        "dialogues": 512,
+        "transitions": 916,
+        "retries": 404,
+        "attempt1_accuracy": 0.541015625,
+        "eventual_success": 0.7734375,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 0.9855263157894736,
+          "truth": 0.35343137254901863,
+          "entity": -0.03629032258064516
+        },
+        "transitions_by_skill": {
+          "turn": 114,
+          "truth": 306,
+          "entity": 496
+        },
+        "candidate_distribution": {
+          "turn": {
+            "yes": 1,
+            "ready": 113
+          },
+          "truth": {
+            "no": 264,
+            "yes": 42
+          },
+          "entity": {
+            "Mira": 145,
+            "Sela": 46,
+            "Lina": 140,
+            "Omar": 54,
+            "Niko": 81,
+            "Tavi": 30
+          }
+        },
+        "dialogue_ids_hash": "e5a63fd265a3d381d522ee39e5c46143805bdd3484545af31d0aa9c3c1df885a"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 3,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10244,
+          "truth": 1012,
+          "entity": 1032
+        },
+        "review_selections": 516,
+        "total_selections": 12288
+      },
+      "gpu_peak_allocated_mb": 8461.1689453125,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 25,
+      "visible_tokens": 362662,
+      "rollout_wall_seconds": 8.148150600027293,
+      "tokens_per_second": 3132.4899664857085,
+      "training_metrics": {
+        "kl": 0.02370058365964464,
+        "clip_fraction": 0.28125,
+        "entropy": 1.0475493165162892,
+        "value_error": 0.24342972727922293,
+        "explained_variance": 0.4440438317568237,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 13,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 7.304521400015801
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.8426849999232218,
+        "dialogues": 512,
+        "transitions": 914,
+        "retries": 402,
+        "attempt1_accuracy": 0.529296875,
+        "eventual_success": 0.751953125,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "truth": 0.41531249999999975,
+          "entity": -0.06844758064516127,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "truth": 320,
+          "entity": 496,
+          "turn": 98
+        },
+        "candidate_distribution": {
+          "truth": {
+            "no": 228,
+            "yes": 92
+          },
+          "entity": {
+            "Lina": 147,
+            "Mira": 119,
+            "Tavi": 25,
+            "Niko": 79,
+            "Omar": 48,
+            "Sela": 78
+          },
+          "turn": {
+            "ready": 98
+          }
+        },
+        "dialogue_ids_hash": "877c96e0582b104004e5208a4636718fb4ea8dce77956edc3bdd0d2fb5d67ead"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 3,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10342,
+          "truth": 1222,
+          "entity": 1236
+        },
+        "review_selections": 614,
+        "total_selections": 12800
+      },
+      "gpu_peak_allocated_mb": 8461.1689453125,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 26,
+      "visible_tokens": 385627,
+      "rollout_wall_seconds": 4.5770473999436945,
+      "tokens_per_second": 5017.426736782868,
+      "training_metrics": {
+        "kl": 0.02111237682402134,
+        "clip_fraction": 0.08333333333333333,
+        "entropy": 1.0467763741811116,
+        "value_error": 0.220759908358256,
+        "explained_variance": 0.5307662959383094,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 3,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 3.8037918999325484
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.7722963000414893,
+        "dialogues": 512,
+        "transitions": 833,
+        "retries": 321,
+        "attempt1_accuracy": 0.642578125,
+        "eventual_success": 0.775390625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": -0.0726980728051392,
+          "truth": 0.702851711026616,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "entity": 467,
+          "truth": 263,
+          "turn": 103
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Lina": 102,
+            "Mira": 149,
+            "Sela": 62,
+            "Niko": 94,
+            "Omar": 45,
+            "Tavi": 15
+          },
+          "truth": {
+            "yes": 121,
+            "no": 142
+          },
+          "turn": {
+            "ready": 103
+          }
+        },
+        "dialogue_ids_hash": "2ecd1d65d4167d3c25940dc8a07e1020ee3f0e1633704d5b8c0ce777f8f10cb8"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 3,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10445,
+          "truth": 1439,
+          "entity": 1428
+        },
+        "review_selections": 717,
+        "total_selections": 13312
+      },
+      "gpu_peak_allocated_mb": 8461.1689453125,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 27,
+      "visible_tokens": 409739,
+      "rollout_wall_seconds": 23.480498300050385,
+      "tokens_per_second": 1026.8947316142885,
+      "training_metrics": {
+        "kl": 0.02412029369068997,
+        "clip_fraction": 0.29927884615384615,
+        "entropy": 1.078523943057427,
+        "value_error": 0.21174674251904854,
+        "explained_variance": 0.5183781259605409,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 13,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 21.72327990003396
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.781315500033088,
+        "dialogues": 512,
+        "transitions": 867,
+        "retries": 355,
+        "attempt1_accuracy": 0.609375,
+        "eventual_success": 0.76953125,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": -0.07994296577946773,
+          "truth": 0.7180672268907562,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "entity": 526,
+          "truth": 238,
+          "turn": 103
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Lina": 146,
+            "Niko": 74,
+            "Mira": 142,
+            "Omar": 54,
+            "Sela": 95,
+            "Tavi": 15
+          },
+          "truth": {
+            "yes": 135,
+            "no": 103
+          },
+          "turn": {
+            "ready": 103
+          }
+        },
+        "dialogue_ids_hash": "91279e0e612106c386dfe976ed4e556fa53694cdfda28cb7b6aff3a628a1caef"
+      },
+      "diagnostic_metrics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 0.6484375,
+          "far": 0.78125
+        },
+        "entity": {
+          "independent": 0.1328125,
+          "far": 0.21875
+        },
+        "property": {
+          "independent": 0.265625,
+          "far": 0.4453125
+        },
+        "count": {
+          "independent": 0.1875,
+          "far": 0.09375
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 4,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10548,
+          "truth": 1637,
+          "entity": 1639
+        },
+        "review_selections": 820,
+        "total_selections": 13824
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 28,
+      "visible_tokens": 432426,
+      "rollout_wall_seconds": 3.2098866999149323,
+      "tokens_per_second": 7067.850712799691,
+      "training_metrics": {
+        "kl": 0.027173171006143092,
+        "clip_fraction": 0.14453125,
+        "entropy": 0.9501491039991379,
+        "value_error": 0.2530308961868286,
+        "explained_variance": 0.5045769419246717,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 4,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 2.415259899920784
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.793675700086169,
+        "dialogues": 512,
+        "transitions": 822,
+        "retries": 310,
+        "attempt1_accuracy": 0.65234375,
+        "eventual_success": 0.7890625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": -0.01961206896551718,
+          "truth": 0.6821839080459767,
+          "turn": 0.9829896907216494
+        },
+        "transitions_by_skill": {
+          "entity": 464,
+          "truth": 261,
+          "turn": 97
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Lina": 112,
+            "Mira": 143,
+            "Omar": 59,
+            "Sela": 60,
+            "Niko": 66,
+            "Tavi": 24
+          },
+          "truth": {
+            "yes": 163,
+            "no": 98
+          },
+          "turn": {
+            "ready": 96,
+            "yes": 1
+          }
+        },
+        "dialogue_ids_hash": "19d50f060a5508fd7693a802d6c9e633f3625d53fe6b37f0929b1ea698f39e95"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 4,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10644,
+          "truth": 1849,
+          "entity": 1843
+        },
+        "review_selections": 916,
+        "total_selections": 14336
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 29,
+      "visible_tokens": 453808,
+      "rollout_wall_seconds": 12.608263299916871,
+      "tokens_per_second": 1695.8719445636082,
+      "training_metrics": {
+        "kl": 0.02785194530669186,
+        "clip_fraction": 0.224609375,
+        "entropy": 0.8553536981344223,
+        "value_error": 0.2229799833148718,
+        "explained_variance": 0.5424563607794521,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 8,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 11.858185399905778
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.7491940999170765,
+        "dialogues": 512,
+        "transitions": 787,
+        "retries": 275,
+        "attempt1_accuracy": 0.701171875,
+        "eventual_success": 0.80859375,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "truth": 0.8026200873362447,
+          "entity": 0.003871681415929302,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "truth": 229,
+          "entity": 452,
+          "turn": 106
+        },
+        "candidate_distribution": {
+          "truth": {
+            "no": 95,
+            "yes": 134
+          },
+          "entity": {
+            "Niko": 58,
+            "Mira": 183,
+            "Sela": 50,
+            "Omar": 33,
+            "Lina": 101,
+            "Tavi": 27
+          },
+          "turn": {
+            "ready": 106
+          }
+        },
+        "dialogue_ids_hash": "6e23aba9771ed6ded64dd5ccc4c55828128bc054b5943faef85ff7a0ae58a79b"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 4,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10750,
+          "truth": 2051,
+          "entity": 2047
+        },
+        "review_selections": 1022,
+        "total_selections": 14848
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 30,
+      "visible_tokens": 474555,
+      "rollout_wall_seconds": 3.100473999977112,
+      "tokens_per_second": 6691.557484485649,
+      "training_metrics": {
+        "kl": 0.028036425355821848,
+        "clip_fraction": 0.06770833333333333,
+        "entropy": 0.8065999746322632,
+        "value_error": 0.1779817839463552,
+        "explained_variance": 0.6072824369137859,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 3,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 2.450020399992354
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.6492267000721768,
+        "dialogues": 512,
+        "transitions": 766,
+        "retries": 254,
+        "attempt1_accuracy": 0.728515625,
+        "eventual_success": 0.8203125,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "turn": 1.0,
+          "truth": 0.9364077669902912,
+          "entity": -0.016210045662100436
+        },
+        "transitions_by_skill": {
+          "turn": 122,
+          "truth": 206,
+          "entity": 438
+        },
+        "candidate_distribution": {
+          "turn": {
+            "ready": 122
+          },
+          "truth": {
+            "yes": 117,
+            "no": 89
+          },
+          "entity": {
+            "Omar": 46,
+            "Mira": 135,
+            "Sela": 49,
+            "Lina": 119,
+            "Niko": 72,
+            "Tavi": 17
+          }
+        },
+        "dialogue_ids_hash": "daf229a8ad5b4a7ba5400eb5653ee8ab6ef0d1e4cbac0c22fc239fd39a5b51dd"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 4,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10872,
+          "truth": 2249,
+          "entity": 2239
+        },
+        "review_selections": 1144,
+        "total_selections": 15360
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 31,
+      "visible_tokens": 496187,
+      "rollout_wall_seconds": 9.687294099945575,
+      "tokens_per_second": 2233.0281063854077,
+      "training_metrics": {
+        "kl": 0.022589244569341343,
+        "clip_fraction": 0.10625,
+        "entropy": 0.918437373638153,
+        "value_error": 0.24774121046066283,
+        "explained_variance": 0.5034209989246207,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 5,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 8.914869599975646
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.7715984999667853,
+        "dialogues": 512,
+        "transitions": 795,
+        "retries": 283,
+        "attempt1_accuracy": 0.68359375,
+        "eventual_success": 0.814453125,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "entity": 0.03404255319148947,
+          "truth": 0.7597285067873301,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "entity": 470,
+          "truth": 221,
+          "turn": 104
+        },
+        "candidate_distribution": {
+          "entity": {
+            "Mira": 149,
+            "Omar": 46,
+            "Lina": 129,
+            "Tavi": 30,
+            "Niko": 67,
+            "Sela": 49
+          },
+          "truth": {
+            "no": 143,
+            "yes": 78
+          },
+          "turn": {
+            "ready": 104
+          }
+        },
+        "dialogue_ids_hash": "83f9373cf5d27d48130b7549e50fea0a72bbf20ee87d475bec4ff13d80979c35"
+      },
+      "diagnostic_metrics": null,
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 4,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 10976,
+          "truth": 2439,
+          "entity": 2457
+        },
+        "review_selections": 1248,
+        "total_selections": 15872
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    },
+    {
+      "rollout": 32,
+      "visible_tokens": 516170,
+      "rollout_wall_seconds": 10.96256579994224,
+      "tokens_per_second": 1822.8396859524698,
+      "training_metrics": {
+        "kl": 0.017297145378376757,
+        "clip_fraction": 0.16666666666666666,
+        "entropy": 0.7986426949501038,
+        "value_error": 0.20724758629997572,
+        "explained_variance": 0.6326266222554113,
+        "early_stopped_for_kl": true,
+        "optimizer_minibatches": 6,
+        "epochs_completed": 0,
+        "ppo_update_seconds": 9.088625699980184
+      },
+      "collection_metrics": {
+        "collection_seconds": 0.7357029999839142,
+        "dialogues": 512,
+        "transitions": 743,
+        "retries": 231,
+        "attempt1_accuracy": 0.76171875,
+        "eventual_success": 0.822265625,
+        "invalid_response_rate": 0.0,
+        "mean_reward_by_skill": {
+          "truth": 0.9827981651376146,
+          "entity": 0.019882352941176545,
+          "turn": 1.0
+        },
+        "transitions_by_skill": {
+          "truth": 218,
+          "entity": 425,
+          "turn": 100
+        },
+        "candidate_distribution": {
+          "truth": {
+            "yes": 111,
+            "no": 107
+          },
+          "entity": {
+            "Mira": 121,
+            "Lina": 126,
+            "Niko": 78,
+            "Sela": 37,
+            "Omar": 43,
+            "Tavi": 20
+          },
+          "turn": {
+            "ready": 100
+          }
+        },
+        "dialogue_ids_hash": "8374a1f4d84d6fbccf52176efdfeee9ebbe2ba38340947de213f803078635ed5"
+      },
+      "diagnostic_metrics": {
+        "turn": {
+          "independent": 1.0,
+          "far": 1.0
+        },
+        "truth": {
+          "independent": 1.0,
+          "far": 0.46875
+        },
+        "entity": {
+          "independent": 0.1171875,
+          "far": 0.21875
+        },
+        "property": {
+          "independent": 0.3984375,
+          "far": 0.0703125
+        },
+        "count": {
+          "independent": 0.1875,
+          "far": 0.1015625
+        },
+        "clarify": {
+          "independent": 0.0,
+          "far": 0.0
+        }
+      },
+      "curriculum": {
+        "adaptive": true,
+        "mastered": [
+          "turn"
+        ],
+        "streak": {
+          "turn": 5,
+          "truth": 0,
+          "entity": 0,
+          "property": 0,
+          "count": 0,
+          "clarify": 0
+        },
+        "diagnostics": [
+          {
+            "tokens": 108568,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4921875,
+                "far": 0.3359375
+              },
+              "count": {
+                "independent": 0.1796875,
+                "far": 0.1484375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": []
+          },
+          {
+            "tokens": 200837,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3125,
+                "far": 0.1953125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 311488,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.4921875,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.4765625,
+                "far": 0.421875
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1953125
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 409739,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 0.6484375,
+                "far": 0.78125
+              },
+              "entity": {
+                "independent": 0.1328125,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.265625,
+                "far": 0.4453125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.09375
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          },
+          {
+            "tokens": 516170,
+            "scores": {
+              "turn": {
+                "independent": 1.0,
+                "far": 1.0
+              },
+              "truth": {
+                "independent": 1.0,
+                "far": 0.46875
+              },
+              "entity": {
+                "independent": 0.1171875,
+                "far": 0.21875
+              },
+              "property": {
+                "independent": 0.3984375,
+                "far": 0.0703125
+              },
+              "count": {
+                "independent": 0.1875,
+                "far": 0.1015625
+              },
+              "clarify": {
+                "independent": 0.0,
+                "far": 0.0
+              }
+            },
+            "mastered": [
+              "turn"
+            ]
+          }
+        ],
+        "skill_selections": {
+          "turn": 11076,
+          "truth": 2655,
+          "entity": 2653
+        },
+        "review_selections": 1348,
+        "total_selections": 16384
+      },
+      "gpu_peak_allocated_mb": 8466.64599609375,
+      "gpu_peak_reserved_mb": 15870.0
+    }
+  ],
+  "termination_reason": "budget_complete",
+  "current_checkpoint": "F:\\RLisallweneed\\results\\runs\\stage0-20260726-205259-adaptive_caregiver_rl-3200\\latest.pt",
+  "visible_tokens": 516170,
+  "wall_seconds_this_session": 289.0024193000281
+}

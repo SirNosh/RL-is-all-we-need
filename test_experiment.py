@@ -2,7 +2,7 @@ import unittest
 
 import torch
 
-from experiment import LABELS, SKILLS, Student, make_example
+from legacy_pilot import LABELS, SKILLS, Student, make_example
 
 
 class ExperimentTests(unittest.TestCase):

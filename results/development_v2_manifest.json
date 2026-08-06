@@ -1,0 +1,105 @@
+{
+  "protocol": "development_v2",
+  "status": "complete",
+  "budget_visible_tokens": 5000000,
+  "seeds": [4000, 4001, 4002],
+  "conditions": [
+    "iid_clm",
+    "ordered_clm",
+    "fixed_caregiver_rl",
+    "adaptive_caregiver_rl",
+    "adaptive_hybrid"
+  ],
+  "runs": [
+    {
+      "condition": "iid_clm",
+      "seed": 4000,
+      "result": "results/stage0-20260726-222800.json",
+      "trace": "results/runs/stage0-20260726-220521-iid_clm-4000/trace.json"
+    },
+    {
+      "condition": "iid_clm",
+      "seed": 4001,
+      "result": "results/stage0-20260726-225121.json",
+      "trace": "results/runs/stage0-20260726-223344-iid_clm-4001/trace.json"
+    },
+    {
+      "condition": "iid_clm",
+      "seed": 4002,
+      "result": "results/stage0-20260726-231303.json",
+      "trace": "results/runs/stage0-20260726-225530-iid_clm-4002/trace.json"
+    },
+    {
+      "condition": "ordered_clm",
+      "seed": 4000,
+      "result": "results/stage0-20260726-233431.json",
+      "trace": "results/runs/stage0-20260726-231707-ordered_clm-4000/trace.json"
+    },
+    {
+      "condition": "ordered_clm",
+      "seed": 4001,
+      "result": "results/stage0-20260726-235542.json",
+      "trace": "results/runs/stage0-20260726-233812-ordered_clm-4001/trace.json"
+    },
+    {
+      "condition": "ordered_clm",
+      "seed": 4002,
+      "result": "results/stage0-20260727-001711.json",
+      "trace": "results/runs/stage0-20260726-235951-ordered_clm-4002/trace.json"
+    },
+    {
+      "condition": "fixed_caregiver_rl",
+      "seed": 4000,
+      "result": "results/stage0-20260727-005718.json",
+      "trace": "results/runs/stage0-20260727-002134-fixed_caregiver_rl-4000/trace.json"
+    },
+    {
+      "condition": "fixed_caregiver_rl",
+      "seed": 4001,
+      "result": "results/stage0-20260728-112431.json",
+      "trace": "results/runs/stage0-20260727-011429-fixed_caregiver_rl-4001/trace.json"
+    },
+    {
+      "condition": "fixed_caregiver_rl",
+      "seed": 4002,
+      "result": "results/stage0-20260728-114719.json",
+      "trace": "results/runs/stage0-20260728-112817-fixed_caregiver_rl-4002/trace.json"
+    },
+    {
+      "condition": "adaptive_caregiver_rl",
+      "seed": 4000,
+      "result": "results/stage0-20260728-125832.json",
+      "trace": "results/runs/stage0-20260728-120543-adaptive_caregiver_rl-4000/trace.json"
+    },
+    {
+      "condition": "adaptive_caregiver_rl",
+      "seed": 4001,
+      "result": "results/stage0-20260728-142636.json",
+      "trace": "results/runs/stage0-20260728-131650-adaptive_caregiver_rl-4001/trace.json"
+    },
+    {
+      "condition": "adaptive_caregiver_rl",
+      "seed": 4002,
+      "result": "results/stage0-20260728-152114.json",
+      "trace": "results/runs/stage0-20260728-142853-adaptive_caregiver_rl-4002/trace.json"
+    },
+    {
+      "condition": "adaptive_hybrid",
+      "seed": 4000,
+      "result": "results/stage0-20260728-161445.json",
+      "trace": "results/runs/stage0-20260728-153956-adaptive_hybrid-4000/trace.json"
+    },
+    {
+      "condition": "adaptive_hybrid",
+      "seed": 4001,
+      "result": "results/stage0-20260728-170316.json",
+      "trace": "results/runs/stage0-20260728-162826-adaptive_hybrid-4001/trace.json"
+    },
+    {
+      "condition": "adaptive_hybrid",
+      "seed": 4002,
+      "result": "results/stage0-20260728-175047.json",
+      "trace": "results/runs/stage0-20260728-171555-adaptive_hybrid-4002/trace.json"
+    }
+  ]
+}

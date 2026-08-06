@@ -1,0 +1,24 @@
+{
+  "protocol": "development_v1",
+  "status": "preserved_exploratory_history",
+  "runs": [
+    {
+      "condition": "iid_clm",
+      "seed": 4000,
+      "label": "development_v1_pre_retention_baseline",
+      "completed": true,
+      "visible_tokens": 5000756,
+      "result": "results/stage0-20260726-211916.json",
+      "trace": "results/runs/stage0-20260726-211916-iid_clm-4000/trace.json"
+    },
+    {
+      "condition": "iid_clm",
+      "seed": 4001,
+      "label": "interrupted_unresumable_under_v1",
+      "completed": false,
+      "visible_tokens": 36830,
+      "checkpoint": "results/runs/stage0-20260726-211916-iid_clm-4001/latest.pt",
+      "reason": "The v1 checkpoint hashes the outer seed/condition lists, requires an exact Git commit, and has no scientific-file hashes."
+    }
+  ]
+}

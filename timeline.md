@@ -313,3 +313,15 @@
   interaction teaching an intrinsically interactive convention; no broad
   validation of artificial childhood at this scale, and no evidence that the
   added adaptive/hybrid complexity outperforms the fixed caregiver.
+
+## 2026-08-06 EDT
+
+- Publishing the complete workspace to GitHub per user request. The tracked
+  reports and curated traces are already present; 185 ignored logs, checkpoints,
+  and generated outputs total about 5.25 GB. Package those ignored results into
+  chunks below GitHub's 100 MB single-file limit rather than silently omitting
+  them.
+
+- Scope was narrowed to exclude the 5.25 GB results set. Keep tracked project
+  files, archive the remaining tokenizer corpora, and omit disposable
+  `__pycache__` files.
